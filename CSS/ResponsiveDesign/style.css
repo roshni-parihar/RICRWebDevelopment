@@ -1,0 +1,32 @@
+#mainDiv{
+    width: 90vw;
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 10px ;
+}
+.subDiv{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+}
+@media  screen and (max-width:1200px ){
+    #mainDiv{
+        grid-template-columns: auto auto auto auto ;
+    }
+}
+@media  screen and (max-width:960px ){
+    #mainDiv{
+        grid-template-columns: auto auto auto ;
+    }
+}
+@media  screen and (max-width:768px ){
+    #mainDiv{
+        grid-template-columns: auto auto;
+    }
+}
+@media  screen and (max-width:576px ){
+    #mainDiv{
+        grid-template-columns: auto;
+    }
+}

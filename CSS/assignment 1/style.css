@@ -1,0 +1,97 @@
+
+.d1{
+    background-color: #007bff;
+    height: 100vh;
+    align-items: center;
+    
+    
+}
+.log{
+    background-color: azure;
+    padding: 10px 40px;
+    border-radius: 10px;
+    width:300px;
+    height:350px;
+    margin-top: 190px;
+    margin-left: 100px;
+    margin-right: 20px;
+    display: inline-block;
+    
+} 
+.reg{
+    background-color: azure;
+    padding: 10px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px (0, 0, 0, 0.2);
+    width: 280px;
+    margin-top:80px;
+    margin-left: 20px;
+    margin-right: 100px;
+    display: inline-block;
+} 
+
+#s1{
+    border-bottom:#007bff;
+    
+}
+
+
+
+.formField{
+    margin-bottom: 15px;
+
+    input {
+       width: 100%;
+       padding: 10px;
+       border: 1px solid rgb(175, 186, 187);
+       border-radius: 6px;
+       border: 0;
+    
+    }
+}
+.option{
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.option a{
+        color: #007bff;
+        text-decoration: none;
+     }
+.option a:hover {
+       text-decoration: underline;
+     }
+.btn{
+    width: 100%;
+    background-color: #007bff;
+    color: beige;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 15px;
+ }   
+ .btn:hover{
+    background-color:beige ;
+    color: #007bff;
+ } 
+ .text{
+    text-align: center;
+    font-size: 13px;
+    margin-top: 10px;
+    
+ }
+ .text a {
+    color: #007bff;
+    text-decoration: none;
+ }
+ .text a:hover{
+    background-color: #007bff;
+    color: beige;
+ }
+
+ 
+
+
+
+

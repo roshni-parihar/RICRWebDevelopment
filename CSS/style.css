@@ -1,0 +1,15 @@
+*{
+    background-color: rgb(25, 180, 11);
+}
+.B{
+    background-color: blueviolet;
+}
+#hd1{
+    background:linear-gradient(90, red 10, blue 25, yellow 25, green 40 )
+}
+div{
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
+}
+#para1{
+    text-shadow: 0,0,0, red;
+}

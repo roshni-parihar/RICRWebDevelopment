@@ -1,0 +1,82 @@
+body{
+    background:url(./hd.jpg);
+    background-size: cover;
+
+
+}
+#mainBox{
+    border: 1px solid #000;
+    width: 500px;
+    height: 500px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 0px grey ;
+    background-color: rgba(255, 255, 255, 0.51);
+}
+
+#formHeading{
+      color: blue;
+      text-align : center;
+}
+
+#loginForm{
+    width: fit-content;
+    margin: 10px auto;
+}
+
+.formField{
+    margin: 20px;
+    label{
+        color: blueviolet;
+        font-size: large;
+    }
+    input{
+        padding:10px;
+        border-radius: 25px;
+        border: 2px solid black;
+        outline-color: blueviolet;
+    }
+}
+
+#formControl{
+    text-align: center;
+    button{
+        margin: 10px;
+        padding:5px;
+        border-radius: 5px;
+
+    }
+}
+
+#cancelButton{
+    border:1px solid #ff0000;
+    background-color: #f74c4c;
+    color: aliceblue;
+}
+
+#loginButton{
+    border: 1px solid #007816;
+    background-color: #3c7847;
+    color: aliceblue;
+}
+
+#cancelButton:hover{
+   color: #f74c4c;
+   background-color: aliceblue;
+}
+
+#loginButton:hover{
+    color: #3c7847;
+   background-color: aliceblue;
+}
+
+#cancelButton:active{
+    background-color: blue;
+    color: aliceblue;
+}
+
+#loginButton:active{
+    background-color: blue;
+    color: aliceblue;
+}   

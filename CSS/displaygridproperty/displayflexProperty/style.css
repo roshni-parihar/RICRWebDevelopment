@@ -1,0 +1,28 @@
+
+#BigD{
+    border: 1px solid #000;
+    width: 700px;
+    height: 700px;
+    background-color:aquamarine;
+}
+#mainDiv{
+   
+    display:grid;
+    grid-template-columns: 200px 100px 100px ;
+    justify-content: center;
+    align-items: end;
+    justify-items:center;
+    width: fit-content;
+    border: 1px solid #000;
+
+}
+
+.subDiv{
+    border: 1px solid #000;
+    width: 40px;
+    height: 40px;
+    background-color: brown;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

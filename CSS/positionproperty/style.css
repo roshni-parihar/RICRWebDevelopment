@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.NavBar{
+    border: 1px solid #000;
+    background-color: blue;
+    color: aliceblue;
+    padding: 10px 50px ;
+    display:  flex;
+
+    justify-content: space-between;
+    align-items: center;
+    position:sticky;
+    top: 0px;
+
+}
+#links{
+    display: flex;
+    gap: 20px;
+}
+button{
+    background-color: blue;
+    width: 40px;
+    height: 40px;
+    position:fixed;
+    bottom: 40px;
+    right: 40px;
+}
+#d2{
+    width: 600px;
+    height: 500px;
+    border: 1px solid #000;
+    background-color: aqua;
+}
+#d2btn{
+    
+}
