@@ -1,0 +1,34 @@
+:root{
+    --primary:blue;
+    --secondary:gray;
+    --tertiary:darkgray;
+    --accent:rgb(249, 55, 87);
+    --error:red;
+    --success:green;
+    --warning:yellow;
+
+}
+#D1{
+    border: 1px solid #000;
+    margin: auto;
+    padding: 10px;
+    color: var(--primary);
+    width: 300px;
+    background-color: var(--warning);
+    height: 500px;
+    position: relative;
+    
+}
+h1{
+    color:var(--accent);
+}
+#d1{
+    border: 1px solid #000;
+    color: black;
+    background-color: var(--error);
+    width:inherit;
+    width: 100px;
+    height: 50vh;
+    position: absolute;
+    align-content: center;
+}
