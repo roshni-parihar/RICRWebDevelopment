@@ -1,0 +1,98 @@
+h1{
+    width: 200px;
+    border: 1px solid #000;
+
+
+    
+}
+h1:hover{
+    text-align: center;
+    width:500px;
+    transition: width 5s;
+transition: text-align 5s;
+}
+
+#outer{
+    width:200px;
+    border: 1px solid #000;
+    height: 50px;
+ #inner{
+    width: 0%;
+    background-color: red;
+    height:50px ;
+
+  }
+}
+#outer:hover{
+    #inner{
+        
+   width: 100%;
+   background-color:green;
+   transition: width 5s ease-in-out, background-color 5s ease-in-out;
+}
+}
+
+#outer1{
+    width:200px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    height: 50px;
+
+ #inner1{
+    height:50px ;
+
+  }
+}
+#outer1:hover{
+    #inner1{
+         animation: myAnimation 5s linear ;
+     }
+}
+@keyframes myAnimation {
+    0%{
+        width: 0%;
+        background-color:red;
+    }
+    50%{
+        width: 50%;
+        background-color: yellow;
+    }
+    100%{
+        width: 100%;
+        background-color: green;
+    }
+
+}
+#d2{
+    width: 100px;
+    height: 50px;
+    font-size: xx-large;
+    border: 1px solid #000;
+    
+
+}
+#d2:hover{
+    transform: rotateZ(180deg);
+    transition:transform 2s ;
+}
+#D1{
+    border: 1px solid #000;
+    width: fit-content;
+    position: relative;
+}
+#d1{
+    background: white;
+    position: absolute;
+    overflow: hidden;
+    top: -80px;
+left:50px;
+height: 0px;
+}
+#D1:hover{
+    #d1{
+        background: white;
+        position: absolute;
+        height: 77px;
+        transition: height 0.3s;
+    }
+}

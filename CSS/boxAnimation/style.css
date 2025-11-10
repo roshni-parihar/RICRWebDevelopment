@@ -1,0 +1,58 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    background-color:white;
+}
+
+#box{
+    width: 150px;
+    height: 150px;
+    border: 1px solid aqua;
+    border-radius: 10px;
+    position: absolute;
+    animation: movingbox 5s linear infinite ;
+     
+
+   img{
+        height:100%;
+        width: 100%;
+        object-fit: cover;
+      
+    }
+}
+
+  
+@keyframes movingbox {
+    
+    0%{
+        top:0 px;
+        left:0px;
+background-color: aqua;
+ transform:rotateZ(5600deg);
+        transition:transform 1s ;
+    }
+    25%{
+        top:0px;
+        left:500px;
+background-color: blue;
+
+    }
+    50%{
+        top:500px;
+        left:500px;
+        background-color: brown;
+     
+    }
+    75%{
+        top:500px;
+        left:0px;
+background-color: antiquewhite;
+
+    }
+    100%{
+        top:0px;
+        left:0px;
+        background-color: chartreuse;
+       
+    }
+}
