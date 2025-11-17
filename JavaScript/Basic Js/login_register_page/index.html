@@ -14,90 +14,106 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
+    <style>
+      .bground {
+        width: 1000px;
+        height: 700px;
+        background-color: rgb(68, 68, 244);
+        margin: 20px 150px 20px 150px;
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+        align-items: end;
+      }
+      .formdata {
+        width: 400px;
+        padding: 25px;
+        border-radius: 10px;
+
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
   </head>
-  <body class="">
+  <body>
     
-      <div class="container bg-primary ">
-        <div class=" container d-flex gap-5 pt-5 px-5 mt-5 align-items-end ">
-          <div class="login bg-light rounded shadow p-5 mx-5 mb-5 ">
+      <div class="bground">
+        <div class="formdata mb-5  pb-1 pt-3 bg-white p-5">
+          <div class="login">
             <h3 class="fw-bold mb-4">
               <u class="link-underline-primary">Log</u>in
             </h3>
-            <div class="d-flex border-bottom border-dark my-3 py-2 align-items-center gap-3 ">
-                <div><i class="bi bi-envelope "></i></div>
-             <div class=""><input
+            <div class="d-flex border-bottom mb-3 ">
+                <div><i class="bi bi-envelope fs-5"></i></div>
+             <div ><input
                 type="email"
                 name="email"
                 id="LoginEmail"
                 placeholder="Enter your email"
-                class="form-control bg-transparent border-0"
+                class="form-control border-0"
               /></div></div>
               
             
-           
-              <div class="d-flex border-bottom border-dark my-3 py-2 align-items-center gap-3 ">
-                <div><i class="bi bi-lock "></i></div>
+            <div class="d-flex border-bottom mb-3">
+                <div><i class="bi bi-lock fs-5"></i></div>
              <div class="d-flex"> <input
                 type="password"
                 name="pass"
                 id="LoginPassword"
-                placeholder="Confirm a password"  class="form-control bg-transparent border-0"></div><div><i class="bi bi-eye "></i></div></div>
+                placeholder="Confirm a password"  class="form-control border-0"></div><div><i class="bi bi-eye fs-5 ms-5"></i></div></div>
                
               
             
             <div class="d-flex justify-content-between mb-3">
-              <div><input type="checkbox" name="rememberme" id="Rememberme" value="rememberme" /> Remember me</div>
-              <a href="" class="text-decoration-none link-offset-2 link-offset-3 link-underline link-underline-opacity-0 link-underline-opacity-75-hover" id="">Forgot password?</a>
+              <div><input type="checkbox" name="" id="RememberButton" /> Remember me</div>
+              <a href="" class="text-decoration-none me-3" id="">Forgot password?</a>
             </div>
-            <div class="my-4">
-            <button class="btn btn-primary w-100 mb-3" id="Loginnow Button">Login Now</button></div>
-            <div class="text-center">
-            <p >
+            <button class="btn btn-primary w-100 mb-3" id="Login Button" onclick="Login();">Login Now</button>
+            <p class="text-center">
               Don't have an account?
               <a href="" class="text-decoration-none" id="SignupButton"> Signup now</a>
-            </p></div>
+            </p>
           </div>
-        
+        </div>
 
-        
-          <div class="registration bg-light rounded shadow p-5 mx-5 mb-5">
-            <h3 class="fw-bold pb-4">
+        <div class="formdata  pb-1 pt-3 bg-white mb-5 p-5">
+          <div class="registration">
+            <h3 class="fw-bold mb-4">
               <u class="link-underline-primary">Reg</u>istration
             </h3>
-            <div class=" d-flex border-bottom border-dark my-3 py-2 align-items-center gap-3">
+            <div class=" d-flex border-bottom mb-3">
              <div><i class="bi bi-person fs-5 "></i></div> 
              <div><input
                 type="text"
                 name="name"
                 id="RegistrationName"
                 placeholder="Enter your name "
-                class="form-control bg-transparent border-0"
+                class="form-control border-0"
               />
             </div></div>
-            <div class=" d-flex border-bottom border-dark my-3 py-2 align-items-center gap-3">
+            <div class=" d-flex border-bottom mb-3">
                 <div><i class="bi bi-envelope fs-5"></i></div>
             <div> <input
                 type="email"
                 name="email"
                 id="RegistrationEmail"
-                class="form-control bg-transparent border-0"
+                class="form-control border-0"
                 placeholder="Enter your email"
               /></div></div>
               
-              <div class="d-flex  border-bottom border-dark my-3 py-2 align-items-center gap-3">
+              <div class="d-flex border-bottom mb-3">
            <div><i class="bi bi-lock fs-5"></i></div>
             <div class="mb-0">
               <input
                 type="password"
                 name="pass"
-                id="RegistrationcreatePassword"
+                id="RegistrationCreatePassword"
                 placeholder="Create a password"
-                class="form-control bg-transparent border-0"
+                class="form-control border-0"
               />
               
             </div></div>
 
-            <div class="d-flex  border-bottom border-dark my-3 py-2 align-items-center gap-3 ">
+            <div class="d-flex  border-bottom mb-3">
                 <div><i class="bi bi-lock fs-5 "></i></div>
             <div class="">
               <input
@@ -105,7 +121,7 @@
                 name="pass"
                 id="RegistrationConfirmPassword"
                 placeholder="Confirm your password"
-                class="form-control bg-transparent border-0"
+                class="form-control border-0"
               /></div><div><i class="bi bi-eye fs-5 ms-5"></i></div></div>
               
             
@@ -113,7 +129,7 @@
               <input type="checkbox" name="" id="Terms" /> I accept all terms &
               conditions
             </div>
-             <div class="my-4">
+            <div>
             <button class="btn btn-primary w-100 mb-3" id="RegisterNowButton" onclick="Registration();">Register Now</button></div>
             
             <div class="text-center" >
@@ -130,5 +146,6 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <script src="./index.js" type=""></script>
   </body>
 </html>
