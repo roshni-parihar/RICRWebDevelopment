@@ -19,4 +19,13 @@ function Submit() {
   console.log("College/School:" + clg);
 
   console.log("Branch:" + br);
+  alert("Submit done");
+   document.getElementById("PersonName").value="";
+  document.getElementById("ContactNumber").value="";
+   document.getElementById("EmailID").value="";
+   document.getElementById("Qualifications").value="";
+  document.getElementById("College/School").value="";
+
+
+   document.getElementById("BranchName").value="";
 }
