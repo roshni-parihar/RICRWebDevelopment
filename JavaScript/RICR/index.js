@@ -18,6 +18,9 @@ function Submit() {
   console.log("Qualification:" + qual);
   console.log("College/School:" + clg);
 
+
+ 
+
   console.log("Branch:" + br);
   alert("Submit done");
    document.getElementById("PersonName").value="";
