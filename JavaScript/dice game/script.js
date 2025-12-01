@@ -10,7 +10,7 @@ function restart() {
   console.log("Game Restarted");
 }
 
-function p1play() {
+function P1play() {
   console.log("Player1 Playing");
   let Score = Number(document.getElementById("score1").innerText);
   const DF = Math.floor(Math.random() * 6) + 1;
@@ -49,7 +49,7 @@ function p1play() {
 
 }
 
-function p2play() {
+function P2play() {
   console.log("Player2 Playing");
   let Score = Number(document.getElementById("score2").innerText);
   const DF = Math.floor(Math.random() * 6) + 1;
