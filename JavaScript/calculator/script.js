@@ -8,7 +8,7 @@ document.getElementById("show").value = "result";
 document.getElementById("show").value ="";
 }
 else{
-    document.getElementById("show").value = char;
+    document.getElementById("show").value =char;
 }
 }
     
