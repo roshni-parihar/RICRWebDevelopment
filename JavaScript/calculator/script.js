@@ -1,21 +1,26 @@
-
-function click(char){
-    if(char === '='){
-document.getElementById("show").value = "result";
-
+function Click(char) {
+  if (char === "=") {
+    try {
+      const exp = (document.getElementById("show").value = "result");
+      document.getElementById("show").value = eval(exp);
+    } catch (error) {
+      alert("invalid expression");
+      document.getElementById("show").value = "";
     }
-    else if( char === 'C'){
-document.getElementById("show").value ="";
-}
-else{
-    document.getElementById("show").value =char;
+  } else if (char === "C") {
+    document.getElementById("show").value = "";
+  } else {
+    let exp = document.getElementById("show").value;
+    exp = exp + char;
+    document.getElementById("show").value = exp;
+  }
 }
 
   document.addEventListener("keydown", (abc) => {
   console.log("pressed key", "abc.key");
 
   if (abc.key === "Enter") {
-    Input("=");
+    Click("=");
   } else if (
     abc.key === "1" ||
     abc.key === "2" ||
@@ -32,8 +37,7 @@ else{
     abc.key === "*" ||
     abc.key === "/"
   ) {
-    Input(abc.key);
+    Click(abc.key);
   } else if (abc.key === "Backspace") {
-    Input("C");
-  } }
-    
+    Click("C");
+  } });
