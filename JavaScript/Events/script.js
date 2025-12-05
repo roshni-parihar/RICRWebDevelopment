@@ -1,9 +1,9 @@
-document.getElementById("c1").addEventListener("mouseenter",() => {fillColor("Blue");})
+document.getElementById("c1").addEventListener("mouseenter",() => {fillColor("Green");})
 document.getElementById("c1").addEventListener("mouseleave",() => {fillColor("White");})
 document.getElementById("c2").addEventListener("mouseenter",() => {fillColor("Red");})
 document.getElementById("c2").addEventListener("mouseleave",() => {fillColor("White");})
 
-document.getElementById("c3").addEventListener("mouseenter",() => {fillColor("Green");})
+document.getElementById("c3").addEventListener("mouseenter",() => {fillColor("Blue");})
 document.getElementById("c3").addEventListener("mouseleave",() => {fillColor("White");})
 document.getElementById("c4").addEventListener("mouseenter",() => {fillColor("Pink");})
 document.getElementById("c4").addEventListener("mouseleave",() => {fillColor("White");})
