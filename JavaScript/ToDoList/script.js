@@ -24,6 +24,7 @@ function AddTask() {
     i.classList.add("bi","bi-trash");
 
     b.appendChild(i);*/
+    
   L.appendChild(d);
   L.appendChild(b);
   document.getElementById("TaskList").appendChild(L);
