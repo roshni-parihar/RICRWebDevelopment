@@ -1,5 +1,5 @@
 function AddTask() {
-  const task = document.getElementById("NewTask").value.trim();
+  const task = document.getElementById("NewTask").value.trim();// trim prevents that events that are made by using backspace
 
   console.log(task);
 
@@ -12,7 +12,7 @@ function AddTask() {
   d.innerText = task;
 
   const b = document.createElement("button");
-  b.classList.add("btn", "btn-danger", "ms-3");
+  b.classList.add("btn","btn-outline-info", "btn-danger", "ms-3");
 
   b.innerHTML = `<i class="bi bi-trash"></i>Delete`;
   b.onclick = () => {

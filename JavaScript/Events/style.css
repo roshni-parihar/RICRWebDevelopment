@@ -1,3 +1,44 @@
+#bulb1{
+    padding: 50px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    width: fit-content;
+}
+
+#colorpalate{
+display: flex;
+gap: 10px;
+margin: 20px;
+}
+.color{
+height: 50px;
+width:50px;
+ border: 1px solid #000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#c1{
+    background-color:green ;
+}
+#c2{
+    background-color:red ;
+}
+#c3{
+    background-color:blue ;
+}
+#c5{
+    background-color:orange ;
+}
+#c6{
+    background-color:yellow ;
+}
+#c4{
+    background-color:pink ;
+}
+
+
 #bulb{
 
     padding: 50px;
