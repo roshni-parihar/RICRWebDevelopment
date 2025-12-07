@@ -41,3 +41,4 @@ function Click(char) {
   } else if (abc.key === "Backspace") {
     Click("C");
   } });
+  
