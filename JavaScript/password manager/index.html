@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body>
+    <header >
+      <div
+        class="container-fluid bg-info px-3 py-2 text-center display-6 fw-bold text-light"
+      >
+        Password Manager
+      </div>
+    </header>
+    <main class="container p-4 bg-danger-subtle border border-black">
+      <section>
+        <div class="d-flex m-2">
+          <label for="siteName" class="form-label w-25 fs-3 "
+            >Website Name:</label
+          >
+          <input
+            type="text"
+            name="siteName"
+            id="siteName"
+            class="form-control bg-info-subtle"
+          />
+        </div>
+        <div class="d-flex m-2">
+          <label for="userName" class="form-label w-25 fs-3">User Name:</label>
+          <input
+            type="text"
+            name="UserName"
+            id="UserName"
+            class="form-control bg-info-subtle"
+          />
+        </div>
+        <div class="d-flex m-2">
+          <label for="Password" class="form-label w-25 fs-3">Password:</label>
+          <input type="text" name="password" id="password" class="form-control bg-info-subtle ">
+        </div>
+        <div class="text-center mt-3">
+          <button class="btn btn-dark w-25 btn-outline-info" onclick="AddData()">Add</button>
+        </div>
+        <div class=" text-center mt-3">
+          <button class="btn btn-success btn-outline-info w-25" onclick="DownloadFile()">
+            Download Data
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>

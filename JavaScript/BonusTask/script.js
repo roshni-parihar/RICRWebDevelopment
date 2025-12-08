@@ -2,8 +2,8 @@
     const state = document.getElementById("mapstate").value.trim().toLowerCase();
 
     if(!state){
-        alert("State is not selected")
-        return
+        alert("State is not selected");
+        
     }
 
     const flag = document.createElement("i");
@@ -14,10 +14,11 @@
         flag.style.top ="345px";
         flag.style.left ="360px";
         flag.title = "State: Delhi \nCapital: New Delhi";
+       
     }
      if(state === "punjab"){
     flag.style.top = "250px";
-    flag.style.left = "300px";
+    flag.style.left = "300px"; 
     flag.title = "State: Punjab \nCapital: Chandigarh";
   }
   if(state === "uttarakhand"){
@@ -29,15 +30,23 @@
     flag.style.top = "330px";
     flag.style.left = "330px";
     flag.title = "State: Haryana \nCapital: Chandigarh";
+    
   }
-   if(state === "madhyapradesh"|| "mp"){
-    flag.style.top = "545px";
-    flag.style.left = "360px";
-    flag.title = "State: MadhyaPradesh  \nCapital: Bhopal";
-  }
+   
   
 
     document.getElementById("Map").appendChild(flag);
-    document.getElementById("mapstate")
-}
+    document.getElementById("mapstate");
 
+    state.addEventListener("mouseover", () => statecolor());
+
+function statecolor() {
+    
+    if (flag.style.top === "330px" && flag.style.left === "330px") {
+        state.style.fill = "#ffcc00";
+    } else {
+        state.style.fill = ""; 
+    }
+}
+    
+   }
