@@ -36,20 +36,33 @@
         class="form-control bg-dark-subtle"
         placeholder="Type State Name To Search"
       />
-      <button class="btn btn-primary w-25"  onclick="search()">
+      <button class="btn btn-primary w-25" onclick="search()">
         <i class="bi bi-search"></i>Search
       </button>
+
+     <!--<select id="mapstate" class="form-select">
+  <option value="">Select State</option>
+</select>--->
+    </div>
+    <div class="bg-info">
+      <div
+        class="container ps-5 overflow-hidden"
+        id="Map"
+        style="position: relative"
+      >
+        <!-- <i class="bi bi-flag-fill text-danger fs-3" id="flag" style="position: absolute; top: 700px; left: 330px;"></i>-->
+        <img src="./Map.jpg" alt="Indian Map" />
+      </div>
+      <div class="d-flex justify-content-center gap-5">
+<button class="btn btn-danger  mt-3  text-light rounded rounded-2 " onclick="clearAll()">Clear All</button>
+  <button class="btn btn-success  mt-3 rounded rounded-2 " onclick="markAll()"> Mark All States</button>
+        <button id="soundbutton" class="btn mt-3 btn-outline-secondary btn-dark text-light rounded rounded-2 ">
+          🔊 Sound: ON
+        </button>
+        
+      </div>
     </div>
 
-    <div
-      class="container ps-5 overflow-hidden"
-      id="Map"
-      style="position: relative"
-    >
-      <!-- <i class="bi bi-flag-fill text-danger fs-3" id="flag" style="position: absolute; top: 700px; left: 330px;"></i>-->
-      <img src="./Map.jpg" alt="Indian Map" />
-    </div>
-    
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
