@@ -16,51 +16,69 @@
     />
     <style>
       #std {
-        background-color: turquoise;
+        background-color: rgb(21, 76, 109);
       }
       #std:hover {
         background-color: rgb(203, 67, 149);
       }
+
+      @media screen and (max-width: 600px) {
+      }
     </style>
   </head>
-  <body>
+  <body class="bg-secondary">
     <header id="std" class="border border-info-subtle border-3">
-      <h1 class="text-center text-primary-emphasis">Find State</h1>
+      <h2 class="text-center text-light">Find State</h2>
     </header>
 
-    <div class="container p-3 d-flex gap-3">
+    <div class="container p-2 d-flex justify-content-center">
       <input
         type="text"
         name="state"
         id="mapstate"
-        class="form-control bg-dark-subtle"
+        class="form-control bg-dark-subtle w-25"
         placeholder="Type State Name To Search"
       />
-      <button class="btn btn-primary w-25" onclick="search()">
+      <button
+        class="btn btn-info btn-outline-dark rounded rounded-4"
+        onclick="search()"
+      >
         <i class="bi bi-search"></i>Search
       </button>
 
-     <!--<select id="mapstate" class="form-select">
+      <!--<select id="mapstate" class="form-select">
   <option value="">Select State</option>
 </select>--->
     </div>
-    <div class="bg-info">
+    <div class="bg-dark-subtle">
       <div
-        class="container ps-5 overflow-hidden"
+        class="d-flex justify-content-center gap-4 container ps-3  overflow-hidden"
         id="Map"
         style="position: relative"
       >
         <!-- <i class="bi bi-flag-fill text-danger fs-3" id="flag" style="position: absolute; top: 700px; left: 330px;"></i>-->
-        <img src="./Map.jpg" alt="Indian Map" />
-      </div>
-      <div class="d-flex justify-content-center gap-5">
-<button class="btn btn-danger  mt-3  text-light rounded rounded-2 " onclick="clearAll()">Clear All</button>
-  <button class="btn btn-success  mt-3 rounded rounded-2 " onclick="markAll()"> Mark All States</button>
-        <button id="soundbutton" class="btn mt-3 btn-outline-secondary btn-dark text-light rounded rounded-2 ">
-          🔊 Sound: ON
+        <img src="./Map.jpg" alt="Indian Map" id="map" class="mt-1 " />
+      
+      <div class="mt-5 ">
+        <div class="d-grid gap-2"><button
+          class="btn btn-danger text-light rounded rounded-5  "
+          onclick="clearAll()"
+        >
+          Clear All
         </button>
-        
-      </div>
+       <button
+          class="btn btn-success  rounded rounded-5 "
+          onclick="markAll()"
+        >
+          Mark All States
+        </button>
+        <button
+          id="soundbutton"
+          class="btn btn-outline-secondary btn-dark text-light rounded rounded-5 "
+        >
+          Sound: ON
+        </button></div></div></div>
+      
     </div>
 
     <script

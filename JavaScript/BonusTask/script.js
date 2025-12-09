@@ -1,4 +1,5 @@
 const sound = new Audio("success.mp3");
+const audio = new Audio("remove sound.wav");
 
 const states = [
   "delhi",
@@ -129,7 +130,7 @@ document.addEventListener("keydown", (abc) => {
 
 function clearAll() {
   placeFlags.forEach((flag) => flag.remove());
-  placeFlags = [];
+  audio.play();
 }
 
 function markAll() {
