@@ -1,0 +1,37 @@
+#M2{
+    border: 1px solid #000;
+    border-radius: 20%;
+    background-color: #a0d2eb;
+    color: #000;
+}
+    #M2:hover{
+background-color:#3895c4 ;
+transition: background-color 1s ease-out;
+color: whitesmoke;
+transform: rotate(360deg);
+transition:transform 1s ;
+    }
+    #M4{
+        background-color: #e5eaf5;
+        margin-left: 170px;
+        border-radius: 40px;
+        border: 1px solid #200223;
+    }
+    #M5{
+        background-color: #e5eaf5;
+        margin-left: 170px; 
+        border: 1px solid #280229;
+        border-radius: 40px;
+    }
+    input{
+        border-radius: 10px;
+        background-color: #d0bdf4;
+        height:50px;
+    
+    }
+    #calculate{
+        background-color: #494d5f;
+        width: 200px;
+        height: 50px;
+
+    }
