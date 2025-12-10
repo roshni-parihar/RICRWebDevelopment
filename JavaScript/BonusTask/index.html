@@ -16,19 +16,33 @@
     />
     <style>
       #std {
-        background-color: rgb(21, 76, 109);
+        background-image: url("indian flag.jpg");
+        background-size: contain;
+        background-clip: text;
+        color: transparent;
+        
       }
-      #std:hover {
-        background-color: rgb(203, 67, 149);
+      input{
+        background-image: url("indian\ flag.jpg");
+        background-size: cover;
+        background-clip: content-box;
+        
       }
-
+      #btn1{
+        background-image: url("indian\ flag.jpg");
+        background-size: cover;
+      }
+      
       @media screen and (max-width: 600px) {
       }
+
+      
+    
     </style>
   </head>
   <body class="bg-secondary">
-    <header id="std" class="border border-info-subtle border-3">
-      <h2 class="text-center text-light">Find State</h2>
+    <header class="border border-info-subtle border-3" style="background-color: black;">
+     <div id="std"> <h1 class="text-center ">Find State</h1></div>
     </header>
 
     <div class="container p-2 d-flex justify-content-center">
@@ -39,7 +53,7 @@
         class="form-control bg-dark-subtle w-25"
         placeholder="Type State Name To Search"
       />
-      <button
+      <button id="btn1"
         class="btn btn-info btn-outline-dark rounded rounded-4"
         onclick="search()"
       >
@@ -50,7 +64,7 @@
   <option value="">Select State</option>
 </select>--->
     </div>
-    <div class="bg-dark-subtle">
+    <div class="" style="background-color:rgb(2, 4, 11)">
       <div
         class="d-flex justify-content-center gap-4 container ps-3  overflow-hidden"
         id="Map"
