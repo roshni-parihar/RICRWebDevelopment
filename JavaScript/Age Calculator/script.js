@@ -6,17 +6,17 @@ function Calculate() {
     return;
   }
 
-  let birthdate = new Date(DOB);
-  let currentdate = new Date(CD);
+  let birthdate = new Date(DOB).getFullYear;
+  let currentdate = new Date(CD).getFullYear;
 
   if (currentdate < birthdate) {
     alert("enter valid date!");
     return;
   }
 
-  let years = currentdate.getFullYear() - birthdate.getFullYear();
-  let months = currentdate.getMonth() - birthdate.getMonth();
-  let days = currentdate.getDate() - birthdate.getDate();
+  let years = currentdate - birthdate;
+ // let months = currentdate.getMonth() - birthdate.getMonth();
+ // let days = currentdate.getDate() - birthdate.getDate();
 
 
   const d = document.createElement("div");
@@ -37,5 +37,11 @@ function Calculate() {
   
 document.getElementById("dob").value= "";
 document.getElementById("cdate").value= "";
+
+document.addEventListener("click", (Event)=>{
+  if(Event.key === "Enter"){
+    Calculate();
+  }
+})
 
 }

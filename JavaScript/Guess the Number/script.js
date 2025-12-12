@@ -17,6 +17,8 @@ function submit() {
     alert("CONGRATULATIONS! YOU GUESSED IT RIGHT!");
 
     document.getElementById("guess").value ="";
+
+    
   }
 
   /*let msg = document.createElement("h3");
