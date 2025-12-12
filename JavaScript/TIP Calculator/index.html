@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="d1" class="d-grid justify-content-center container w-25  pb-3 pt-1">
+        <div class="p-2 ">
+      <div id="d2" class="container  text-center  text-light fs-2 fw-bold mb-2">
+        Tip Calculator
+      </div>
+      <div id="content" class="container box d-grid justify-content-center border border-2 border-light-subtle rounded rounded-5 ps-5 pe-5 gap-4 ">
+        <div class="">
+          <label for="bill" class="text-white form-label">Bill Amount</label>
+          <input
+            type="number"
+            name="bill"
+            id="BillAmount"
+            class="form-control "
+            placeholder="Enter Amount to be paid:"
+          />
+        </div>
+        <div class="d-grid">
+          <label for="service" class="text-white form-label"
+            >How was the service?</label
+          >
+          <select name="service" id="Service" class=" rounded">
+            <option value="">select</option>
+            <option value="0.25">25% - Top Notch</option>
+            <option value="0.20">20% - Excellent</option>
+            <option value="">15% - Good</option>
+            <option value="">10% - Bad</option>
+            <option value="">5% - Worst</option>
+          </select>
+        </div>
+        <div class="">
+          <label for="person" class="text-white form-label"
+            >Number of people sharing the bill:</label
+          >
+          <input
+            type="number"
+            name="person"
+            id="Person"
+            class="form-control "
+            placeholder="persons?"
+          />
+        </div>
+        <div class="text-center">
+          <button
+            class="rounded rounded-3 btn btn-success text-light btn-outline-warning mb-3" onclick="Calculate()"
+          >
+            Calculate
+          </button>
+        </div>
+       <!-- <div class="text-center text-light fs-4"></div>-->
+      </div></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
