@@ -14,12 +14,15 @@ function submit() {
   } else if (guess < randomNumber) {
     alert("OOPS! SORRY!!! TRY A LARGER NUMBER.");
   } else {
-    alert("CONGRATULATIONS! YOU GUESSED IT RIGHT!");
+    alert("CONGRATULATIONS!");
 
-    document.getElementById("guess").value ="";
+    document.getElementById("guess").value = "";
 
-    
+   
   }
+   document.addEventListener("keypress", function(Event) {
+      if (Event.key === "Enter") submit();
+    });
 
   /*let msg = document.createElement("h3");
   msg.classList.add("fw-bold", "text-center", "p-2");

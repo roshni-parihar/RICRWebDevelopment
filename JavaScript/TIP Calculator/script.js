@@ -37,9 +37,9 @@ document.getElementById("Service").value= "";
 document.getElementById("Person").value= "";
 
 }
+
 document.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     Calculate();
 
-  }
-});
+  }});

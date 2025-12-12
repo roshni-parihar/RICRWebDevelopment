@@ -6,8 +6,8 @@ function Calculate() {
     return;
   }
 
-  let birthdate = new Date(DOB).getFullYear;
-  let currentdate = new Date(CD).getFullYear;
+  let birthdate = new Date(DOB).getFullYear();
+  let currentdate = new Date(CD).getFullYear();
 
   if (currentdate < birthdate) {
     alert("enter valid date!");
@@ -38,10 +38,10 @@ function Calculate() {
 document.getElementById("dob").value= "";
 document.getElementById("cdate").value= "";
 
-document.addEventListener("click", (Event)=>{
+document.addEventListener("keypress", (Event)=>{
   if(Event.key === "Enter"){
     Calculate();
   }
-})
+});
 
 }
