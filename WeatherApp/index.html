@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <style>
+    body{
+      background: linear-gradient(135deg, #1e90ff, #ff6347);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    #back{
+      background: rgba(255, 255, 255, 0.2);;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      
+    }
+
+  </style>
+  <body>
+    <div id="back"
+      class="container border border-3 border-black w-50  rounded rounded-5 border-secondary m-5 h-50 p-3" >
+      <div class="d-flex justify-content-center">
+        <div
+          class="bg-primary p-2 fs-4 fw-bold rounded rounded-5 w-100 text-light text-center border border-black border-3 "
+        >
+          Weather..🌦️🌤️⛈️🌥️🌨️
+        </div>
+      </div>
+
+      <main>
+        <div
+          class="container  border border-3 p-3 mt-3 border-black rounded-5 shadow" style=" background: Radial-gradient( #1e90ff, #ff6347);"
+        >
+          <div class="d-flex gap-2">
+            <input
+              type="text"
+              name="city"
+              id="city"
+              placeholder="City Name"
+              class="form-control border border-info bg-dark-subtle"
+            />
+            <button
+              class="btn btn-warning  btn-outline-dark w-50"
+              onclick="getweather()"
+            >
+             <i class="bi bi-cloud-fill fs-5"></i> Get Weather
+            </button>
+          </div>
+          <div
+            id="WeatherData"
+            class="p-2 d-flex justify-content-between"
+          ></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
