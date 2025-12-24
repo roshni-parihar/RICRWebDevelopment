@@ -1,7 +1,10 @@
-#a{
-    text-decoration: none;
-    color: black;
-}
+ a{
+   text-decoration: none;
+        color: #000;
+     }
+  a:hover{
+          color: coral;
+     }
 .brand span {
     color: rgb(206, 68, 68);
     transition: color 0.4s ease;
@@ -20,6 +23,9 @@
 }
 .content h1 span {
 color: #ffe600;
+}
+.content h1 span:hover {
+    color:aqua;
 }
 .start{
     background:linear-gradient(135deg, #e8ebec, #f27805);

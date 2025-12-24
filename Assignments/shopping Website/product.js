@@ -5,15 +5,17 @@ async function getProducts() {
     const productlist = document.getElementById("product");
     data.forEach((element) => {
       const d = document.createElement("div");
-      d.classList.add("card");
-      d.innerHTML = `<img src=${element.image} alt=${
+      d.classList.add("card", "h-100");
+      d.innerHTML = `<div class="h-50 ">
+      <img src=${element.image} alt=${
         element.title
-      } class="h-50 object-fit-contain"/>
-        <h3 class="mb-3">${
-          element.title.lenght > 50
+      } class="w-50 object-fit-contain"/></div>
+      
+        <h4 class="mb-3">${
+          element.title.length > 50
             ? element.title.slice(0, 45) + "..."
-            : element.title
-        }</h3>
+            : element.title 
+        }</h4>
         <div class="fw-semibold ">${element.rating.rate}/5(${
         element.rating.count
       })</div>
@@ -34,6 +36,5 @@ async function getProducts() {
   } catch (error) {
     console.log(error.message);
   }
- 
 }
- getProducts();
+getProducts();
