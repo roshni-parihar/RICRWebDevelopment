@@ -5,10 +5,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./assets/pages/Home";
-import About from "./assets/pages/About";
-import Product from "./assets/pages/Product";
-import Contact from "./assets/pages/Contact";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Product from "./pages/Product";
+import Contact from "./pages/Contact";
 
 
 

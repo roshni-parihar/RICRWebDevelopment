@@ -2,7 +2,8 @@ import React from "react";
 const About = () => {
   return (
     <>
-      <div>About</div>
+      <div className="bg-primary
+      ">About</div>
     </>
   );
 };
