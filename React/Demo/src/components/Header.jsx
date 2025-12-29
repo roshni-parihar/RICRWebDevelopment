@@ -20,12 +20,7 @@ const Header = () => {
            <Link to={"/contact"} className="text-decoration-none text-black fs-4">
             Contact
           </Link>
-            <Link to={"/login"} className="text-decoration-none text-black fs-4">
-            Login
-          </Link>
-             <Link to={"/signup"} className="text-decoration-none text-black fs-4">
-            SignUp
-          </Link>
+           
         </div>{" "}
       </div>
     </>
