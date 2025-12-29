@@ -10,8 +10,8 @@ const Footer = () => {
     <>
       {" "}
       <footer
-        className="bg-rose-300  
-       border-t border-rose-400" 
+        className="bg-white/50 
+       border-t border-rose-300" 
       >
         <div className="grid grid-cols-4  gap-12 mb-10 p-5">
           <div className="me-3.5">
