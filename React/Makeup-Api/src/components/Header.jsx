@@ -38,6 +38,18 @@ const Header = () => {
             <MdConnectWithoutContact />
             Contact
           </Link>
+          <Link
+            to={"/login"}
+            className="flex items-center gap-2 text-xl hover:text-pink-600 hover:underline decoration-pink-600"
+          >
+            Login
+          </Link>
+          <Link
+            to={"/signup"}
+            className="flex items-center gap-2 text-xl hover:text-pink-600 hover:underline decoration-pink-600"
+          >
+            SignUp
+          </Link>
         </div>{" "}
       </nav>
     </>

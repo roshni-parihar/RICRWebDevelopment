@@ -2,17 +2,31 @@ import React from "react";
 import { useState } from "react";
 
 const Contact = () => {
-  const [fullname, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+ 
+  const [contactData, setContactData] = useState({
+    fullname: "",
+    email: "",
+    message: "",
+  });
+   //const [fullname, setFullName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [message, setMessage] = useState("");
   const [isloading, setIsLoading] = useState(false);
 
-  const handleClearForm = () => {
+  /* const handleClearForm = () => {
     setFullName("");
     setEmail("");
     setMessage("");
+  };*/
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContactData((previousData) => ({ ...previousData, [name]: value }));
   };
 
+  const handleClearForm = () => { fullname("");
+    email("");
+    message("") ;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -20,12 +34,12 @@ const Contact = () => {
       const response = await fetch(
         "https://official-joke-api.appspot.com/jokes/random"
       );
-      const data = {
+      /* const data = {
         fullname,
         email,
         message,
       };
-      console.log(data);
+      console.log(data);*/
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -46,8 +60,10 @@ const Contact = () => {
               <input
                 type="text"
                 name="fullname"
-                value={fullname}
-                onChange={(event) => setFullName(event.target.value)}
+                //value={fullname}
+                value={contactData.fullname}
+                // onChange={(event) => setFullName(event.target.value)}
+                onChange={handleChange}
                 placeholder="Enter FullName"
                 className=" ms-2 rounded"
                 required
@@ -58,8 +74,8 @@ const Contact = () => {
               <input
                 type="email"
                 name="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={contactData.email}
+                onChange={handleChange}
                 placeholder="Enter Email"
                 className="rounded ms-2"
                 required
@@ -69,8 +85,8 @@ const Contact = () => {
               <label htmlFor="message">Message</label>
               <textarea
                 name="message"
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
+                value={contactData.message}
+                onChange={handleChange}
                 placeholder="Write your message here.."
                 className="rounded ms-2"
                 required
