@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Login = () => {
-  const [contactData, setContactData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
@@ -10,11 +10,11 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContactData((prev) => ({ ...prev, [name]: value }));
+    setLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleClearForm = () => {
-    setContactData({
+    setLoginData({
       email: "",
       password: "",
     });
@@ -25,7 +25,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      console.log(contactData);
+      console.log(loginData);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -46,7 +46,7 @@ const Login = () => {
               <input
                 type="email"
                 name="email"
-                value={contactData.email}
+                value={loginData.email}
                 onChange={handleChange}
                 placeholder="Enter your Email"
                 required
@@ -59,7 +59,7 @@ const Login = () => {
               <input
                 type="password"
                 name="password"
-                value={contactData.password}
+                value={loginData.password}
                 onChange={handleChange}
                 placeholder="Enter your Password"
                 required
