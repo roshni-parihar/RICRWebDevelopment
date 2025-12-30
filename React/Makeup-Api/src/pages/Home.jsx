@@ -14,7 +14,7 @@ const Home = () => {
               </h1>
               <p className="mt-6 text-2xl text-white ">
                 Beauty begins the moment you decide to be yourelf. Enhance your
-                natural glow with elegance & connfidence.
+                natural glow with elegance & confidence.
               </p>{" "}
               <div className="mt-8 flex gap-4 mb-5">
                 <Link

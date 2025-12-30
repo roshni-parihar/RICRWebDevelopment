@@ -5,6 +5,7 @@ const SignUp = () => {
     fullname: "",
     email: "",
     password: "",
+    repeatpassword:"",
     dob: "",
     phone: "",
   });
@@ -21,6 +22,7 @@ const SignUp = () => {
       fullname: "",
       email: "",
       password: "",
+      repeatpassword:"",
       dob: "",
       phone: "",
     });
@@ -84,6 +86,18 @@ const SignUp = () => {
                 className="outline-rose-300 rounded-lg border border-rose-900 bg-white text-center text-red-950 text-lg w-75 h-10"
               />
             </div>
+            <div className="flex flex-col gap-1 mb-2">
+              <label htmlFor="repeatpassword" className="text-lg">
+                RepeatPassword
+              </label>
+              <input
+                type="password"
+                name="repeatpassword"
+                value={signUpData.repeatpassword}
+                onChange={handleChange}
+                className="outline-rose-300 rounded-lg border border-rose-900 bg-white text-center text-red-950 text-lg w-75 h-10"
+              />
+            </div>
 
             <div className="flex flex-col gap-1 mb-2">
               <label htmlFor="dob" className="text-lg">
@@ -123,7 +137,7 @@ const SignUp = () => {
                 type="submit"
                 className="bg-green-800 hover:bg-green-950 text-white px-4 py-2 rounded-xl w-25"
               >
-                {isLoading ? "Loading..." : "Submit"}
+                {isLoading ? "Loading..." : "SignUp"}
               </button>
             </div>
           </div>
