@@ -20,6 +20,9 @@ const Header = () => {
            <Link to={"/contact"} className="text-decoration-none text-black fs-4">
             Contact
           </Link>
+           <Link to={"/ricrForm"} className="text-decoration-none text-black fs-4">
+          RicrForm
+          </Link>
            
         </div>{" "}
       </div>

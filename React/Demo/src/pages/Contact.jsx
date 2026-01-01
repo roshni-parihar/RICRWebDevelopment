@@ -7,23 +7,14 @@ const Contact = () => {
     email: "",
     message: "",
     religion: "",
-    gender:"",
-    skill:[],
+    gender: "",
+    skill: [],
   });
-  //const [fullname, setFullName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [message, setMessage] = useState("");
+  
   const [isloading, setIsLoading] = useState(false);
 
-  /* const handleClearForm = () => {
-    setFullName("");
-    setEmail("");
-    setMessage("");
-  };*/
+  
   const handleChange = (e) => {
-    /* const { name, value } = e.target;
-    setContactData((previousData) => ({ ...previousData, [name]: value }));
-  };*/
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
       let temp = contactData.skill;
@@ -31,49 +22,47 @@ const Contact = () => {
         temp.push(value);
         setContactData((previousData) => ({ ...previousData, [name]: temp }));
       } else {
-        temp = Object.values(temp);// convert to array
-        temp = temp.filter((word) => word !== value); // remove the undersired value
+        temp = Object.values(temp); //Convert to Array
+        temp = temp.filter((word) => word !== value); //Remove the Undersired Value
         setContactData((previousData) => ({ ...previousData, [name]: temp }));
       }
-    }else{
-      setContactData((previousData)=>({...previousData, [name]:value}))
+    } else {
+      setContactData((previousData) => ({ ...previousData, [name]: value }));
     }
   };
   const handleClearForm = () => {
-    fullname("");
-    email("");
-    message("");
-    gender (""),
-    religion("");
+    setContactData({
+      fullname: "",
+      email: "",
+      message: "",
+      religion: "",
+      gender: "",
+      skill: [],
+    });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "https://official-joke-api.appspot.com/jokes/random"
-      );
-      /* const data = {
-        fullname,
-        email,
-        message,
-      };
-      console.log(data);*/
+      console.log(contactData);
     } catch (error) {
       console.log(error.message);
     } finally {
       setIsLoading(false);
     }
-
     handleClearForm();
   };
 
   return (
     <>
-      <div className="bg-blue-200 text-white text-center p-4">
+      <div className="  text-white text-center p-4">
         <h1>Contact Us</h1>
         <div className="container">
-          <form className="" onReset={handleClearForm} onSubmit={handleSubmit}>
+          <form
+            className="border rounded bg-amber-500 border-white"
+            onReset={handleClearForm}
+            onSubmit={handleSubmit}
+          >
             <div className="p-3">
               <label htmlFor="fullname">Full Name</label>
               <input
@@ -101,82 +90,6 @@ const Contact = () => {
               />
             </div>
             <div className="p-2">
-              <label htmlFor="gender">Gender</label>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                onChange={handleChange}
-                checked={contactData.gender === "male"}
-              />
-              Male
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                onChange={handleChange}
-                checked={contactData.gender === "female"}
-              />
-              Female
-              <input
-                type="radio"
-                name="gender"
-                value="other"
-                onChange={handleChange}
-                checked={contactData.gender === "other"}
-              />
-              Other
-            </div>
-
-            <div className="p-2">
-              <label htmlFor="skill">Skills</label>
-              <input
-                type="checkbox"
-                name="skill"
-                value="html"
-                onChange={handleChange}
-                checked={Object.values(contactData.skill).includes("html")}
-                required
-              />
-              HTML
-              <input
-                type="checkbox"
-                name="skill"
-                value="css"
-                onChange={handleChange}
-                checked={
-                  Object.values(contactData.skill).find(
-                    (word) => word === "css"
-                  )
-                    ? true
-                    : false
-                }
-                required
-              />
-              CSS
-              <input
-                type="checkbox"
-                name="skill"
-                value="js"
-                onChange={handleChange}
-                checked={
-                  Object.values(contactData.skill).find((word) => word === "js")
-                    ? true
-                    : false
-                }
-              />
-              JS
-              <input
-                type="checkbox"
-                name="skill"
-                value="React"
-                onChange={handleChange}
-                checked={Object.values(contactData.skill).includes("react")}
-              />
-              React
-            </div>
-
-            <div className="p-2">
               <label htmlFor="message">Message</label>
               <textarea
                 name="message"
@@ -189,14 +102,109 @@ const Contact = () => {
                 message
               </textarea>
             </div>
-            <div className="p-2">
-              <label htmlFor="religion">Religion</label>
-              <select name="religion" id="religion" onChange={handleChange} value={contactData.religion}>
+            <div className=" flex p-3">
+              <label htmlFor="religion " className="me-2">
+                Religion
+              </label>
+              <select
+                name="religion"
+                id="religion"
+                className="rounded border"
+                onChange={handleChange}
+                value={contactData.religion}
+              >
                 <option value="">--select religion--</option>
                 <option value="hinduism">Hinduism</option>
                 <option value="islam">Islam</option>
-                <option value="Buddhism"></option>
+                <option value="buddhism">Buddhism</option>
               </select>
+            </div>{" "}
+            <div className="p-2 ">
+              <label htmlFor="gender" className="px-2">
+                Gender
+              </label>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                onChange={handleChange}
+                checked={contactData.gender === "male"}
+                className="mx-1 "
+              />
+              Male
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                onChange={handleChange}
+                checked={contactData.gender === "female"}
+                className="mx-1 "
+              />
+              Female
+              <input
+                type="radio"
+                name="gender"
+                value="other"
+                onChange={handleChange}
+                checked={contactData.gender === "other"}
+                className="mx-1 "
+              />
+              Other
+            </div>
+            <div className="d-flex justify-content-center">
+              <label htmlFor="skill" className="">
+                Skills
+              </label>
+              <div>
+                <input
+                  type="checkbox"
+                  name="skill"
+                  value="html"
+                  onChange={handleChange}
+                  checked={Object.values(contactData.skill).includes("html")}
+                  className="mx-2"
+                />
+                HTML
+                <input
+                  type="checkbox"
+                  name="skill"
+                  value="css"
+                  onChange={handleChange}
+                  checked={
+                    Object.values(contactData.skill).find(
+                      (word) => word === "css"
+                    )
+                      ? true
+                      : false
+                  }
+                  className="mx-2 "
+                />
+                CSS
+                <input
+                  type="checkbox"
+                  name="skill"
+                  value="js"
+                  onChange={handleChange}
+                  checked={
+                    Object.values(contactData.skill).find(
+                      (word) => word === "js"
+                    )
+                      ? true
+                      : false
+                  }
+                  className="mx-2"
+                />
+                JS
+                <input
+                  type="checkbox"
+                  name="skill"
+                  value="React"
+                  onChange={handleChange}
+                  checked={Object.values(contactData.skill).includes("react")}
+                  className="mx-2"
+                />
+                React
+              </div>
             </div>
             <div className="p-2">
               <button type="submit" className="rounded ">

@@ -9,19 +9,22 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Product from "./pages/Product";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+
+import RicrForm from "./pages/RicrForm";
+import {Toaster} from "react-hot-toast";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <Toaster position="top-center" reverseOrder={false}/>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/product" element={<Product />} />
           <Route path="/contact" element={<Contact />} />
+           <Route path="/ricrForm" element={<RicrForm />} />
           
         </Routes>
         <Footer />
