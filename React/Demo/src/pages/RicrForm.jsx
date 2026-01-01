@@ -84,11 +84,11 @@ function RicrForm() {
     if (formData.guardianName.length < 3) {
       Error.fullname = "Name should be more than 3 characters!";
     } else {
-      if (!/^[A-Za-z ]+$/.test(formData.fullname)) {
+      if (!/^[A-Za-z ]+$/.test(formData.guardianName)) {
         Error.guardianName = "Only Contain A-Z, a-z and space";
       }
     }
-    if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
+    if (!/^[6-9]\d{9}$/.test(formData.guardianContact)) {
       Error.guardianContact = "Only Indian Mobile Number allowed";
     }
     if (!/^[1-9][0-9]{5}$/.test(formData.pin)) {
