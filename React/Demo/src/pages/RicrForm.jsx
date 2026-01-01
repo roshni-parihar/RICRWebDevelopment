@@ -81,7 +81,7 @@ function RicrForm() {
       Error.mobile = "Only Indian Mobile Number allowed";
     }
 
-     if (formData.guardianName.length < 3) {
+    if (formData.guardianName.length < 3) {
       Error.fullname = "Name should be more than 3 characters!";
     } else {
       if (!/^[A-Za-z ]+$/.test(formData.fullname)) {
@@ -90,6 +90,15 @@ function RicrForm() {
     }
     if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
       Error.guardianContact = "Only Indian Mobile Number allowed";
+    }
+    if (!/^[1-9][0-9]{5}$/.test(formData.pin)) {
+      Error.pin = "Enter valid PinCode";
+    }
+    if (!/^[A-Za-z\s]{2,50}$/.test(formData.city)) {
+      Error.city = "Enter valid City!";
+    }
+    if (!/^[A-Za-z0-9\s,./-]{10,150}$/.test(formData.address)) {
+      Error.address = "Please Enter Valid Address!";
     }
 
     setValidationError(Error);
@@ -174,7 +183,7 @@ function RicrForm() {
                       onChange={handleChange}
                       className="w-210 h-fit border rounded px-3 py-1"
                     />
-                     {validationError.email && (
+                    {validationError.email && (
                       <span className="text-xs text-red-500">
                         {validationError.email}
                       </span>
@@ -194,7 +203,8 @@ function RicrForm() {
                       value={formData.mobile}
                       onChange={handleChange}
                       className="w-210 h-fit border rounded px-3 py-1"
-                    /> {validationError.mobile && (
+                    />{" "}
+                    {validationError.mobile && (
                       <span className="text-xs text-red-500">
                         {validationError.mobile}
                       </span>
@@ -390,6 +400,11 @@ function RicrForm() {
                     value={formData.address}
                     onChange={handleChange}
                   />
+                  {validationError.address && (
+                    <span className="text-xs text-red-500">
+                      {validationError.address}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center">
@@ -404,6 +419,11 @@ function RicrForm() {
                       value={formData.city}
                       onChange={handleChange}
                     />
+                    {validationError.city && (
+                      <span className="text-xs text-red-500">
+                        {validationError.city}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -418,6 +438,11 @@ function RicrForm() {
                       value={formData.pin}
                       onChange={handleChange}
                     />
+                    {validationError.pin && (
+                      <span className="text-xs text-red-500">
+                        {validationError.pin}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -428,36 +453,38 @@ function RicrForm() {
                 Guardian Details
               </span>
               <div className="grid grid-cols-2 gap-6">
-                <div><input
-                  type="text"
-                  name="guardianName"
-                  placeholder="Guardian's Full Name"
-                  value={formData.guardianName}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-fit px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition"
-                /> {validationError.guardianName && (
-                      <span className="text-xs text-red-500">
-                        {validationError.guardianName}
-                      </span>
-                    )}
-                
+                <div>
+                  <input
+                    type="text"
+                    name="guardianName"
+                    placeholder="Guardian's Full Name"
+                    value={formData.guardianName}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-fit px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition"
+                  />{" "}
+                  {validationError.guardianName && (
+                    <span className="text-xs text-red-500">
+                      {validationError.guardianName}
+                    </span>
+                  )}
                 </div>
-                <div><input
-                  type="tel"
-                  name="guardianContact"
-                  placeholder="Guardian's Contact Number"
-                  maxLength="10"
-                  value={formData.guardianContact}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-fit px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition"
-                /> {validationError.guardianContact && (
-                      <span className="text-xs text-red-500">
-                        {validationError.guardianContact}
-                      </span>
-                    )}
-                
+                <div>
+                  <input
+                    type="tel"
+                    name="guardianContact"
+                    placeholder="Guardian's Contact Number"
+                    maxLength="10"
+                    value={formData.guardianContact}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-fit px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition"
+                  />{" "}
+                  {validationError.guardianContact && (
+                    <span className="text-xs text-red-500">
+                      {validationError.guardianContact}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
