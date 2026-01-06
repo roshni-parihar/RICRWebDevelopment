@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+ 
   return (
     <>
       <div className="pt-10">
@@ -10,7 +11,10 @@ const Home = () => {
             <div className="flex flex-col ms-25">
               {" "}
               <h1 className="text-5xl font-light text-black font-sans">
-                Discover Your Inner <span className="font-medium font-serif text-red-900 text-shadow-lg text-shadow-white">AURA</span>
+                Discover Your Inner{" "}
+                <span className="font-medium font-serif text-red-900 text-shadow-lg text-shadow-white">
+                  AURA
+                </span>
               </h1>
               <p className="mt-6 text-2xl text-white ">
                 Beauty begins the moment you decide to be yourelf. Enhance your
@@ -34,8 +38,11 @@ const Home = () => {
             </div>
 
             <div className="flex h-100">
-              
-               <img src='images/pw1.webp'className="object-cover object-center w-full rounded-4xl shadow-md h-96 shadow-white" alt="image" />
+              <img
+                src="images/pw1.webp"
+                className="object-cover object-center w-full rounded-4xl shadow-md h-96 shadow-white"
+                alt="image"
+              />
             </div>
           </div>
         </section>
@@ -74,13 +81,15 @@ const Home = () => {
             </h2>
             <p className="text-2xl p-5 text-gray-100">
               Join thousands of women who've simplified their beauty routine.
-            </p><div className="p-3"><Link
-              to="/product"
-              className=" px-10 py-3 bg-white text-rose-600 hover:bg-rose-50 shadow-xl text-lg  rounded-4xl"
-            >
-              Shop Now
-            </Link></div>
-            
+            </p>
+            <div className="p-3">
+              <Link
+                to="/product"
+                className=" px-10 py-3 bg-white text-rose-600 hover:bg-rose-50 shadow-xl text-lg  rounded-4xl"
+              >
+                Shop Now
+              </Link>
+            </div>
           </div>
         </section>
       </div>

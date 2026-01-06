@@ -15,6 +15,12 @@ const Swap = ()=>{
   let temp = from;
   setFrom(to);
   setTo(temp);
+
+  
+  let temp2 = fromAmt;
+   setFromAmt(toAmt);
+  setToAmt(temp2);
+
 }
 
   const Convert = async () => {
@@ -30,7 +36,7 @@ const Swap = ()=>{
       );
 
       setToAmt(
-        fromAmt *
+        fromAmt * 
           res.data[from.split(" ")[0].toLowerCase()][
             to.split(" ")[0].toLowerCase()
           ]
@@ -38,7 +44,7 @@ const Swap = ()=>{
     } 
     catch (error) {
   toast.error("Conversion failed. Try again!");
-  console.error(error);
+
 }
 
   };
@@ -49,19 +55,19 @@ const Swap = ()=>{
       <div className="max-w-3xl bg-gray-500 rounded-xl shadow-lg hover:shadow-cyan-700 shadow-cyan-900 border p-6 mx-auto">
           <div className="relative grid grid-cols-2 gap-15">
             {" "}
-            <div className="flex border rounded-3xl px-3  bg-[#DCE3ED]">
+            <div className="flex border rounded-3xl px-3  bg-[#b0c3de]">
               {from && (
                 <img
                   src={`https://flagsapi.com/${from.split(" ")[1]}/flat/48.png`}
                   alt=""
                 />
-              )}
+              )};
 
               <select
                 name="from"
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className=" p-3  overflow-hidden"
+                className=" p-3   overflow-hidden"
               >
                 <option value="">--select Country--</option>
                 {CountryData.map((country, idx) => (
@@ -74,7 +80,7 @@ const Swap = ()=>{
                 ))}
               </select>
             </div>
-            <div className="flex border rounded-3xl px-3  bg-[#DCE3ED]">
+            <div className="flex border rounded-3xl px-3  bg-[#b0c3de]">
               {to && (
                 <img
                   src={`https://flagsapi.com/${to.split(" ")[1]}/flat/48.png`}
