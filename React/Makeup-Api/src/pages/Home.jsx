@@ -5,14 +5,21 @@ const Home = () => {
  
   return (
     <>
-      <div className="pt-10">
-        <section className="flex flex-col items-center justify-between p-5">
-          <div className="grid grid-cols-2 items-center gap-50">
-            <div className="flex flex-col ms-25">
+      <div className="">
+        <section className="flex flex-col items-center justify-between ">
+          <div className="grid grid-cols-3 items-center gap-3">
+             <div className="flex ">
+              <img
+                src="images/aura2.jpg"
+                className="object-cover h-120  object-center w-full rounded-br-full shadow-md  shadow-white"
+                alt="image"
+              />
+            </div>
+            <div className="flex flex-col ">
               {" "}
               <h1 className="text-5xl font-light text-black font-sans">
                 Discover Your Inner{" "}
-                <span className="font-medium font-serif text-red-900 text-shadow-lg text-shadow-white">
+                <span className="font-medium font-serif  text-red-900 text-shadow-lg text-shadow-white">
                   AURA
                 </span>
               </h1>
@@ -36,14 +43,15 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-
-            <div className="flex h-100">
+             <div className="flex ">
               <img
-                src="images/pw1.webp"
-                className="object-cover object-center w-full rounded-4xl shadow-md h-96 shadow-white"
+                src="images/a2.webp"
+                className=" h-120 object-bottom-left object-cover w-full rounded-tl-full shadow-white border-white border-s-3  shadow-lg"
                 alt="image"
               />
             </div>
+
+           
           </div>
         </section>
         <section className="py-7 px-20 bg-white">
