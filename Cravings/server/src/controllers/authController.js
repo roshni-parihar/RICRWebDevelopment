@@ -6,20 +6,23 @@ export const UserRegister = async (req, res, next) => {
 
     if (!fullName || !email || !mobileNumber || !password) {
       const error = new Error("All Fields Required");
-      error.statuCode = 400;
+      error.StatusCode = 400;
       return next(error);
     }
     // checking user is already exists or not
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       const error = new Error("Email is already registered");
-      error.StatuCode = 409;
+      error.StatusCode = 409;
       return next(error);
+      
     }
 
     // encrypting password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
+    console.log("hashpassword",hashPassword);
+    
 
     //saving data in backend
     const newUser = await User.create({
@@ -44,14 +47,14 @@ export const UserLogin = async (req, res, next) => {
     //verifying
     if (!email || !password) {
       const error = new Error("All Fields Required");
-      error.statuCode = 400;
+      error.StatusCode = 400;
       return next(error);
     }
     // checking user is registered or not
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       const error = new Error("Email not registered");
-      error.StatuCode = 402;
+      error.statusCode = 401;
       return next(error);
     }
 
@@ -59,7 +62,7 @@ export const UserLogin = async (req, res, next) => {
     const isVerified = await bcrypt.compare(password, existingUser.password);
     if (!isVerified) {
       const error = new Error("Password didn't match");
-      error.StatuCode = 402;
+      error.StatusCode = 402;
       return next(error);
     }
 

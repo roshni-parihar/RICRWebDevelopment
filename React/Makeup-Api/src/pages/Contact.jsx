@@ -9,7 +9,6 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isloading, setIsLoading] = useState(false);
-
   const handleResetForm = () => {
     setFullName("");
     setEmail("");

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { TbLockPassword } from "react-icons/tb";
 import { MdOutlineMailOutline } from "react-icons/md";
 import toast from "react-hot-toast";
-
+import api from "../config/Api";
+import {useNavigate} from "react-router-dom";
 const Login = () => {
+  const navigate= useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -23,26 +25,47 @@ const Login = () => {
     });
   };
 
+  const validate =()=>{
+    let Error ={};
+    if (
+      !/^[\w\.]+@(gmail|outlook|ricr|yahoo)\.(com|in|co.in)$/.test(
+        formData.email
+      )
+    ) {
+      Error.email = "Use Proper Email Format";
+    }
+ setValidationError(Error);
+
+    return Object.keys(Error).length > 0 ? false : true;
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!loginData.email || !loginData.password) {
       toast.error("Please fill all fields");
       return;
     }
 
-    setIsLoading(true);
+     if (!validate()) {
+      setIsLoading(false);
+      toast.error("Fill the Form Correctly");
+      return;
+    }
 
     try {
+      const res = await api.post("/auth/login", loginData);
       console.log(loginData);
-      toast.success("Login successful");
+      toast.success(res.data.message);
+      handleClearForm();
     } catch (error) {
-      toast.error("Something went wrong");
+      console.log(error);
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
-
-    handleClearForm();
   };
 
   return (
@@ -50,8 +73,6 @@ const Login = () => {
       className="min-h-screen flex justify-center items-center"
       style={{ background: "var(--color-background)" }}
     >
-    
-
       <div className="py-5">
         <form onSubmit={handleSubmit} onReset={handleClearForm}>
           <div
@@ -62,14 +83,14 @@ const Login = () => {
             }}
           >
             <h1
-              className="text-2xl font-semibold text-center mb-4"
+              className="text-3xl font-semibold text-center mb-4"
               style={{ color: "var(--color-primary)" }}
             >
-              Login
+              <span className=" underline"> Lo</span>
+              <span className="text-(--color-secondary)">gin</span>
             </h1>
-
-            {/* Email */}
-            <div className="flex items-center gap-2 mb-4">
+<hr className="font-bold text-(--color-secondary) " />
+            <div className="flex items-center gap-2 mb-4 mt-2.5">
               <MdOutlineMailOutline
                 className="text-2xl"
                 style={{ color: "var(--color-accent)" }}
@@ -89,7 +110,6 @@ const Login = () => {
               />
             </div>
 
-            {/* Password */}
             <div className="flex items-center gap-2 mb-6">
               <TbLockPassword
                 className="text-2xl"
@@ -110,7 +130,6 @@ const Login = () => {
               />
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-4 justify-center">
               <button
                 type="submit"
@@ -133,8 +152,12 @@ const Login = () => {
               >
                 Reset
               </button>
-            </div>
+              
           </div>
+          <div className="flex mt-4">
+                <p className="text-lg">Don't have account?</p>
+              <button className="text-lg underline text-(--color-text) ms-2 font-semibold font-sans" onClick={()=>navigate("/register")}>Register</button></div>
+            </div>
         </form>
       </div>
     </section>

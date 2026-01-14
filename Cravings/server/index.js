@@ -23,7 +23,10 @@ app.use((err, req, res, next) => {
   const StatusCode = err.statusCode || 500;
 
   res.status(StatusCode).json({ message: ErrorMessage });
+  
 });
+
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
