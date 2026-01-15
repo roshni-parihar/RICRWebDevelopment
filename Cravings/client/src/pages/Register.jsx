@@ -116,7 +116,7 @@ const Register = () => {
                     placeholder="Full Name"
                     required
                     disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none"
+                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
                     style={{ borderColor: "var(--color-primary)" }}
                   />
                   {validationError.fullName && (
@@ -136,7 +136,7 @@ const Register = () => {
                     placeholder="Email Address"
                     required
                     disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none"
+                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
                     style={{ borderColor: "var(--color-primary)" }}
                   />
                 </div>
@@ -153,7 +153,7 @@ const Register = () => {
                     placeholder="Mobile Number"
                     required
                     disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none"
+                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
                     style={{ borderColor: "var(--color-primary)" }}
                   />
                 </div>
@@ -169,7 +169,7 @@ const Register = () => {
                     placeholder="Create Password"
                     required
                     disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none"
+                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
                     style={{ borderColor: "var(--color-primary)" }}
                   />
                 </div>
@@ -185,7 +185,7 @@ const Register = () => {
                     placeholder="Confirm Password"
                     required
                     disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none"
+                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
                     style={{ borderColor: "var(--color-primary)" }}
                   />
                   {validationError.confirmPassword && (
@@ -199,19 +199,21 @@ const Register = () => {
               <div className="flex gap-4 justify-center mt-6">
                 <button
                   type="submit"
+                  disabled={isLoading}
                   style={{ background: "var(--color-primary)", color: "white" }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all"
+                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
                 >
                   {isLoading ? "Submitting..." : "Register"}
                 </button>
 
                 <button
                   type="reset"
+                  disabled={isLoading}
                   style={{
                     background: "var(--color-secondary)",
                     color: "white",
                   }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all"
+                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
                 >
                   Clear
                 </button>

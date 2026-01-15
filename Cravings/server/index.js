@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./src/config/db.js";
 import AuthRouter from "./src/routers/authRouter.js";
+import PublicRouter from "./src/routers/publicRouter.js"
 import morgan from "morgan";// gives error,or any log data in terminal
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
+app.use("/public",PublicRouter)
 
 app.get("/", (req, res) => {
   console.log("Server is working");

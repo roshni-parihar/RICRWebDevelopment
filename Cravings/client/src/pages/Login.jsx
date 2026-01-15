@@ -101,8 +101,9 @@ const Login = () => {
                 value={loginData.email}
                 onChange={handleChange}
                 placeholder="Enter Email"
+                disabled={isLoading}
                 required
-                className="rounded-lg px-3 h-10 w-64 border outline-none"
+                className="rounded-lg px-3 h-10 w-64 border outline-none  disabled:cursor-not-allowed disabled:bg-gray-300"
                 style={{
                   borderColor: "var(--color-primary)",
                   color: "var(--color-text)",
@@ -120,9 +121,10 @@ const Login = () => {
                 name="password"
                 value={loginData.password}
                 onChange={handleChange}
+                disabled={isLoading}
                 placeholder="Enter Password"
                 required
-                className="rounded-lg px-3 h-10 w-64 border outline-none"
+                className="rounded-lg px-3 h-10 w-64 border outline-nonedisabled:cursor-not-allowed disabled:bg-gray-300"
                 style={{
                   borderColor: "var(--color-primary)",
                   color: "var(--color-text)",
@@ -133,22 +135,24 @@ const Login = () => {
             <div className="flex gap-4 justify-center">
               <button
                 type="submit"
+                disabled={isLoading}
                 style={{
                   background: "var(--color-primary)",
                   color: "white",
                 }}
-                className="px-5 py-2 rounded-xl hover:scale-95 transition-all"
+                className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
               >
                 {isLoading ? "Loading..." : "Login"}
               </button>
 
               <button
                 type="reset"
+                disabled={isLoading}
                 style={{
                   background: "var(--color-secondary)",
                   color: "white",
                 }}
-                className="px-5 py-2 rounded-xl hover:scale-95 transition-all"
+                className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
               >
                 Reset
               </button>
