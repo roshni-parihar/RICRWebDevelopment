@@ -4,6 +4,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import toast from "react-hot-toast";
 import api from "../config/Api";
 import {useNavigate} from "react-router-dom";
+import Bpic from "../assets/f7.webp"
 const Login = () => {
   const navigate= useNavigate();
   const [loginData, setLoginData] = useState({
@@ -25,21 +26,6 @@ const Login = () => {
     });
   };
 
-  const validate =()=>{
-    let Error ={};
-    if (
-      !/^[\w\.]+@(gmail|outlook|ricr|yahoo)\.(com|in|co.in)$/.test(
-        formData.email
-      )
-    ) {
-      Error.email = "Use Proper Email Format";
-    }
- setValidationError(Error);
-
-    return Object.keys(Error).length > 0 ? false : true;
-  }
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -49,17 +35,12 @@ const Login = () => {
       return;
     }
 
-     if (!validate()) {
-      setIsLoading(false);
-      toast.error("Fill the Form Correctly");
-      return;
-    }
-
     try {
       const res = await api.post("/auth/login", loginData);
       console.log(loginData);
       toast.success(res.data.message);
       handleClearForm();
+      navigate("/user-dashboard");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -70,26 +51,33 @@ const Login = () => {
 
   return (
     <section
-      className="min-h-screen flex justify-center items-center"
-      style={{ background: "var(--color-background)" }}
+      className=" flex justify-center items-center "
+      style={{backgroundImage:`url(${Bpic})`,
+    backgroundSize:"cover",
+    backgroundPosition:"center",
+    height:"92vh",
+
+ }}
     >
-      <div className="py-5">
-        <form onSubmit={handleSubmit} onReset={handleClearForm}>
-          <div
-            className="rounded-2xl px-10 py-6 shadow-xl w-fit"
-            style={{
-              background: "white",
-              border: "2px solid var(--color-primary)",
-            }}
-          >
+      <div className="">
+        <form onSubmit={handleSubmit} onReset={handleClearForm} className="">
+           <div className="bg-white rounded-t-2xl p-2 border-(--color-primary) border-2">
             <h1
-              className="text-3xl font-semibold text-center mb-4"
+              className="text-3xl font-semibold text-center"
               style={{ color: "var(--color-primary)" }}
             >
               <span className=" underline"> Lo</span>
               <span className="text-(--color-secondary)">gin</span>
-            </h1>
-<hr className="font-bold text-(--color-secondary) " />
+            </h1> 
+           </div>
+
+          <div
+            className="rounded-b-2xl px-10 py-6 shadow-xl w-fit bg-white/80"
+            style={{
+              border: "2px solid var(--color-primary)",
+            }}
+          >
+           
             <div className="flex items-center gap-2 mb-4 mt-2.5">
               <MdOutlineMailOutline
                 className="text-2xl"

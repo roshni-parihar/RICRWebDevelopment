@@ -6,7 +6,7 @@ const Header = () => {
     const naviGate = useNavigate();
   return (
     <>
-      <div className="bg-(--color-primary) px-4 py-2 flex justify-between items-center">
+      <div className="bg-(--color-primary) px-4 py-2 flex justify-between items-center" >
         <Link to={"/"}>
           <img
             src={tranparentLogo}
