@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../config/Api";
 import { useNavigate } from "react-router-dom";
+import Bpic from "../assets/f7.webp";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Contact = () => {
     fullName: "",
     email: "",
     mobileNumber: "",
-    message:"",
+    message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +24,7 @@ const Contact = () => {
       fullName: "",
       email: "",
       mobileNumber: "",
-      message:"",
+      message: "",
     });
   };
 
@@ -36,8 +37,7 @@ const Contact = () => {
       toast.success(res.data.message);
       handleClearForm();
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message, "Unkown Error");
+      toast.error(error?.response?.data?.message || "Unknown Error");
     } finally {
       setIsLoading(false);
     }
@@ -45,115 +45,95 @@ const Contact = () => {
 
   return (
     <>
-      <section className="min-h-screen flex justify-center items-center bg-(--color-background) ">
-        <div className="py-5">
-          <form onSubmit={handleSubmit} onReset={handleClearForm}>
-            <div
-              className="rounded-2xl px-10 py-6 shadow-xl w-fit "
-              style={{
-                background: "white",
-                border: "2px solid var(--color-primary)",
-              }}
-            >
-              <h1 className="text-3xl font-semibold text-center mb-4 text-(--color-primary) ">
-                 Contact Us
-              </h1>
+      <section
+        className="flex justify-center items-center min-h-screen"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${Bpic})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          onReset={handleClearForm}
+          className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+          style={{
+            backgroundColor: "rgba(17,24,39,0.9)",
+            border: "2px solid #f59e0b",
+          }}
+        >
+          <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
+            <h1 className="text-3xl font-extrabold text-[#f59e0b]">
+              Contact Us 🍽️
+            </h1>
+            <p className="text-sm text-gray-300">We'd love to hear from you</p>
+          </div>
 
-              <div className="grid gap-2.5 mt-2.5">
-                <div className="flex justify-between">
-                  <label htmlFor="fullName" className="text-l font-semibold">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    placeholder="Full Name"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
+          <div className="px-8 py-6 space-y-4">
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              placeholder="Full Name"
+              disabled={isLoading}
+              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+            />
 
-                <div className="flex justify-between">
-                  <label htmlFor="fullName" className="text-l font-semibold">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              disabled={isLoading}
+              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+            />
 
-                <div className="flex justify-between">
-                  {" "}
-                  <label htmlFor="email" className="text-l font-semibold">
-                    Contact
-                  </label>
-                  <input
-                    type="tel"
-                    name="mobileNumber"
-                    maxLength="10"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    placeholder="Mobile Number"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <label htmlFor="message " className="text-l font-semibold">Message</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Write message here.."
-                    disabled={isLoading}
-                    required
-                    className="rounded-lg px-3 h-30 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200 "
-                    style={{ borderColor: "var(--color-primary)" }}
-                  >
-                    Message
-                  </textarea>
-                </div>
-              </div>
+            <input
+              type="tel"
+              name="mobileNumber"
+              maxLength="10"
+              value={formData.mobileNumber}
+              onChange={handleChange}
+              placeholder="Mobile Number"
+              disabled={isLoading}
+              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+            />
 
-              <div className="flex gap-4 justify-center mt-6">
-                <button
-                  type="submit"
-                  style={{ background: "var(--color-primary)", color: "white" }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                  {isLoading ? "Submitting..." : "Submit"}
-                </button>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Write your message here..."
+              disabled={isLoading}
+              rows={3}
+              className="w-full px-3 py-2 rounded-lg bg-black text-white border border-[#f59e0b] outline-none resize-none"
+            />
 
-                <button
-                  type="reset"
-                  style={{
-                    background: "var(--color-secondary)",
-                    color: "white",
-                  }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                  Clear
-                </button>
-              </div>
+            <div className="flex justify-center gap-4 pt-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-95"
+                style={{
+                  backgroundColor: "#f59e0b",
+                  color: "#111827",
+                }}
+              >
+                {isLoading ? "Submitting..." : "Submit"}
+              </button>
 
-              
+              <button
+                type="reset"
+                disabled={isLoading}
+                className="px-6 py-2 rounded-xl font-bold bg-black text-white border border-[#f59e0b]"
+              >
+                Clear
+              </button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </section>
     </>
   );

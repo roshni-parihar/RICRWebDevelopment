@@ -6,70 +6,47 @@ import { GrTransaction } from "react-icons/gr";
 import { LuHandHelping } from "react-icons/lu";
 import { RiMenuUnfoldFill } from "react-icons/ri";
 
-const UserSideBar = ({ active, setActive }) => {
+const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
+  const menuItems = [
+    { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
+    { key: "profile", title: "Profile", icon: <AiFillProfile /> },
+    { key: "orders", title: "Orders", icon: <MdOutlineBorderColor /> },
+    { key: "transaction", title: "Transactions", icon: <GrTransaction /> },
+    { key: "helpdesk ", title: "Help Desk", icon: <LuHandHelping /> },
+  ];
+
   return (
     <>
       <div className="p-3">
-        <div className="text-xl font-bold flex  gap-2 items-center"><RiMenuUnfoldFill />User Dashboard</div>
-        <hr />
-        <div className="grid gap-3 p-6 ">
+        <div className=" h-10 text-xl font-bold flex  gap-2 items-center">
           <button
-            className={`flex  gap-3  items-center  p-3 rounded-xl ${
-              active === "overview"
-                ? "bg-(--color-secondary) text-white"
-                : "hover:bg-gray-50/60"
-            }`}
-            onClick={() => setActive("overview")}
+            className="hover:scale-105"
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <FaMagnifyingGlassChart /> Overview
+            <RiMenuUnfoldFill  className="text-4xl text-bold ps-2"/>
           </button>
-
-          <button
-            className={`flex  gap-3  items-center  p-3 rounded-xl ${
-              active === "profile"
-                ? "bg-(--color-secondary) text-white"
-                : "hover:bg-gray-50/60"
-            }`}
-            onClick={() => setActive("profile")}
-          >
-            <AiFillProfile />
-            Profile
-          </button>
-
-          <button
-            className={`flex  gap-3  items-center  p-3 rounded-xl ${
-              active === "orders"
-                ? "bg-(--color-secondary) text-white"
-                : "hover:bg-gray-50/60"
-            }`}
-            onClick={() => setActive("orders")}
-          >
-            <MdOutlineBorderColor />
-            Orders
-          </button>
-
-          <button
-            className={`flex  gap-3  items-center  p-3 rounded-xl ${
-              active === "transaction"
-                ? "bg-(--color-secondary) text-white"
-                : "hover:bg-gray-50/60"
-            }`}
-          >
-            <GrTransaction />
-            Transaction
-          </button>
-
-          <button
-            className={`flex  gap-3  items-center  p-3 rounded-xl ${
-              active === "helpdesk"
-                ? "bg-(--color-secondary) text-white"
-                : "hover:bg-gray-50/60"
-            }`}
-          >
-            <LuHandHelping />
-            Help Desk
-          </button>
+          {!isOpen && (
+            <span className="overflow-hidden text-nowrap">User Dashboard</span>
+          )}
         </div>
+        <hr />
+
+         <div className="py-6 space-y-5 w-full ">
+            {menuItems.map((item, idx) => (
+              <button
+                className={`flex  gap-3  items-center  p-3 rounded-xl text-base h-12 w-full  text-nowrap overflow-hidden duration-300  text-white ${
+                  active === item.key
+                    ? "bg-(--color-secondary) text-white"
+                    : "hover:bg-gray-50/60"
+                }`}
+                onClick={() => setActive(item.key)}
+                key={idx}
+              >
+                {item.icon} {!isOpen && item.title}
+              </button>
+            ))}
+          </div>
+       
       </div>
     </>
   );

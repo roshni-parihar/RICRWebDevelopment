@@ -3,15 +3,15 @@ import { TbLockPassword } from "react-icons/tb";
 import { MdOutlineMailOutline } from "react-icons/md";
 import toast from "react-hot-toast";
 import api from "../config/Api";
-import {useNavigate} from "react-router-dom";
-import Bpic from "../assets/f7.webp"
+import { useNavigate } from "react-router-dom";
+import Bpic from "../assets/f7.webp";
+
 const Login = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -20,29 +20,22 @@ const Login = () => {
   };
 
   const handleClearForm = () => {
-    setLoginData({
-      email: "",
-      password: "",
-    });
+    setLoginData({ email: "", password: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!loginData.email || !loginData.password) {
-      toast.error("Please fill all fields");
-      return;
-    }
+    console.log(loginData);
+    
 
     try {
       const res = await api.post("/auth/login", loginData);
-      console.log(loginData);
       toast.success(res.data.message);
       handleClearForm();
       navigate("/user-dashboard");
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
@@ -51,107 +44,90 @@ const Login = () => {
 
   return (
     <section
-      className=" flex justify-center items-center "
-      style={{backgroundImage:`url(${Bpic})`,
-    backgroundSize:"cover",
-    backgroundPosition:"center",
-    height:"92vh",
-
- }}
+      className="flex justify-center items-center min-h-screen"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${Bpic})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <div className="">
-        <form onSubmit={handleSubmit} onReset={handleClearForm} className="">
-           <div className="bg-white rounded-t-2xl p-2 border-(--color-primary) border-2">
-            <h1
-              className="text-3xl font-semibold text-center"
-              style={{ color: "var(--color-primary)" }}
-            >
-              <span className=" underline"> Lo</span>
-              <span className="text-(--color-secondary)">gin</span>
-            </h1> 
-           </div>
+      <form
+        onSubmit={handleSubmit}
+        onReset={handleClearForm}
+        className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+        style={{
+          backgroundColor: "rgba(17,24,39,0.9)",
+          border: "2px solid #f59e0b",
+        }}
+      >
+        <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
+          <h1 className="text-3xl font-extrabold text-[#f59e0b]">
+            Foodie Login 🍕
+          </h1>
+          <p className="text-sm text-gray-300">Taste starts here</p>
+        </div>
 
-          <div
-            className="rounded-b-2xl px-10 py-6 shadow-xl w-fit bg-white/80"
-            style={{
-              border: "2px solid var(--color-primary)",
-            }}
-          >
-           
-            <div className="flex items-center gap-2 mb-4 mt-2.5">
-              <MdOutlineMailOutline
-                className="text-2xl"
-                style={{ color: "var(--color-accent)" }}
-              />
-              <input
-                type="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleChange}
-                placeholder="Enter Email"
-                disabled={isLoading}
-                required
-                className="rounded-lg px-3 h-10 w-64 border outline-none  disabled:cursor-not-allowed disabled:bg-gray-300"
-                style={{
-                  borderColor: "var(--color-primary)",
-                  color: "var(--color-text)",
-                }}
-              />
-            </div>
-
-            <div className="flex items-center gap-2 mb-6">
-              <TbLockPassword
-                className="text-2xl"
-                style={{ color: "var(--color-accent)" }}
-              />
-              <input
-                type="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleChange}
-                disabled={isLoading}
-                placeholder="Enter Password"
-                required
-                className="rounded-lg px-3 h-10 w-64 border outline-nonedisabled:cursor-not-allowed disabled:bg-gray-300"
-                style={{
-                  borderColor: "var(--color-primary)",
-                  color: "var(--color-text)",
-                }}
-              />
-            </div>
-
-            <div className="flex gap-4 justify-center">
-              <button
-                type="submit"
-                disabled={isLoading}
-                style={{
-                  background: "var(--color-primary)",
-                  color: "white",
-                }}
-                className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-              >
-                {isLoading ? "Loading..." : "Login"}
-              </button>
-
-              <button
-                type="reset"
-                disabled={isLoading}
-                style={{
-                  background: "var(--color-secondary)",
-                  color: "white",
-                }}
-                className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-              >
-                Reset
-              </button>
-              
+        <div className="px-8 py-6">
+          <div className="flex items-center gap-3 mb-4">
+            <MdOutlineMailOutline className="text-2xl text-[#f59e0b]" />
+            <input
+              type="email"
+              name="email"
+              value={loginData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              disabled={isLoading}
+              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
+            />
           </div>
-          <div className="flex mt-4">
-                <p className="text-lg">Don't have account?</p>
-              <button className="text-lg underline text-(--color-text) ms-2 font-semibold font-sans" onClick={()=>navigate("/register")}>Register</button></div>
-            </div>
-        </form>
-      </div>
+
+          <div className="flex items-center gap-3 mb-6">
+            <TbLockPassword className="text-2xl text-[#f59e0b]" />
+            <input
+              type="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              disabled={isLoading}
+              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-95"
+              style={{
+                backgroundColor: "#f59e0b",
+                color: "#111827",
+              }}
+            >
+              {isLoading ? "Loading..." : "Login"}
+            </button>
+
+            <button
+              type="reset"
+              disabled={isLoading}
+              className="px-6 py-2 rounded-xl font-bold bg-black text-white border border-[#f59e0b]"
+            >
+              Reset
+            </button>
+          </div>
+
+          <div className="flex justify-center mt-6 text-sm text-gray-300">
+            <span>New customer?</span>
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="ml-2 font-semibold text-[#f59e0b] hover:underline"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
     </section>
   );
 };

@@ -1,49 +1,62 @@
 import React from "react";
-import tranparentLogo from "../assets/transparentLogo.png";
+import transparentLogo from "../assets/logo1.png";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-    const naviGate = useNavigate();
+  const navigate = useNavigate();
+
   return (
-    <>
-      <div className="bg-(--color-primary) px-4 py-2 flex justify-between items-center" >
-        <Link to={"/"}>
+    <header className="fixed top-0 left-0 w-full z-50">
+      <div className="flex justify-between items-center px-6  bg-black border-b border-(--border-main) shadow-lg">
+        
+             <Link to="/">
           <img
-            src={tranparentLogo}
-            alt=""
-            className="h-12 w-20 object-cover invert-100"
+            src={transparentLogo}
+            alt="Logo"
+            className="h-20 w-24 object-contain "
           />
         </Link>
-        <div className="flex gap-4">
+
+      
+        <nav className="flex gap-6">
           <Link
-            to={"/"}
-            className="text-decoration-none text-white hover:text-(--color-accent)"
+            to="/"
+            className="text-gray-200 font-medium hover:text-(--color-primary) transition"
           >
             Home
           </Link>
           <Link
-            to={"/about"}
-            className="text-decoration-none text-white hover:text-(--color-accent)"
+            to="/about"
+            className="text-gray-200 font-medium hover:text-(--color-primary) transition"
           >
             About
           </Link>
           <Link
-            to={"/contact"}
-            className="text-decoration-none text-white hover:text-(--color-accent)"
+            to="/contact"
+            className="text-gray-200 font-medium hover:text-(--color-primary) transition"
           >
             Contact
           </Link>
-        </div>
-        <div className="flex gap-2">
-          <button className="bg-(--color-secondary) py-2 px-4 font-bold hover:bg-(--color-secondary-hover) hover:text-white rounded "onClick={()=>naviGate("/login")}>
+        </nav>
+
+        
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate("/login")}
+            className="px-5 py-2 rounded-lg font-semibold border border-(--border-main) text-(--color-primary) hover:bg-[#f59e0b] hover:text-black transition-all"
+          >
             Login
           </button>
-          <button className="bg-(--color-secondary) py-2 px-4 font-bold hover:bg-(--color-secondary-hover) hover:text-white rounded "onClick={()=>naviGate("/register")}>
+
+          <button
+            onClick={() => navigate("/register")}
+            className="px-5 py-2 rounded-lg font-semibold bg-[#f59e0b] text-black hover:scale-95 transition-all"
+          >
             Register
           </button>
         </div>
       </div>
-    </>
+    </header>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../config/Api";
 import { useNavigate } from "react-router-dom";
+import Bpic from "../assets/f7.webp";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -34,11 +35,9 @@ const Register = () => {
     let Error = {};
 
     if (formData.fullName.length < 3) {
-      Error.fullName = "Name should be More Than 3 Characters";
-    } else {
-      if (!/^[A-Za-z ]+$/.test(formData.fullName)) {
-        Error.fullName = "Only Contain A-Z , a-z and space";
-      }
+      Error.fullName = "Name should be more than 3 characters";
+    } else if (!/^[A-Za-z ]+$/.test(formData.fullName)) {
+      Error.fullName = "Only letters and space allowed";
     }
 
     if (
@@ -46,16 +45,15 @@ const Register = () => {
         formData.email
       )
     ) {
-      Error.email = "Use Proper Email Format";
+      Error.email = "Invalid email format";
     }
 
     if (!/^[1-9]\d{9}$/.test(formData.mobileNumber)) {
-      Error.mobileNumber = "Only Indian Mobile Number allowed";
+      Error.mobileNumber = "Invalid mobile number";
     }
 
     setValidationError(Error);
-
-    return Object.keys(Error).length > 0 ? false : true;
+    return Object.keys(Error).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -63,8 +61,8 @@ const Register = () => {
     setIsLoading(true);
 
     if (!validate()) {
+      toast.error("Fill the form correctly");
       setIsLoading(false);
-      toast.error("Fill the Form Correctly");
       return;
     }
 
@@ -73,168 +71,133 @@ const Register = () => {
       toast.success(res.data.message);
       handleClearForm();
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message, "Unkown Error");
+      toast.error(error?.response?.data?.message || "Unknown error");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <>
-      <section
-        className="min-h-screen flex justify-center items-center bg-(--color-background) "
-      
+    <section
+      className="flex justify-center items-center min-h-screen"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${Bpic})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        onReset={handleClearForm}
+        className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+        style={{
+          backgroundColor: "rgba(17,24,39,0.9)",
+          border: "2px solid #f59e0b",
+        }}
       >
-        <div className="py-5">
-          <form onSubmit={handleSubmit} onReset={handleClearForm}>
-            <div
-              className="rounded-2xl px-10 py-6 shadow-xl w-fit "
+        
+        <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
+          <h1 className="text-3xl font-extrabold text-[#f59e0b]">
+            Create Account 🍽️
+          </h1>
+          <p className="text-sm text-gray-300">
+            Join us for delicious experiences
+          </p>
+        </div>
+
+        
+        <div className="px-8 py-6 space-y-4">
+          <input
+            type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            placeholder="Full Name"
+            disabled={isLoading}
+            className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+          />
+          {validationError.fullName && (
+            <p className="text-sm text-red-400">
+              {validationError.fullName}
+            </p>
+          )}
+
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            disabled={isLoading}
+            className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+          />
+
+          <input
+            type="tel"
+            name="mobileNumber"
+            maxLength="10"
+            value={formData.mobileNumber}
+            onChange={handleChange}
+            placeholder="Mobile Number"
+            disabled={isLoading}
+            className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+          />
+
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            disabled={isLoading}
+            className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+          />
+
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+            disabled={isLoading}
+            className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+          />
+
+          <div className="flex justify-center gap-4 pt-2">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-95"
               style={{
-                background: "white",
-                border: "2px solid var(--color-primary)",
+                backgroundColor: "#f59e0b",
+                color: "#111827",
               }}
             >
-              <h1
-                className="text-3xl font-semibold text-center mb-4 text-(--color-primary) "
-                
-              >
-               <span className=" underline"> Re</span><span className="text-(--color-secondary)">gister</span>
-               
-              </h1>
+              {isLoading ? "Submitting..." : "Register"}
+            </button>
 
-              <div className="grid gap-2.5 mt-2.5">
-                <div className="flex justify-between">
-                  <label htmlFor="fullName" className="text-l font-semibold">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    placeholder="Full Name"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                  {validationError.fullName && (
-                    <p className="text-sm text-red-500">
-                      {validationError.fullName}
-                    </p>
-                  )}
-                </div>
+            <button
+              type="reset"
+              disabled={isLoading}
+              className="px-6 py-2 rounded-xl font-bold bg-black text-white border border-[#f59e0b]"
+            >
+              Reset
+            </button>
+          </div>
 
-                <div  className="flex justify-between">
-                   <label htmlFor="fullName" className="text-l font-semibold">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
-
-                <div  className="flex justify-between">
-                  {" "}
-                   <label htmlFor="email" className="text-l font-semibold">Contact</label>
-                  <input
-                    type="tel"
-                    name="mobileNumber"
-                    maxLength="10"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                    placeholder="Mobile Number"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
-
-                <div  className="flex justify-between">
-                  {" "}
-                   <label htmlFor="password" className="text-l font-semibold">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Create Password"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                </div>
-
-                <div  className="flex justify-between">
-                  {" "}
-                   <label htmlFor="confirmPassword" className="text-l font-semibold">Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Confirm Password"
-                    required
-                    disabled={isLoading}
-                    className="rounded-lg px-3 h-10 w-72 border outline-none disabled:cursor-not-allowed disabled:bg-gray-200"
-                    style={{ borderColor: "var(--color-primary)" }}
-                  />
-                  {validationError.confirmPassword && (
-                    <p className="text-sm text-red-500">
-                      {validationError.confirmPassword}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex gap-4 justify-center mt-6">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  style={{ background: "var(--color-primary)", color: "white" }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                  {isLoading ? "Submitting..." : "Register"}
-                </button>
-
-                <button
-                  type="reset"
-                  disabled={isLoading}
-                  style={{
-                    background: "var(--color-secondary)",
-                    color: "white",
-                  }}
-                  className="px-5 py-2 rounded-xl hover:scale-95 transition-all disabled:scale-100 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                  Clear
-                </button>
-              </div>
-
-              <div className="flex mt-4 justify-center">
-                <p className="text-lg">Already have an account?</p>
-                <button
-                  type="button"
-                  onClick={() => navigate("/login")}
-                  className="text-lg underline ms-2 font-semibold"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-          </form>
+          <div className="flex justify-center text-sm text-gray-300 pt-2">
+            <span>Already have an account?</span>
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="ml-2 font-semibold text-[#f59e0b] hover:underline"
+            >
+              Login
+            </button>
+          </div>
         </div>
-      </section>
-    </>
+      </form>
+    </section>
   );
 };
 

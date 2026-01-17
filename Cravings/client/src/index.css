@@ -1,17 +1,32 @@
 @import "tailwindcss";
 :root {
-  /* Primary */
-  --color-primary: #161E54;
-  --color-primary-hover: #0F163F;
+  /* PRIMARY – Gold (Brand Highlight) */
+  --color-primary: #f59e0b;        /* Gold / Premium food accent */
 
-  /* Secondary */
-  --color-secondary: #F16D34;
-  --color-secondary-hover: #D85F2E;
+  /* SECONDARY – Dark Gold / Bronze */
+  --color-secondary: #d97706;      /* Slightly deeper gold */
 
-  /* Background & Text */
-  --color-background: #BBE0EF;
-  --color-text: #161E54;
+  /* ACCENT – Soft Highlight */
+  --color-accent: #fde68a;         /* Light gold highlight */
 
-  /* Accent */
-  --color-accent: #FF986A;
+  /* BACKGROUND – Luxury Black */
+  --color-background: #0b0b0b;     /* Rich black, not pure black */
+
+  /* TEXT – Main */
+  --color-text: #f9fafb;           /* Off-white for readability */
+
+  /* TEXT MUTED */
+  --color-text-muted: #9ca3af;     /* Gray text */
+
+  /* HOVER STATES */
+  --color-primary-hover: #fbbf24;  /* Brighter gold */
+  --color-secondary-hover: #b45309;
+
+  /* BORDERS */
+  --color-border: #27272a;
+
+  /* CARD BACKGROUND */
+  --color-card: rgba(0, 0, 0, 0.75);
 }
+
+
