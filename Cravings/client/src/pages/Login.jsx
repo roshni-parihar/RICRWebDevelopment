@@ -5,8 +5,11 @@ import toast from "react-hot-toast";
 import api from "../config/Api";
 import { useNavigate } from "react-router-dom";
 import Bpic from "../assets/f7.webp";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const { setUser, setIsLogin } = useAuth();
+
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
@@ -28,11 +31,15 @@ const Login = () => {
     setIsLoading(true);
 
     console.log(loginData);
-    
 
     try {
       const res = await api.post("/auth/login", loginData);
       toast.success(res.data.message);
+
+      setUser(res.data.data);
+      setIsLogin(true);
+      sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
+
       handleClearForm();
       navigate("/user-dashboard");
     } catch (error) {

@@ -1,5 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import { genToken } from "../utils/authToken.js";
+
 export const UserRegister = async (req, res, next) => {
   try {
     const { fullName, email, mobileNumber, password } = req.body;
@@ -65,6 +67,10 @@ export const UserLogin = async (req, res, next) => {
       error.StatusCode = 402;
       return next(error);
     }
+
+// Token Generation
+await genToken(existingUser,res);
+
 
     //sending message to frontend
     res.status(200).json({ message: "Login Successfull",data:existingUser });
