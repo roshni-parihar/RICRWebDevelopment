@@ -42,11 +42,11 @@ const Header = () => {
 
         <div className="flex gap-3">
           {isLogin ? (
-            <span className="text-white">{user.fullName}</span>
+            <span className="text-white">{user.fullName}</span> // shows the user or who login's profile view or name
           ) : (
             <>
               <button
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/login")} 
                 className="px-5 py-2 rounded-lg font-semibold border border-(--border-main) text-(--color-primary) hover:bg-[#f59e0b] hover:text-black transition-all"
               >
                 Login
