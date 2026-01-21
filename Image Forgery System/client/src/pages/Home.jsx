@@ -16,7 +16,7 @@ const Home = () => {
         </h2>
         <Link
           to="/upload"
-          className="px-6 py-3 bg-[var(--primary)] rounded-lg"
+          className="px-6 py-3 bg-var(--primary) rounded-lg"
         >
           Get Started
         </Link>
