@@ -1,5 +1,5 @@
 import React from "react";
-import transparentLogo from "../assets/logo1.png";
+import transparentLogo from "../assets/clientLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -9,13 +9,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <div className="flex justify-between items-center px-6  bg-black border-b border-(--border-main) shadow-lg">
+    <header className="sticky top-0 left-0 w-full z-50 border border-b-gray-600">
+   <div className="flex justify-between items-center px-6  bg-black border-b border-(--border-main) shadow-lg h-20">
         <Link to="/">
           <img
             src={transparentLogo}
             alt="Logo"
-            className="h-20 w-24 object-contain "
+            className="h-15 w-24 object-cover rounded-full  border-3 border-(--color-secondary-hover) py-1 "
           />
         </Link>
 
@@ -42,7 +42,7 @@ const Header = () => {
 
         <div className="flex gap-3">
           {isLogin ? (
-            <span className="text-white">{user.fullName}</span> // shows the user or who login's profile view or name
+            <div className="text-orange-300 cursor-pointer border p-3 rounded-2xl hover:bg-(--color-secondary-hover)/40 hover:text-(--color-text)" onClick={()=> navigate("/user-dashboard")}>{user.fullName}</div> // shows the user or who login's profile view or name
           ) : (
             <>
               <button

@@ -19,7 +19,7 @@ const UserDashboard = () => {
         backgroundPosition: "center",
       }}
     > <div className=" w-full  flex min-h-screen ">
-        <div className={`bg-(--color-background) text-white  mt-18  duration-100 ${isOpen?"w-2/60}":"w-12/60"}`}>
+        <div className={`bg-(--color-border) text-white   duration-100 ${isOpen?"w-2/60}":"w-12/60"}`}>
           <UserSideBar active={active} setActive={setActive} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <div className={`duration-300 ${isOpen?"w-58/60}":"w-48/60"}`}>

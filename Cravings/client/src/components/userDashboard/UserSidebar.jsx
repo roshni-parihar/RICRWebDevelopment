@@ -17,7 +17,7 @@ const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
 
   return (
     <>
-      <div className="p-3">
+      <div className="p-2">
         <div className=" h-10 text-xl font-bold flex  gap-2 items-center">
           <button
             className="hover:scale-105"
