@@ -15,8 +15,8 @@ const Home = () => {
       }}
     >
       
-      <div className="flex flex-col justify-center items-center text-center min-h-screen px-4">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-[#f59e0b] tracking-wide">
+      <div className="flex flex-col  items-center text-center h-screen px-4">
+        <h1 className="text-5xl mt-30 md:text-6xl font-extrabold text-[#f59e0b] tracking-wide">
           Delicious Food <br /> Delivered Fresh
         </h1>
 

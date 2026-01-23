@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import api from "../../../config/Api";
 
 const EditProfileModal = ({ onClose }) => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [formData, setFormData] = useState({
     fullName: user.fullName || "",
     email: user.email || "",
     mobileNumber: user.mobileNumber || "",
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [validationError, setValidationError] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,68 +23,52 @@ const EditProfileModal = ({ onClose }) => {
     });
   };
 
-  const validate = () => {
-    let Error = {};
-
-    if (formData.fullName.length < 3) {
-      Error.fullName = "Name should be more than 3 characters";
-    } else if (!/^[A-Za-z ]+$/.test(formData.fullName)) {
-      Error.fullName = "Only letters and space allowed";
-    }
-
-    if (
-      !/^[\w\.]+@(gmail|outlook|ricr|yahoo)\.(com|in|co.in)$/.test(
-        formData.email,
-      )
-    ) {
-      Error.email = "Invalid email format";
-    }
-
-    if (!/^[1-9]\d{9}$/.test(formData.mobileNumber)) {
-      Error.mobileNumber = "Invalid mobile number";
-    }
-
-    setValidationError(Error);
-    return Object.keys(Error).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    if (!validate()) {
-      toast.error("Fill the form correctly");
-      setIsLoading(false);
-      return;
-    }
+    console.log("submitted");
+    console.log(formData);
 
     try {
-      const res = await api.post("/auth/register", formData);
-      toast.success(res.data.message);
-      handleClearForm();
+      const res = await api.put("/user/update", formData);
+      sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
+      setUser(res.data.data);
+      setIsLogin(true);
+      // sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Unknown error");
+      console.log(error);
     } finally {
-      setIsLoading(false);
+      onClose();
     }
   };
 
   return (
     <>
       <div className="fixed flex items-center justify-center  inset-0 bg-black/80 z-100">
-        <div className="flex justify-center items-center  gap-3 bg-white w-5xl max-h-[85vh] overflow-y-auto">
+        <div className="  rounded-4xl  flex justify-center items-center   hover:shadow-md hover:shadow-amber-800  gap-3 bg-white  w-3xl max-h-[85vh] overflow-y-auto backdrop-blur-md">
           <form
             onSubmit={handleSubmit}
             onReset={handleClearForm}
-            className="w-full rounded-2xl shadow-2xl backdrop-blur-md"
+            className="w-150  backdrop-blur-md"
           >
-            <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
-              <h1 className="text-3xl  font-extrabold text-[#f5740b]">
-                Edit Profile
-              </h1>
-              <p className="text-sm text-gray-800">
-                Update your personal information
-              </p>
+            <div className="flex gap-20 justify-center items-center rounded-t-2xl text-center  border-b-2 border-[#f5780b]">
+              <div className="py-4">
+                {" "}
+                <h1 className="text-3xl   font-extrabold text-black text-shadow-xs text-shadow-[#f5740b]">
+                  Edit Profile ✒️
+                </h1>
+                <p className="text-md text-orange-800">
+                  Update your personal information
+                </p>
+              </div>
+
+              <div className="flex items-center  -mt-8 ">
+                <button
+                  className="border-2  rounded-2xl -me-128  bg-red-700  px-4 py-1"
+                  onClick={() => onClose()}
+                >
+                  ❌
+                </button>
+              </div>
             </div>
 
             <div className="px-12 py-6 space-y-4">
@@ -100,14 +83,8 @@ const EditProfileModal = ({ onClose }) => {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  disabled={isLoading}
-                  className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+                  className="w-full h-10 px-3 rounded-lg bg-black/60 text-white border border-[#f5900b] outline-none"
                 />
-                {validationError.fullName && (
-                  <p className="text-sm text-red-400">
-                    {validationError.fullName}
-                  </p>
-                )}
               </div>
 
               <div className="space-y-1">
@@ -120,14 +97,9 @@ const EditProfileModal = ({ onClose }) => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  disabled={isLoading}
-                  className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+                  disabled
+                  className="w-full h-10 px-3 rounded-lg bg-black/60 text-white border border-[#f59e0b] cursor-not-allowed outline-none"
                 />{" "}
-                {validationError.email && (
-                  <span className="text-xs text-red-500">
-                    {validationError.email}
-                  </span>
-                )}
               </div>
 
               <div className="space-y-1">
@@ -135,44 +107,27 @@ const EditProfileModal = ({ onClose }) => {
                   Phone:
                 </label>
                 <input
-                  type="tel"
+                  type="number"
                   name="mobileNumber"
                   maxLength="10"
                   value={formData.mobileNumber}
                   onChange={handleChange}
                   placeholder="Mobile Number"
-                  disabled={isLoading}
-                  className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
+                  className="w-full h-10 px-3 rounded-lg bg-black/60 text-white border border-[#f59e0b] outline-none"
                 />{" "}
-                {validationError.mobileNumber && (
-                  <span className="text-xs text-red-500">
-                    {validationError.mobileNumber}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex justify-center gap-3 pt-2">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-6 py-2 rounded-xl border border-amber-900 font-bold transition-all hover:scale-95"
-                  style={{
-                    backgroundColor: "#f59e0b",
-                    color: "#111827",
-                  }}
-                >
-                  {isLoading ? "Saving..." : "Save"}
-                </button>
-                <div className="">
-                  <button
-                    className="border-2  rounded-2xl   bg-red-700  px-6 py-2"
-                    onClick={() => onClose()}
-                  >
-                    X
-                  </button>
-                </div>
               </div>
             </div>
+             <div className="flex justify-center gap-3 pb-4">
+                <button
+                  type="submit"
+                 
+                  className="px-6 py-2 rounded-xl border bg-(--color-secondary) border-amber-900 font-bold transition-all hover:scale-95"
+                 
+                >
+                  Save
+                </button>
+               
+              </div>
           </form>
         </div>
       </div>
