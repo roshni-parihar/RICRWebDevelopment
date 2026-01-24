@@ -12,12 +12,13 @@ const Register = () => {
     mobileNumber: "",
     password: "",
     confirmPassword: "",
+    role: "customer",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [validationError, setValidationError] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -28,6 +29,7 @@ const Register = () => {
       mobileNumber: "",
       password: "",
       confirmPassword: "",
+      role: "",
     });
   };
 
@@ -42,7 +44,7 @@ const Register = () => {
 
     if (
       !/^[\w\.]+@(gmail|outlook|ricr|yahoo)\.(com|in|co.in)$/.test(
-        formData.email
+        formData.email,
       )
     ) {
       Error.email = "Invalid email format";
@@ -50,6 +52,10 @@ const Register = () => {
 
     if (!/^[1-9]\d{9}$/.test(formData.mobileNumber)) {
       Error.mobileNumber = "Invalid mobile number";
+    }
+
+    if (!formData.role) {
+      Error.role = "Please choose any one";
     }
 
     setValidationError(Error);
@@ -89,13 +95,12 @@ const Register = () => {
       <form
         onSubmit={handleSubmit}
         onReset={handleClearForm}
-        className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+        className="w-130 rounded-2xl shadow-2xl backdrop-blur-md"
         style={{
           backgroundColor: "rgba(17,24,39,0.9)",
           border: "2px solid #f59e0b",
         }}
       >
-        
         <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
           <h1 className="text-3xl font-extrabold text-[#f59e0b]">
             Create Account 🍽️
@@ -104,8 +109,49 @@ const Register = () => {
             Join us for delicious experiences
           </p>
         </div>
+        <div className="flex items-center">
+         
+          <div className=" flex text-md justify-evenly items-center mt-2">
+             <p className="text-(--color-primary)">I AM:</p>
+          <div className="flex gap-2  items-center text-white">
+            <input
+              type="radio"
+              name="role"
+              id="manager"
+              checked={formData.role === "manager"}
+              value={"manager"}
+              onChange={handleChange}
+            />
+            <label htmlFor="manager">Restaurant Manager</label>
+          </div>
+           <div className="flex gap-2 items-center text-white">
+            <input
+              type="radio"
+              name="role"
+              id="partner"
+              checked={formData.role === "partner"}
+              value={"partner"}
+               onChange={handleChange}
+            />
+            <label htmlFor="manager">Delivery Partner</label>
+          </div>
+           <div className="flex gap-2 items-center text-white">
+            <input
+              type="radio"
+              name="role"
+              id="customer"
+              checked={formData.role === "customer"}
+              value={"customer"}
+               onChange={handleChange}
+            />
+            <label htmlFor="manager">Customer</label>
+          </div>
+        </div>
+         {validationError.role && (
+            <p className="text-sm text-red-400">{validationError.role}</p>
+          )}
 
-        
+        </div>
         <div className="px-8 py-6 space-y-4">
           <input
             type="text"
@@ -117,9 +163,7 @@ const Register = () => {
             className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none"
           />
           {validationError.fullName && (
-            <p className="text-sm text-red-400">
-              {validationError.fullName}
-            </p>
+            <p className="text-sm text-red-400">{validationError.fullName}</p>
           )}
 
           <input

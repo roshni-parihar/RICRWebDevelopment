@@ -8,9 +8,34 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    switch (key) {
+      case "manager": {
+        navigate("/restaurant-dashboard");
+        break;
+      }
+
+      case "partner": {
+        navigate("/partner-dashboard");
+        break;
+      }
+      case "customer": {
+        navigate("/customer-dashboard");
+        break;
+      }
+      case "admin": {
+        navigate("/admin-dashboard");
+        break;
+      }
+
+      default:
+        break;
+    }
+  };
+
   return (
     <header className="sticky top-0 left-0 w-full z-50 border border-b-gray-600">
-   <div className="flex justify-between items-center px-6  bg-black border-b border-(--border-main) shadow-lg h-20">
+      <div className="flex justify-between items-center px-6  bg-black border-b border-(--border-main) shadow-lg h-20">
         <Link to="/">
           <img
             src={transparentLogo}
@@ -42,11 +67,17 @@ const Header = () => {
 
         <div className="flex gap-3">
           {isLogin ? (
-            <div className="text-orange-300 cursor-pointer border p-3 rounded-2xl hover:bg-(--color-secondary-hover)/40 hover:text-(--color-text)" onClick={()=> navigate("/user-dashboard")}>{user.fullName}</div> // shows the user or who login's profile view or name
+            <div
+              className="text-orange-300 cursor-pointer border p-3 rounded-2xl hover:bg-(--color-secondary-hover)/40 hover:text-(--color-text)"
+              onClick={() => navigate("/user-dashboard")  }
+              onclick = {(handleNavigate )}
+            >
+              {user.fullName}
+            </div> // shows the user or who login's profile view or name
           ) : (
             <>
               <button
-                onClick={() => navigate("/login")} 
+                onClick={() => navigate("/login")}
                 className="px-5 py-2 rounded-lg font-semibold border border-(--border-main) text-(--color-primary) hover:bg-[#f59e0b] hover:text-black transition-all"
               >
                 Login

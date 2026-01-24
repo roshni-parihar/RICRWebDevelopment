@@ -8,7 +8,7 @@ import Bpic from "../assets/f7.webp";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const { setUser, setIsLogin } = useAuth();
+  const { setUser, setIsLogin, setRole } = useAuth();
 
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -41,7 +41,38 @@ const Login = () => {
       sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
 
       handleClearForm();
-      navigate("/user-dashboard");
+      switch (res.data.data.role) {
+        case "manager":
+          {
+            setRole("manager");
+            navigate("/restaurant-dashboard");
+             break;
+          }
+
+          case "partner":
+          {
+            setRole("partner");
+            navigate("/partner-dashboard");
+             break;
+          }
+          case "customer":
+          {
+            setRole("customer");
+            navigate("/customer-dashboard");
+             break;
+          }
+          case "admin":
+          {
+            setRole("admin");
+            navigate("/admin-dashboard");
+             break;
+          }
+
+         
+
+        default:
+          break;
+      }
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {

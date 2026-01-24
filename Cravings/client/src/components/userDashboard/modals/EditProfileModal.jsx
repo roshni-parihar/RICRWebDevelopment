@@ -33,7 +33,7 @@ const EditProfileModal = ({ onClose }) => {
       sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
       setUser(res.data.data);
       setIsLogin(true);
-      // sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
+     
     } catch (error) {
       console.log(error);
     } finally {
