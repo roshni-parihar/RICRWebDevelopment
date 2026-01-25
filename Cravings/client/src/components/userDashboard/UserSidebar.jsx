@@ -5,8 +5,14 @@ import { MdOutlineBorderColor } from "react-icons/md";
 import { GrTransaction } from "react-icons/gr";
 import { LuHandHelping } from "react-icons/lu";
 import { RiMenuUnfoldFill } from "react-icons/ri";
+import { MdLogout } from "react-icons/md";
+import api from "../../config/Api"
+import toast from "react-hot-toast";
+import {useAuth} from "../../context/AuthContext"
 
 const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
+  const{setUser, setIsLogin}= useAuth();
+
   const menuItems = [
     { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
     { key: "profile", title: "Profile", icon: <AiFillProfile /> },
@@ -15,9 +21,22 @@ const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
     { key: "helpdesk ", title: "Help Desk", icon: <LuHandHelping /> },
   ];
 
+  const handleLogout = async()=>{
+    try {
+      const res = await api.get("/auth/logout")
+      toast.success(res.data.message);
+      setUser("");
+      setIsLogin(false);
+      sessionStorage.removeItem("CravingUser")
+    } catch (error) {
+       toast.error(error?.response?.data?.message || "Unknown Error");
+    }
+  }
+
   return (
     <>
-      <div className="p-2">
+      <div className="p-2 flex flex-col justify-between h-full">
+        <div className="p-2">
         <div className=" h-10 text-xl font-bold flex  gap-2 items-center">
           <button
             className="hover:scale-105"
@@ -47,6 +66,11 @@ const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
             ))}
           </div>
        
+      </div>
+      <div>
+        <button className="flex  gap-3  items-center  p-3 rounded-xl text-base h-12 w-full  text-nowrap overflow-hidden duration-300  text-white hover:bg-red-500" onClick={handleLogout}> <MdLogout />{!isOpen && "Logout"}
+        </button>
+      </div>
       </div>
     </>
   );

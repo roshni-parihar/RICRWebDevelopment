@@ -16,11 +16,11 @@ const Header = () => {
       }
 
       case "partner": {
-        navigate("/partner-dashboard");
+        navigate("/rider-dashboard");
         break;
       }
       case "customer": {
-        navigate("/customer-dashboard");
+        navigate("/user-dashboard");
         break;
       }
       case "admin": {
@@ -69,8 +69,8 @@ const Header = () => {
           {isLogin ? (
             <div
               className="text-orange-300 cursor-pointer border p-3 rounded-2xl hover:bg-(--color-secondary-hover)/40 hover:text-(--color-text)"
-              onClick={() => navigate("/user-dashboard")  }
-              onclick = {(handleNavigate )}
+             
+              onClick={handleNavigate}
             >
               {user.fullName}
             </div> // shows the user or who login's profile view or name

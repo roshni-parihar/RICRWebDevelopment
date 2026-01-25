@@ -6,9 +6,33 @@ import UserOrders from "../../components/userDashboard/UserOrders";
 import UserTransaction from "../../components/userDashboard/UserTransaction";
 import UserHelpDesk from "../../components/userDashboard/UserHelpDesk";
 import bg from "../dashboards/images/f7.webp"
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
 const UserDashboard = () => {
+  const {role, isLogin} = useAuth();
   const [active, setActive] = useState("overview");
- const [isOpen,setIsOpen]=useState(false);  
+  const navigate = useNavigate();
+ const [isOpen,setIsOpen]=useState(false);
+ 
+  useEffect(()=>{
+    if(!isLogin){
+      navigate("/login");
+    }
+  })
+  if(role !== "customer"){
+    return <>
+    <div className="p-3">
+          <div className="border rounded shadow p-5 w-4xl mx-auto text-center bg-gray-100">
+            <div className="text-5xl text-red-600">
+              ⊗
+            </div>
+            <div className="text-xl">
+              You are not login as Customer. Please Login again.
+            </div>
+          </div>
+        </div></>
+  }
   return (
     <>
       <section

@@ -6,7 +6,7 @@ export const UserRegister = async (req, res, next) => {
   try {
     const { fullName, email, mobileNumber, password, role } = req.body;
 
-    if (!fullName || !email || !mobileNumber || !password ||!role) {
+    if (!fullName || !email || !mobileNumber || !password || !role) {
       const error = new Error("All Fields Required");
       error.StatusCode = 400;
       return next(error);
@@ -17,22 +17,25 @@ export const UserRegister = async (req, res, next) => {
       const error = new Error("Email is already registered");
       error.StatusCode = 409;
       return next(error);
-      
     }
 
     // encrypting password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-    console.log("hashpassword",hashPassword);
-    
+    console.log("hashpassword", hashPassword);
 
+    const photoURL = `https://placehold.co/600x400?text=${fullName.charAt(0).toUpperCase()}`;
+    const photo = {
+      url: photoURL,
+    };
     //saving data in backend
     const newUser = await User.create({
       fullName,
-      email,
+      email: email.toLowerCase(),
       mobileNumber,
       password: hashPassword,
       role,
+      photo,
     });
 
     // sending respose to FrontEnd
@@ -69,12 +72,11 @@ export const UserLogin = async (req, res, next) => {
       return next(error);
     }
 
-// Token Generation
-await genToken(existingUser,res);
-
+    // Token Generation
+    await genToken(existingUser, res);
 
     //sending message to frontend
-    res.status(200).json({ message: "Login Successfull",data:existingUser });
+    res.status(200).json({ message: "Login Successfull", data: existingUser });
 
     //end
   } catch (error) {
@@ -83,8 +85,8 @@ await genToken(existingUser,res);
 };
 export const UserLogout = async (req, res, next) => {
   try {
-res.status(200).json({ message: "Logout Successfull"});
-
+    res.clearCookie("parleG");
+    res.status(200).json({ message: "Logout Successfull" });
   } catch (error) {
     next(error);
   }

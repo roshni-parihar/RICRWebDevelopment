@@ -1,6 +1,6 @@
 import User from "../models/userModel.js";
 
-export const UserUpdate = async (req, res, next) => {
+export const UserUpdate = async (req, res, next) => {   // exported to user router
   try {
     const { fullName, email, mobileNumber } = req.body;
 
@@ -33,6 +33,17 @@ export const UserUpdate = async (req, res, next) => {
     res.status(200).json({ message: "User Updated Successfully",data:updateUser });
 
     console.log("updating user");
+  } catch (error) {
+    next(error);
+  }
+};
+export const UserChangePhoto = async (req, res, next) => {
+  try {
+    console.log("body: ", req.body);
+
+    console.log("file:", req.file);
+
+    res.status(200).json({ message: "Photo Updated" });
   } catch (error) {
     next(error);
   }

@@ -1,42 +1,99 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import EditProfileModal from "./modals/EditProfileModal";
+import UserImage from "../../assets/userImage.jpg";
+import { FaCamera } from "react-icons/fa";
+import api from "../../config/Api";
+import toast from "react-hot-toast";
 
 const UserProfile = () => {
   const { user } = useAuth();
+  
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const[preview, setPreview]= useState(
+    ""
+  );
+  const[photo,setPhoto]= useState("");
+
+  const changePhoto = async()=>{
+
+    const form_Data = new FormData();
+
+    form_Data.append("image", photo);
+    form_Data.append("imageURL", preview);
+
+    try {
+      const res = await api.patch("/user/changePhoto", form_Data);
+
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Unknown Error");
+    }
+  };
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    const newPhotoURL = URL.createObjectURL(file);
+    //console.log(newPhotoURL);
+    setPreview(newPhotoURL);
+    setTimeout(() => {
+      setPhoto(file);
+      changePhoto();
+    }, 5000);
+  };
+
+ 
+  
 
   return (
     <>
-      <div className="min-h-screen flex flex-col  items-center  text-white  px-6">
-        <div className="flex flex-col gap-4 mt-5 w-full border border-gray-800 px-6 py-8 rounded-4xl bg-black/50 shadow-md shadow-orange-900 hover:shadow-md hover:shadow-orange-400 backdrop-blur-md    max-w-xl">
-          <div className="text-3xl flex justify-between  items-center  font-bold text-[#f5740b] mb-4 text-shadow-lg text-shadow-black">
-            <h2>User Profile </h2>
-             <div className="">
-            <button
-              className="px-4 py-2 rounded-4xl border-2  bg-orange-400 scale-60 text-black  transition-all hover:scale-80 hover:bg-orange-500"
-              onClick={() => setIsEditProfileModalOpen(true)}
-            >
-              Edit Profile
+       <div className="bg-(--color-primary)/10 rounded-lg shadow-md p-6 md:p-8 h-full">
+        <div className="flex justify-between border p-3 rounded-3xl items-center border-gray-300 bg-white">
+          <div className="flex gap-5 items-center">
+            <div className="relative">
+              <div className=" border rounded-full w-36 h-36 overflow-hidden">
+                <img
+                  src={preview || user.photo.url || UserImage}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute bottom-2 left-[75%] border bg-white p-2 rounded-full group flex gap-3">
+                <label
+                  htmlFor="imageUpload"
+                  className="text-(--color-primary) group-hover:text-(--color-secondary)"
+                >
+                  <FaCamera />
+                </label>
+                <input
+                  type="file"
+                  id="imageUpload"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="text-3xl text-(--color-primary) font-bold">
+                {user.fullName}
+              </div>
+              <div className="text-gray-600 text-lg font-semibold">
+                {user.email}
+              </div>
+              <div className="text-gray-600 text-lg font-semibold">
+                {user.mobileNumber}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white">
+              Edit
+            </button>
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white">
+              Reset
             </button>
           </div>
-          </div>
-          <div className="flex justify-between items-center border-b border-amber-500 pb-2">
-            <span className="text-gray-200">Name</span>
-            <span className="font-medium text-lg">{user.fullName}</span>
-          </div>
-
-          <div className="flex justify-between  items-center border-b border-amber-500 pb-2">
-            <span className="text-gray-200">Email</span>
-            <span className="font-medium text-lg">{user.email}</span>
-          </div>
-
-          <div className="flex justify-between items-center border-b border-amber-500 pb-2">
-            <span className="text-gray-200">Phone</span>
-            <span className="font-medium text-lg">{user.mobileNumber}</span>
-          </div>
-
-         
         </div>
       </div>
 

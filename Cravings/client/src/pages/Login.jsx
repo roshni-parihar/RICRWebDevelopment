@@ -52,13 +52,13 @@ const Login = () => {
           case "partner":
           {
             setRole("partner");
-            navigate("/partner-dashboard");
+            navigate("/rider-dashboard");
              break;
           }
           case "customer":
           {
             setRole("customer");
-            navigate("/customer-dashboard");
+            navigate("/user-dashboard");
              break;
           }
           case "admin":

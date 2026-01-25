@@ -12,13 +12,13 @@ const Register = () => {
     mobileNumber: "",
     password: "",
     confirmPassword: "",
-    role: "customer",
+    role: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [validationError, setValidationError] = useState({});
 
   const handleChange = (e) => {
-    const { name, value, } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -41,7 +41,6 @@ const Register = () => {
     } else if (!/^[A-Za-z ]+$/.test(formData.fullName)) {
       Error.fullName = "Only letters and space allowed";
     }
-
     if (
       !/^[\w\.]+@(gmail|outlook|ricr|yahoo)\.(com|in|co.in)$/.test(
         formData.email,
@@ -77,6 +76,7 @@ const Register = () => {
       toast.success(res.data.message);
       handleClearForm();
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message || "Unknown error");
     } finally {
       setIsLoading(false);
@@ -110,47 +110,45 @@ const Register = () => {
           </p>
         </div>
         <div className="flex items-center">
-         
           <div className=" flex text-md justify-evenly items-center mt-2">
-             <p className="text-(--color-primary)">I AM:</p>
-          <div className="flex gap-2  items-center text-white">
-            <input
-              type="radio"
-              name="role"
-              id="manager"
-              checked={formData.role === "manager"}
-              value={"manager"}
-              onChange={handleChange}
-            />
-            <label htmlFor="manager">Restaurant Manager</label>
+            <p className="text-(--color-primary)">I AM:</p>
+            <div className="flex gap-2  items-center text-white">
+              <input
+                type="radio"
+                name="role"
+                id="manager"
+                checked={formData.role === "manager"}
+                value={"manager"}
+                onChange={handleChange}
+              />
+              <label htmlFor="manager">Restaurant Manager</label>
+            </div>
+            <div className="flex gap-2 items-center text-white">
+              <input
+                type="radio"
+                name="role"
+                id="partner"
+                checked={formData.role === "partner"}
+                value={"partner"}
+                onChange={handleChange}
+              />
+              <label htmlFor="manager">Delivery Partner</label>
+            </div>
+            <div className="flex gap-2 items-center text-white">
+              <input
+                type="radio"
+                name="role"
+                id="customer"
+                checked={formData.role === "customer"}
+                value={"customer"}
+                onChange={handleChange}
+              />
+              <label htmlFor="manager">Customer</label>
+            </div>
           </div>
-           <div className="flex gap-2 items-center text-white">
-            <input
-              type="radio"
-              name="role"
-              id="partner"
-              checked={formData.role === "partner"}
-              value={"partner"}
-               onChange={handleChange}
-            />
-            <label htmlFor="manager">Delivery Partner</label>
-          </div>
-           <div className="flex gap-2 items-center text-white">
-            <input
-              type="radio"
-              name="role"
-              id="customer"
-              checked={formData.role === "customer"}
-              value={"customer"}
-               onChange={handleChange}
-            />
-            <label htmlFor="manager">Customer</label>
-          </div>
-        </div>
-         {validationError.role && (
+          {validationError.role && (
             <p className="text-sm text-red-400">{validationError.role}</p>
           )}
-
         </div>
         <div className="px-8 py-6 space-y-4">
           <input
@@ -241,6 +239,10 @@ const Register = () => {
           </div>
         </div>
       </form>
+
+      <p className="text-center text-gray-600 mt-8 text-sm">
+        All fields marked are mandatory. We respect your privacy.
+      </p>
     </section>
   );
 };
