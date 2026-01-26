@@ -32,7 +32,7 @@ export const RiderUpdate = async (req, res, next) => {   // exported to rider ro
     console.log("Updated Rider", updateRider);
     res.status(200).json({ message: "Rider Updated Successfully",data:updateRider});
 
-    console.log("updating user");
+    console.log("updating rider");
   } catch (error) {
     next(error);
   }

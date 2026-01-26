@@ -33,7 +33,6 @@ const EditRiderProfileModal = ({ onClose }) => {
       sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
       setUser(res.data.data);
       setIsLogin(true);
-     
     } catch (error) {
       console.log(error);
     } finally {
@@ -117,17 +116,14 @@ const EditRiderProfileModal = ({ onClose }) => {
                 />{" "}
               </div>
             </div>
-             <div className="flex justify-center gap-3 pb-4">
-                <button
-                  type="submit"
-                 
-                  className="px-6 py-2 rounded-xl border bg-(--color-secondary) border-amber-900 font-bold transition-all hover:scale-95"
-                 
-                >
-                  Save
-                </button>
-               
-              </div>
+            <div className="flex justify-center gap-3 pb-4">
+              <button
+                type="submit"
+                className="px-6 py-2 rounded-xl border bg-(--color-secondary) border-amber-900 font-bold transition-all hover:scale-95"
+              >
+                Save
+              </button>
+            </div>
           </form>
         </div>
       </div>
