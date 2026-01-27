@@ -68,7 +68,7 @@ const RiderSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
        
       </div>
       <div>
-        <button className="flex  gap-3  items-center  p-3 rounded-xl text-base  w-full    text-nowrap overflow-hidden duration-300  text-white hover:bg-red-500" onClick={handleLogout}> <MdLogout />{!isOpen && "Logout"}
+        <button className="flex  gap-3  items-center  p-3 rounded-xl text-base  w-full    text-nowrap overflow-hidden duration-300  text-white hover:bg-red-200" onClick={handleLogout}> <MdLogout />{!isOpen && "Logout"}
         </button>
       </div>
       </div>

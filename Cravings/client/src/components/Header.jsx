@@ -4,12 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
-  const { user, isLogin } = useAuth();
+  const { user, isLogin, role } = useAuth();
 
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    switch (key) {
+    switch (role) {
       case "manager": {
         navigate("/restaurant-dashboard");
         break;
