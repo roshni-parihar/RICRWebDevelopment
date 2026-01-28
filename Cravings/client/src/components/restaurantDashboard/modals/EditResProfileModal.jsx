@@ -15,14 +15,7 @@ const EditResProfileModal = ({ onClose }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleClearForm = () => {
-    setFormData({
-      fullName: "",
-      email: "",
-      mobileNumber: "",
-    });
-  };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("submitted");
@@ -33,10 +26,11 @@ const EditResProfileModal = ({ onClose }) => {
       sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
       setUser(res.data.data);
       setIsLogin(true);
+     
     } catch (error) {
       console.log(error);
     } finally {
-      onClose();
+       onClose();
     }
   };
 
@@ -46,7 +40,7 @@ const EditResProfileModal = ({ onClose }) => {
         <div className="  rounded-4xl  flex justify-center items-center   hover:shadow-md hover:shadow-amber-800  gap-3 bg-white  w-3xl max-h-[85vh] overflow-y-auto backdrop-blur-md">
           <form
             onSubmit={handleSubmit}
-            onReset={handleClearForm}
+           
             className="w-150  backdrop-blur-md"
           >
             <div className="flex gap-20 justify-center items-center rounded-t-2xl text-center  border-b-2 border-[#f5780b]">
@@ -123,6 +117,7 @@ const EditResProfileModal = ({ onClose }) => {
               >
                 Save
               </button>
+             
             </div>
           </form>
         </div>
