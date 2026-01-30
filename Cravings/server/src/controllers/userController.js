@@ -4,37 +4,73 @@ import User from "../models/userModel.js";
 export const UserUpdate = async (req, res, next) => {
   // exported to user router
   try {
-    const { fullName, email, mobileNumber } = req.body;
+    const {
+      fullName,
+      email,
+      mobileNumber,
+      gender,
+      dob,
+      address,
+      city,
+      pin,
+      documents,
+      paymentDetails,
+      geolocation,
+    } = req.body;
 
     const currentUser = req.user;
 
-    if (!fullName || !email || !mobileNumber) {
+    if (
+      !fullName ||
+      !email ||
+      !mobileNumber ||
+      !gender ||
+      !dob ||
+      !address ||
+      !city ||
+     ! pin ||
+     ! documents ||
+      !paymentDetails ||
+      !geolocation
+    ) {
       const error = new Error("All Fields Requireds");
       error.statusCode = 400;
       return next(error);
     }
     console.log(currentUser); // old user data in json format
-    /*
+
     currentUser.fullName = fullName; // inserting update data on currentUser
     currentUser.email = email;
     currentUser.mobileNumber = mobileNumber;
+    currentUser.gender = gender;
+    currentUser.dob = dob;
+    currentUser.address = address;
+    currentUser.city = city;
+    currentUser.pin = pin;
+    currentUser.documents = documents;
+    currentUser.paymentDetails = paymentDetails;
+    currentUser.geolocation = geolocation;
+
     await currentUser.save();
 
     console.log(currentUser); // new data
 
-    res.status(200).json({message:'User Updated Successfully'})
-    */
+    res
+      .status(200)
+      .json({ message: "User Updated Successfully", data: currentUser });
 
     // second way
-    const updatedUser = await User.findByIdAndUpdate(
+
+    /*const updatedUser = await User.findByIdAndUpdate(
       { _id: currentUser._id },
       { fullName, email, mobileNumber },
       { new: true },
     );
     console.log("Updated User", updatedUser);
+
     res
       .status(200)
-      .json({ message: "User Updated Successfully", data: updatedUser });
+      .json({ message: "User Updated Successfully", data: updatedUser });*/
 
     console.log("updating user");
   } catch (error) {
@@ -53,8 +89,7 @@ export const UserChangePhoto = async (req, res, next) => {
       error.statusCode = 400;
       return next(error);
     }
-    console.log("DP:",dp);
-    
+    console.log("DP:", dp);
 
     if (currentUser.photo.publicID) {
       await cloudinary.uploader.destroy(currentUser.photo.publicID);

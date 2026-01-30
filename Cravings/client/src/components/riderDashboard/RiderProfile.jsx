@@ -7,25 +7,28 @@ import api from "../../config/Api";
 import toast from "react-hot-toast";
 
 const RiderProfile = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   
   const [isEditRiderProfileModalOpen, setIsEditRiderProfileModalOpen] = useState(false);
   const[preview, setPreview]= useState(
     ""
   );
-  const[photo,setPhoto]= useState("");
+ 
 
-  const changePhoto = async()=>{
+  const changePhoto = async(photo)=>{
 
     const form_Data = new FormData();
 
     form_Data.append("image", photo);
-    form_Data.append("imageURL", preview);
+   // form_Data.append("imageURL", preview);
 
     try {
       const res = await api.patch("/user/changePhoto", form_Data);
 
       toast.success(res.data.message);
+
+      setUser(res.data.data);
+      sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
     } catch (error) {
       toast.error(error?.response?.data?.message || "Unknown Error");
     }
@@ -34,11 +37,10 @@ const RiderProfile = () => {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     const newPhotoURL = URL.createObjectURL(file);
-    //console.log(newPhotoURL);
+    console.log(newPhotoURL);
     setPreview(newPhotoURL);
     setTimeout(() => {
-      setPhoto(file);
-      changePhoto();
+     changePhoto(file);
     }, 5000);
   };
 
@@ -76,18 +78,18 @@ const RiderProfile = () => {
             </div>
             <div>
               <div className="text-3xl text-(--color-primary) font-bold">
-                {user.fullName}
+                {user.fullName  || "User Name"}
               </div>
               <div className="text-gray-600 text-lg font-semibold">
-                {user.email}
+                {user.email || "email@example.com"}
               </div>
               <div className="text-gray-600 text-lg font-semibold">
-                {user.mobileNumber}
+                {user.mobileNumber || "XXXXXXXXXX"}
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white">
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white" onClick={()=>setIsEditRiderProfileModalOpen(true)}>
               Edit
             </button>
             <button className="px-4 py-2 rounded bg-(--color-secondary) text-white">

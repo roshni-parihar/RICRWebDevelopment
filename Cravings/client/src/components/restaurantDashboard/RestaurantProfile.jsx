@@ -7,25 +7,28 @@ import api from "../../config/Api";
 import toast from "react-hot-toast";
 
 const RestaurantProfile = () => {
- const { user } = useAuth();
+ const { user, setUser } = useAuth();
   
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const[preview, setPreview]= useState(
     ""
   );
-  const[photo,setPhoto]= useState("");
+  
 
-  const changePhoto = async()=>{
+  const changePhoto = async(photo)=>{
 
     const form_Data = new FormData();
 
     form_Data.append("image", photo);
-    form_Data.append("imageURL", preview);
+    //form_Data.append("imageURL", preview);
 
     try {
       const res = await api.patch("/user/changePhoto", form_Data);
 
       toast.success(res.data.message);
+
+       setUser(res.data.data);
+      sessionStorage.setItem("CravingUser", JSON.stringify(res.data.data));
     } catch (error) {
       toast.error(error?.response?.data?.message || "Unknown Error");
     }
@@ -37,7 +40,7 @@ const RestaurantProfile = () => {
     //console.log(newPhotoURL);
     setPreview(newPhotoURL);
     setTimeout(() => {
-      setPhoto(file);
+      changePhoto(file);
       changePhoto();
     }, 5000);
   };
@@ -76,13 +79,13 @@ const RestaurantProfile = () => {
             </div>
             <div>
               <div className="text-3xl text-(--color-primary) font-bold">
-                {user.fullName}
+                {user.fullName || "User Name"}
               </div>
               <div className="text-gray-600 text-lg font-semibold">
-                {user.email}
+                {user.email  || "email@example.com"}
               </div>
               <div className="text-gray-600 text-lg font-semibold">
-                {user.mobileNumber}
+                {user.mobileNumber || "XXXXXXXXXX"}
               </div>
             </div>
           </div>
@@ -90,7 +93,7 @@ const RestaurantProfile = () => {
             <button className="px-4 py-2 rounded bg-(--color-secondary) text-white cursor-pointer">
               Edit
             </button>
-            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white">
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white" onClick={()=>setIsEditProfileModalOpen(true)}>
               Reset
             </button>
           </div>
