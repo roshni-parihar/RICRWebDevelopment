@@ -1,5 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 import User from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 export const RiderUpdate = async (req, res, next) => {
   // exported to rider router
@@ -76,23 +77,23 @@ export const RiderChangePhoto = async (req, res, next) => {
   try {
     //console.log("body: ", req.body);
 
-   const currentRider = req.user;
-   const dp= req.file;
+    const currentRider = req.user;
+    const dp = req.file;
 
-   if(!dp){
-    const error = new Error("Profile Picture Required");
-    error.statusCode = 400;
-    return next(error);
-   }
-   console.log("DP:", dp);
+    if (!dp) {
+      const error = new Error("Profile Picture Required");
+      error.statusCode = 400;
+      return next(error);
+    }
+    console.log("DP:", dp);
 
-   if(currentRider.photo.publicID){
-    await cloudinary.uploader.destroy(currentRider.photo.publicID);
-   }
-   
-const b64 = Buffer.from(dp.buffer).toString("base64");
+    if (currentRider.photo.publicID) {
+      await cloudinary.uploader.destroy(currentRider.photo.publicID);
+    }
 
-const dataURI = `data:${dp.mimetype};base64,${b64}`; //mimetype defines the file type- jpeg, png etc
+    const b64 = Buffer.from(dp.buffer).toString("base64");
+
+    const dataURI = `data:${dp.mimetype};base64,${b64}`; //mimetype defines the file type- jpeg, png etc
     console.log("DataURI:", dataURI.slice(0, 100));
 
     const result = await cloudinary.uploader.upload(dataURI, {
@@ -107,6 +108,43 @@ const dataURI = `data:${dp.mimetype};base64,${b64}`; //mimetype defines the file
 
     await currentUser.save();
     res.status(200).json({ message: "Photo Updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RiderResetPassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const currentRider = req.user;
+
+    if (!oldPassword || !newPassword) {
+      const error = new Error("All Fields Required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // checking that rider's entered oldpassword is same as currentRider's password stored in database
+    const isVerified = await bcrypt.compare(
+      oldPassword,
+      currentRider.newPassword,
+    );
+
+    // if not ..showing errors
+    if (!isVerified) {
+      const error = new Error("Old Password didn't match");
+      error.statusCode = 401;
+      return next(error);
+    }
+
+    // hashing newPassword
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(newPassword, salt);
+
+    currentRider.password = hashPassword;
+    await currentRider.save();
+    res.status(200).json({ message: "Password Reset Succefully" });
+    
   } catch (error) {
     next(error);
   }

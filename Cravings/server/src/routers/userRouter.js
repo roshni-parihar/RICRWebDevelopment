@@ -1,7 +1,17 @@
 import express from "express";
-import { UserUpdate,UserChangePhoto } from "../controllers/userController.js";
-import { RiderUpdate,RiderChangePhoto } from "../controllers/riderController.js";
-import { ManagerUpdate,ManagerChangePhoto } from "../controllers/restaurantController.js";
+import {
+  UserUpdate,
+  UserChangePhoto,
+  UserResetPassword,
+} from "../controllers/userController.js";
+import {
+  RiderUpdate,
+  RiderChangePhoto,
+} from "../controllers/riderController.js";
+import {
+  ManagerUpdate,
+  ManagerChangePhoto,
+} from "../controllers/restaurantController.js";
 import { Protect } from "../middlewares/authMiddleware.js";
 import multer from "multer";
 
@@ -10,12 +20,23 @@ const Uploads = multer();
 
 router.put("/update", Protect, UserUpdate);
 router.patch("/changePhoto", Protect, Uploads.single("image"), UserChangePhoto);
+router.patch("/resetPassword", Protect, UserResetPassword);
 
 router.put("/update", Protect, RiderUpdate);
-router.patch("/changePhoto", Protect, Uploads.single("image"), RiderChangePhoto);
+router.patch(
+  "/changePhoto",
+  Protect,
+  Uploads.single("image"),
+  RiderChangePhoto,
+);
+router.patch("/resetPassword", Protect, RiderResetPassword);
 
 router.put("/update", Protect, ManagerUpdate);
-router.patch("/changePhoto", Protect, Uploads.single("image"), ManagerChangePhoto);
-
+router.patch(
+  "/changePhoto",
+  Protect,
+  Uploads.single("image"),
+  ManagerChangePhoto,
+);
 
 export default router;

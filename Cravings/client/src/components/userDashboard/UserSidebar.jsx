@@ -9,9 +9,11 @@ import { MdLogout } from "react-icons/md";
 import api from "../../config/Api"
 import toast from "react-hot-toast";
 import {useAuth} from "../../context/AuthContext"
+import {useNavigate} from "react-router-dom"
 
 const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
   const{setUser, setIsLogin}= useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
@@ -27,6 +29,7 @@ const UserSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
       toast.success(res.data.message);
       setUser("");
       setIsLogin(false);
+      navigate("/");
       sessionStorage.removeItem("CravingUser")
     } catch (error) {
        toast.error(error?.response?.data?.message || "Unknown Error");
