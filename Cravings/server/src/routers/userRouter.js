@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   UserUpdate,
   UserChangePhoto,
@@ -6,11 +7,11 @@ import {
 } from "../controllers/userController.js";
 import {
   RiderUpdate,
-  RiderChangePhoto,
+  RiderChangePhoto,RiderResetPassword
 } from "../controllers/riderController.js";
 import {
   ManagerUpdate,
-  ManagerChangePhoto,
+  ManagerChangePhoto,ManagerResetPassword
 } from "../controllers/restaurantController.js";
 import { Protect } from "../middlewares/authMiddleware.js";
 import multer from "multer";
@@ -38,5 +39,6 @@ router.patch(
   Uploads.single("image"),
   ManagerChangePhoto,
 );
+router.patch("resertPassword",Protect,ManagerResetPassword )
 
 export default router;

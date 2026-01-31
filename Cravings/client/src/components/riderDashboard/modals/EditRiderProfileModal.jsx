@@ -16,6 +16,8 @@ const EditRiderProfileModal = ({ onClose }) => {
     documents: {
       uidai: user?.documents?.uidai || "",
       pan: user?.documents?.pan || "",
+      rc:user?.documents?.rc || "",
+      dl:user?.documents?.dl ||"",
     },
     paymentDetails: {
       upi: user?.paymentDetails?.upi || "",

@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate }from "react-router-dom"
 import { FaMagnifyingGlassChart } from "react-icons/fa6";
 import { AiFillProfile } from "react-icons/ai";
 import { MdOutlineBorderColor } from "react-icons/md";
@@ -12,6 +13,7 @@ import {useAuth} from "../../context/AuthContext"
 
 const RiderSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
   const{setUser, setIsLogin}= useAuth();
+  const navigate =useNavigate();
 
   const menuItems = [
     { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
@@ -27,6 +29,7 @@ const RiderSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
       toast.success(res.data.message);
       setUser("");
       setIsLogin(false);
+navigate("/");
       sessionStorage.removeItem("CravingUser")
     } catch (error) {
        toast.error(error?.response?.data?.message || "Unknown Error");

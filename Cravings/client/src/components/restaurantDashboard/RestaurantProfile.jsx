@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { useAuth } from "../../context/AuthContext";
 import EditResProfileModal from "./modals/EditResProfileModal";
+import ResetPasswordModal from './modals/ResetPasswordModal';
 import UserImage from "../../assets/userImage.jpg";
 import { FaCamera } from "react-icons/fa";
 import api from "../../config/Api";
@@ -10,6 +11,7 @@ const RestaurantProfile = () => {
  const { user, setUser } = useAuth();
   
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const[preview, setPreview]= useState(
     ""
   );
@@ -90,10 +92,10 @@ const RestaurantProfile = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white cursor-pointer">
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white cursor-pointer" onClick={()=>setIsEditProfileModalOpen(true)}>
               Edit
             </button>
-            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white" onClick={()=>setIsEditProfileModalOpen(true)}>
+            <button className="px-4 py-2 rounded bg-(--color-secondary) text-white" onClick={()=>setIsResetPasswordModalOpen(true)}>
               Reset
             </button>
           </div>
@@ -102,6 +104,9 @@ const RestaurantProfile = () => {
 
       {isEditProfileModalOpen && (
         <EditResProfileModal onClose={() => setIsEditProfileModalOpen(false)} />
+      )}
+      {isResetPasswordModalOpen && (
+        <ResetPasswordModal onClose={() => setIsResetPasswordModalOpen(false)} />
       )}
     </>
   );

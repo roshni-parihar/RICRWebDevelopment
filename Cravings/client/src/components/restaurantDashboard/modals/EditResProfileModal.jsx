@@ -13,9 +13,12 @@ const EditResProfileModal = ({ onClose }) => {
     address: user?.address || "",
     city: user?.city || "",
     pin: user?.pin || "",
+    restaurantName:user?.restaurantName ||"",
     documents: {
       uidai: user?.documents?.uidai || "",
       pan: user?.documents?.pan || "",
+      gst:user?.documents?.gst || "",
+      fssai:user?.documents?.fssai ||"",
     },
     paymentDetails: {
       upi: user?.paymentDetails?.upi || "",
@@ -25,6 +28,12 @@ const EditResProfileModal = ({ onClose }) => {
     geoLocation: {
       lat: user?.geoLocation?.lat || "",
       lon: user?.geoLocation?.lon || "",
+    },
+    cuisine:{
+
+    },
+    menu:{
+
     },
   });
 
