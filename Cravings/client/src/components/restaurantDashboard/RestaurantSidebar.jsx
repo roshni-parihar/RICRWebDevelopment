@@ -47,7 +47,7 @@ const RestaurantSidebar = ({ active, setActive, isOpen, setIsOpen }) => {
             </button>
             {!isOpen && (
               <span className="overflow-hidden text-nowrap">
-                User Dashboard
+                Manager Dashboard
               </span>
             )}
           </div>

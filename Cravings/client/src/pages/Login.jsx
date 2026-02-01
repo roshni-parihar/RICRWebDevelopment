@@ -6,9 +6,11 @@ import api from "../config/Api";
 import { useNavigate } from "react-router-dom";
 import Bpic from "../assets/f7.webp";
 import { useAuth } from "../context/AuthContext";
+import ForgetPasswordModal from "../components/publicModals/ForgetPasswordModal";
 
 const Login = () => {
   const { setUser, setIsLogin, setRole } = useAuth();
+  const[isForgetPassModalOpen, setIsForgetPassModalOpen]= useState({});
 
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -81,6 +83,7 @@ const Login = () => {
   };
 
   return (
+   <>
     <section
       className="flex justify-center items-center min-h-screen"
       style={{
@@ -154,7 +157,18 @@ const Login = () => {
             </button>
           </div>
 
-          <div className="flex justify-center mt-6 text-sm text-gray-300">
+          <div>
+            <div className="flex justify-center mt-3 text-sm text-gray-300">
+           
+            <button
+              type="button"
+              onClick={()=>setIsForgetPassModalOpen(true)}
+              className="ml-2 text-md font-semibold text-[#219adc] hover:underline"
+            >Forget Password ?
+              
+            </button>
+          </div>
+            <div className="flex justify-center mt-4 text-sm text-gray-300">
             <span>New customer?</span>
             <button
               type="button"
@@ -164,9 +178,18 @@ const Login = () => {
               Register
             </button>
           </div>
+          </div>
         </div>
       </form>
     </section>
+    {
+      isForgetPassModalOpen && (
+        <ForgetPasswordModal onClose={()=>setIsForgetPassModalOpen(false)}/>
+      )
+    }
+    </>
+
+   
   );
 };
 
