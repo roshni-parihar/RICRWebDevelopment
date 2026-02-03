@@ -59,6 +59,7 @@ const menuSchema = mongoose.Schema({
         publicID: { type: String, required: true },
       },
     ],
+      required: true,
   },
   timestamps: true,
 });
