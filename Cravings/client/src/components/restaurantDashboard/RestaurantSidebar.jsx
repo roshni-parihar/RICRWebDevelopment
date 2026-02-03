@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaMagnifyingGlassChart } from "react-icons/fa6";
-import { AiFillProfile } from "react-icons/ai";
-import { GrTransaction } from "react-icons/gr";
-import { LuHandHelping } from "react-icons/lu";
-import { RiMenuUnfoldFill } from "react-icons/ri";
+import { TbChartTreemap } from "react-icons/tb";
+import {RiMenuUnfoldFill } from 'react-icons/ri';
+import { ImProfile } from "react-icons/im";
+import { BiSolidFoodMenu } from "react-icons/bi";
+import { TiShoppingCart } from "react-icons/ti";
+import { FaMoneyBillWave } from "react-icons/fa";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
 import api from "../../config/Api";
 import toast from "react-hot-toast";
@@ -15,11 +18,12 @@ const RestaurantSidebar = ({ active, setActive, isOpen, setIsOpen }) => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
-    { key: "profile", title: "Profile", icon: <AiFillProfile /> },
-
-    { key: "transaction", title: "Transactions", icon: <GrTransaction /> },
-    { key: "helpdesk ", title: "Help Desk", icon: <LuHandHelping /> },
+   { key: "overview", title: "Overview", icon: <TbChartTreemap /> },
+    { key: "profile", title: "Profile", icon: <ImProfile /> },
+    { key: "menu", title: "Menu", icon: < BiSolidFoodMenu /> },
+    { key: "orders", title: "Orders", icon: <TiShoppingCart /> },
+    { key: "earnings", title: "Earnings", icon: <FaMoneyBillWave /> },
+    { key: "helpdesk", title: "Help Desk", icon: <RiCustomerService2Fill /> },
   ];
 
   const handleLogout = async () => {

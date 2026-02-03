@@ -3,7 +3,10 @@ import RestaurantOverview from "../../components/restaurantDashboard/RestaurantO
 import RestaurantSidebar from "../../components/restaurantDashboard/RestaurantSidebar";
 import RestaurantProfile from "../../components/restaurantDashboard/RestaurantProfile";
 import RestaurantTransaction from "../../components/restaurantDashboard/RestaurantTransaction";
+import RestaurantMenu from "../../components/restaurantDashboard/RestaurantMenu";
+import RestaurantEarnings from "../../components/restaurantDashboard/RestaurantEarnings";
 import RestaurantHelpDesk from "../../components/restaurantDashboard/RestaurantHelpDesk";
+import RestaurantOrders from "../../components/restaurantDashboard/RestaurantOrder";
 import bg from "../dashboards/images/f7.webp";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -58,6 +61,9 @@ const RestaurantDashboard = () => {
           <div className={`duration-300 ${isOpen ? "w-58/60}" : "w-48/60"}`}>
             {active === "overview" && <RestaurantOverview />}
             {active === "profile" && <RestaurantProfile />}
+             {active === "menu" && <RestaurantMenu />}
+              {active === "orders" && <RestaurantOrders />}
+               {active === "earnings" && <RestaurantEarnings />}
             {active === "transaction" && <RestaurantTransaction />}
             {active === "helpdesk" && <RestaurantHelpDesk />}
           </div>

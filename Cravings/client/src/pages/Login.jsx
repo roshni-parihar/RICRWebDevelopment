@@ -10,7 +10,7 @@ import ForgetPasswordModal from "../components/publicModals/ForgetPasswordModal"
 
 const Login = () => {
   const { setUser, setIsLogin, setRole } = useAuth();
-  const[isForgetPassModalOpen, setIsForgetPassModalOpen]= useState({});
+  const [isForgetPassModalOpen, setIsForgetPassModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -44,33 +44,27 @@ const Login = () => {
 
       handleClearForm();
       switch (res.data.data.role) {
-        case "manager":
-          {
-            setRole("manager");
-            navigate("/restaurant-dashboard");
-             break;
-          }
+        case "manager": {
+          setRole("manager");
+          navigate("/restaurant-dashboard");
+          break;
+        }
 
-          case "partner":
-          {
-            setRole("partner");
-            navigate("/rider-dashboard");
-             break;
-          }
-          case "customer":
-          {
-            setRole("customer");
-            navigate("/user-dashboard");
-             break;
-          }
-          case "admin":
-          {
-            setRole("admin");
-            navigate("/admin-dashboard");
-             break;
-          }
-
-         
+        case "partner": {
+          setRole("partner");
+          navigate("/rider-dashboard");
+          break;
+        }
+        case "customer": {
+          setRole("customer");
+          navigate("/user-dashboard");
+          break;
+        }
+        case "admin": {
+          setRole("admin");
+          navigate("/admin-dashboard");
+          break;
+        }
 
         default:
           break;
@@ -83,113 +77,111 @@ const Login = () => {
   };
 
   return (
-   <>
-    <section
-      className="flex justify-center items-center min-h-screen"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${Bpic})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        onReset={handleClearForm}
-        className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+    <>
+      <section
+        className="flex justify-center items-center min-h-screen"
         style={{
-          backgroundColor: "rgba(17,24,39,0.9)",
-          border: "2px solid #f59e0b",
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${Bpic})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
-        <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
-          <h1 className="text-3xl font-extrabold text-[#f59e0b]">
-            Foodie Login 🍕
-          </h1>
-          <p className="text-sm text-gray-300">Taste starts here</p>
-        </div>
-
-        <div className="px-8 py-6">
-          <div className="flex items-center gap-3 mb-4">
-            <MdOutlineMailOutline className="text-2xl text-[#f59e0b]" />
-            <input
-              type="email"
-              name="email"
-              value={loginData.email}
-              onChange={handleChange}
-              placeholder="Email"
-              disabled={isLoading}
-              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
-            />
+        <form
+          onSubmit={handleSubmit}
+          onReset={handleClearForm}
+          className="w-95 rounded-2xl shadow-2xl backdrop-blur-md"
+          style={{
+            backgroundColor: "rgba(17,24,39,0.9)",
+            border: "2px solid #f59e0b",
+          }}
+        >
+          <div className="py-4 rounded-t-2xl text-center border-b border-[#f59e0b]">
+            <h1 className="text-3xl font-extrabold text-[#f59e0b]">
+              Foodie Login 🍕
+            </h1>
+            <p className="text-sm text-gray-300">Taste starts here</p>
           </div>
 
-          <div className="flex items-center gap-3 mb-6">
-            <TbLockPassword className="text-2xl text-[#f59e0b]" />
-            <input
-              type="password"
-              name="password"
-              value={loginData.password}
-              onChange={handleChange}
-              placeholder="Password"
-              disabled={isLoading}
-              className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
-            />
-          </div>
+          <div className="px-8 py-6">
+            <div className="flex items-center gap-3 mb-4">
+              <MdOutlineMailOutline className="text-2xl text-[#f59e0b]" />
+              <input
+                type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                disabled={isLoading}
+                className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
+              />
+            </div>
 
-          <div className="flex justify-center gap-4">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-95"
-              style={{
-                backgroundColor: "#f59e0b",
-                color: "#111827",
-              }}
-            >
-              {isLoading ? "Loading..." : "Login"}
-            </button>
+            <div className="flex items-center gap-3 mb-6">
+              <TbLockPassword className="text-2xl text-[#f59e0b]" />
+              <input
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleChange}
+                placeholder="Password"
+                disabled={isLoading}
+                className="w-full h-10 px-3 rounded-lg bg-black text-white border border-[#f59e0b] outline-none focus:ring-2 focus:ring-[#f59e0b]"
+              />
+            </div>
 
-            <button
-              type="reset"
-              disabled={isLoading}
-              className="px-6 py-2 rounded-xl font-bold bg-black text-white border border-[#f59e0b]"
-            >
-              Reset
-            </button>
-          </div>
+            <div className="flex justify-center gap-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-95"
+                style={{
+                  backgroundColor: "#f59e0b",
+                  color: "#111827",
+                }}
+              >
+                {isLoading ? "Loading..." : "Login"}
+              </button>
 
-          <div>
-            <div className="flex justify-center mt-3 text-sm text-gray-300">
-           
-            <button
-              type="button"
-              onClick={()=>setIsForgetPassModalOpen(true)}
-              className="ml-2 text-md font-semibold text-[#219adc] hover:underline"
-            >Forget Password ?
-              
-            </button>
+              <button
+                type="reset"
+                disabled={isLoading}
+                className="px-6 py-2 rounded-xl font-bold bg-black text-white border border-[#f59e0b]"
+              >
+                Reset
+              </button>
+            </div>
+
+            <div>
+              <div className="flex justify-center mt-3 text-sm text-gray-300">
+                <button
+                 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsForgetPassModalOpen(true);
+                  }}
+                  className="ml-2 text-md font-semibold text-[#219adc] hover:underline"
+                >
+                  Forget Password ?
+                </button>
+              </div>
+              <div className="flex justify-center mt-4 text-sm text-gray-300">
+                <span>New customer?</span>
+                <button
+                  type="button"
+                  onClick={() => navigate("/register")}
+                  className="ml-2 font-semibold text-[#f59e0b] hover:underline"
+                >
+                  Register
+                </button>
+              </div>
+            </div>
           </div>
-            <div className="flex justify-center mt-4 text-sm text-gray-300">
-            <span>New customer?</span>
-            <button
-              type="button"
-              onClick={() => navigate("/register")}
-              className="ml-2 font-semibold text-[#f59e0b] hover:underline"
-            >
-              Register
-            </button>
-          </div>
-          </div>
-        </div>
-      </form>
-    </section>
-    {
-      isForgetPassModalOpen && (
-        <ForgetPasswordModal onClose={()=>setIsForgetPassModalOpen(false)}/>
-      )
-    }
+        </form>
+      </section>
+      {isForgetPassModalOpen && (
+        <ForgetPasswordModal onClose={() => setIsForgetPassModalOpen(false)} />
+      )}
     </>
-
-   
   );
 };
 

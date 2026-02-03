@@ -18,6 +18,10 @@ const ForgetPasswordModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if(formData.newPassword !== formData.cfNewPassword){
+      toast.error("New Password and Confirm Password Must be same.")
+      setLoading(false);
+    }
     try {
       console.log(formData);
       let res;
@@ -25,12 +29,12 @@ const ForgetPasswordModal = ({ onClose }) => {
         if (isOtpVerified) {
           res = await api.post("/auth/forgetPassword", formData);
           toast.success(res.data.message);
-          console.log("OTP already verify now update password");
+         
           onClose();
         } else {
           res = await api.post("/auth/verifyOtp", formData);
           toast.success(res.data.message);
-          console.log("OTP already Sent now Verify It");
+         
           setIsOtpSent(true);
           setIsOtpVerified(true);
         }
@@ -132,7 +136,7 @@ const ForgetPasswordModal = ({ onClose }) => {
                 </div>
               )}
             </div>
-            <div>
+            <div className="w-full flex justify-center mt-5">
               <button
                 type="submit"
                 disabled={loading}

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+
 export const Protect = async (req, res, next) => {
   try {
     const biscuit = req.cookies.parleG;
@@ -23,6 +24,59 @@ export const Protect = async (req, res, next) => {
     next(error);
   }
 };
+
+const AdminProteect = async(req,res,next )=>{
+  try {
+      if (req.user.role !== "admin") {
+      const error = new Error("Unauthorized! Only admin can do this");
+      error.statusCode = 401;
+      return next(error);}
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const PartnerProtect = async (req, res, next) => {
+  try {
+    if (req.user.role !== "partner") {
+      const error = new Error("Unauthorized! Only rider can do this");
+      error.statusCode = 401;
+      return next(error);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+export const ManagerProtect = async (req, res, next) => {
+  try {
+    if (req.user.role !== "manager") {
+      const error = new Error(
+        "Unauthorized! Only restaurant manager can do this",
+      );
+      error.statusCode = 401;
+      return next(error);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+export const CustomerProtect = async (req, res, next) => {
+  try {
+    if (req.user.role !== "customer") {
+      const error = new Error("Unauthorized! Only user can do this");
+      error.statusCode = 401;
+      return next(error);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 export const ProtectOtp = async (req, res, next) => {
   try {
     const token = req.cookies.otpToken;

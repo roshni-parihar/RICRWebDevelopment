@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import User from "../models/userModel.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"; 
+
 export const ManagerUpdate = async (req, res, next) => {
   // exported to user router
   try {
@@ -153,3 +154,5 @@ export const ManagerResetPassword = async (req, res, next) => {
     next(error);
   }
 };
+
+
