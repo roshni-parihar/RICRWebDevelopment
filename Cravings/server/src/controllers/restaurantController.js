@@ -27,23 +27,64 @@ export const ManagerUpdate = async (req, res, next) => {
 
     const currentManager = req.user;
 
+    // Validation for required fields
+    if (!fullName || !email || !mobileNumber) {
+      const error = new Error("Full Name, Email, and Mobile Number are required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    if (!city || !pin) {
+      const error = new Error("City and PIN Code are required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    if (!restaurantName) {
+      const error = new Error("Restaurant Name is required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate email format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const error = new Error("Invalid email format");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate mobile number (10 digits)
+    if (!/^\d{10}$/.test(mobileNumber.replace(/\D/g, ""))) {
+      const error = new Error("Mobile number must be 10 digits");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate PIN code (6 digits)
+    if (!/^\d{6}$/.test(pin)) {
+      const error = new Error("PIN code must be 6 digits");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate PAN format if provided
     if (
-      !fullName ||
-      !email ||
-      !mobileNumber ||
-      !gender ||
-      dob ||
-      !address ||
-      !city ||
-      !pin ||
-      !documents ||
-      !paymentDetails ||
-      !geolocation ||
-      !restaurantName ||
-      !cuisine ||
-      !menu
+      documents?.pan &&
+      documents.pan !== "N/A" &&
+      !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(documents.pan)
     ) {
-      const error = new Error("All Fields Requireds");
+      const error = new Error("Invalid PAN format");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate UPI format if provided
+    if (
+      paymentDetails?.upi &&
+      paymentDetails.upi !== "N/A" &&
+      !/^[a-zA-Z0-9._-]+@[a-zA-Z]{3,}$/.test(paymentDetails.upi)
+    ) {
+      const error = new Error("Invalid UPI format");
       error.statusCode = 400;
       return next(error);
     }
@@ -213,6 +254,69 @@ export const RestaurantAddMenuItem = async (req, res, next) => {
   }
 };
 
+
+export const RestaurantEditMenuItem = async (req, res, next) => {
+  try {
+    const {
+      itemName,
+      description,
+      price,
+      type,
+      preparationTime,
+      availability,
+      servingSize,
+      cuisine,
+    } = req.body;
+
+    const { id } = req.params;
+
+    const CurrentUser = req.user;
+
+    if (
+      !itemName ||
+      !description ||
+      !price ||
+      !type ||
+      !preparationTime ||
+      !availability ||
+      !servingSize ||
+      !cuisine
+    ) {
+      const error = new Error("All Fields are Required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    let images = [];
+    if (req.files) {
+      images = await UploadMultipleToCloudinary(req.files);
+      console.log(images);
+    }
+
+    const existingMenuItem = await Menu.findById(id);
+
+    existingMenuItem.itemName = itemName || existingMenuItem.itemName;
+    existingMenuItem.description = description || existingMenuItem.description;
+    existingMenuItem.price = price || existingMenuItem.price;
+    existingMenuItem.type = type || existingMenuItem.type;
+    existingMenuItem.preparationTime =
+      preparationTime || existingMenuItem.preparationTime;
+    existingMenuItem.availability =
+      availability || existingMenuItem.availability;
+    existingMenuItem.servingSize = servingSize || existingMenuItem.servingSize;
+    existingMenuItem.cuisine = cuisine || existingMenuItem.cuisine;
+    existingMenuItem.images =
+      images.length > 0 ? images : existingMenuItem.images;
+    await existingMenuItem.save();
+
+    res.status(201).json({
+      message: "Menu Item Updated Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const GetRestaurantMenuItem = async (req, res, next) => {
   try {
     const CurrentUser = req.user;
@@ -227,3 +331,5 @@ export const GetRestaurantMenuItem = async (req, res, next) => {
     next(error);
   }
 };
+
+

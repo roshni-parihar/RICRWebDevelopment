@@ -1,13 +1,17 @@
-import express from 'express'
-import multer from 'multer'
+import express from "express";
+import multer from "multer";
 
-
-import { RestaurantAddMenuItem , GetRestaurantMenuItem } from "../controllers/restaurantController.js";
+import {
+  RestaurantAddMenuItem,
+  GetRestaurantMenuItem,
+  ManagerUpdate,
+  ManagerChangePhoto,
+  ManagerResetPassword,
+} from "../controllers/restaurantController.js";
 import { ManagerProtect, Protect } from "../middlewares/authMiddleware.js";
 
-const router =express.Router()
+const router = express.Router();
 const upload = multer();
-
 
 router.post(
   "/addMenuItem",
@@ -16,11 +20,22 @@ router.post(
   upload.array("itemImages", 5),
   RestaurantAddMenuItem,
 );
-router.get(
-  "/menuItems",
+router.put("/update", Protect, ManagerUpdate);
+router.patch(
+  "/changePhoto",
+  Protect,
+  upload.single("image"),
+  ManagerChangePhoto,
+);
+router.patch("resertPassword", Protect, ManagerResetPassword);
+
+router.get("/menuItems", Protect, ManagerProtect, GetRestaurantMenuItem);
+router.put(
+  "/updateMenuItem/:id",// fetching item by id 
   Protect,
   ManagerProtect,
-  GetRestaurantMenuItem,
+  upload.array("itemImages", 5),
+  RestaurantAddMenuItem,
 );
 
 export default router;

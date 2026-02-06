@@ -9,10 +9,7 @@ import {
   RiderUpdate,
   RiderChangePhoto,RiderResetPassword
 } from "../controllers/riderController.js";
-import {
-  ManagerUpdate,
-  ManagerChangePhoto,ManagerResetPassword
-} from "../controllers/restaurantController.js";
+
 import { Protect } from "../middlewares/authMiddleware.js";
 import multer from "multer";
 
@@ -32,13 +29,6 @@ router.patch(
 );
 router.patch("/resetPassword", Protect, RiderResetPassword);
 
-router.put("/update", Protect, ManagerUpdate);
-router.patch(
-  "/changePhoto",
-  Protect,
-  Uploads.single("image"),
-  ManagerChangePhoto,
-);
-router.patch("resertPassword",Protect,ManagerResetPassword )
+
 
 export default router;

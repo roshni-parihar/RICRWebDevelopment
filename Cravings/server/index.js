@@ -5,6 +5,7 @@ import connectDB from "./src/config/db.js";
 import AuthRouter from "./src/routers/authRouter.js";
 import PublicRouter from "./src/routers/publicRouter.js";
 import UserRouter from "./src/routers/userRouter.js";
+import restaurantRouter from "./src/routers/restaurantRouter.js"
 import morgan from "morgan"; // gives error,or any log data in terminal
 import cookieParser from "cookie-parser";
 
@@ -19,6 +20,7 @@ app.use(morgan("dev"));
 app.use("/auth", AuthRouter);
 app.use("/public", PublicRouter);
 app.use("/user", UserRouter);
+app.use("/restaurant", restaurantRouter);
 
 app.get("/", (req, res) => {
   console.log("Server is working");
