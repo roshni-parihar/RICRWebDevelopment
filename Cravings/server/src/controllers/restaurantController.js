@@ -1,6 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 import User from "../models/userModel.js";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcrypt";
 
 import Menu from "../models/menuSchema.js";
 import { UploadMultipleToCloudinary } from "../utils/imageUploader.js";
@@ -29,7 +29,9 @@ export const ManagerUpdate = async (req, res, next) => {
 
     // Validation for required fields
     if (!fullName || !email || !mobileNumber) {
-      const error = new Error("Full Name, Email, and Mobile Number are required");
+      const error = new Error(
+        "Full Name, Email, and Mobile Number are required",
+      );
       error.statusCode = 400;
       return next(error);
     }
@@ -101,9 +103,9 @@ export const ManagerUpdate = async (req, res, next) => {
     currentManager.documents = documents;
     currentManager.paymentDetails = paymentDetails;
     currentManager.geolocation = geolocation;
-     currentManager.restaurantName = restaurantName;
-      currentManager.cuisine= cuisine;
-       currentManager.menu= menu;
+    currentManager.restaurantName = restaurantName;
+    currentManager.cuisine = cuisine;
+    currentManager.menu = menu;
     await currentManager.save();
 
     console.log(currentManager); // new data
@@ -254,7 +256,6 @@ export const RestaurantAddMenuItem = async (req, res, next) => {
   }
 };
 
-
 export const RestaurantEditMenuItem = async (req, res, next) => {
   try {
     const {
@@ -321,7 +322,7 @@ export const GetRestaurantMenuItem = async (req, res, next) => {
   try {
     const CurrentUser = req.user;
 
-    const menuItems = await Menu.find({ resturantID: CurrentUser._id });
+    const menuItems = await Menu.find({ restaurantID: CurrentUser._id });
 
     res.status(200).json({
       message: "Menu Items Fetched Successfully",
@@ -331,5 +332,3 @@ export const GetRestaurantMenuItem = async (req, res, next) => {
     next(error);
   }
 };
-
-
