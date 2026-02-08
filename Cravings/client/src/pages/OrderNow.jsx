@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import api from "../config/Api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const OrderNow = () => {
+  const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState();
   const [loading, setLoading] = useState(false);
 
   const fetchAllRestaurant = async () => {
     setLoading(true);
     try {
-      const resv = await api.get("/public/allRestaurants");
+      const res = await api.get("/public/allRestaurants");
       setRestaurants(restaurants.data.data);
     } catch (error) {
       console.log(error);
@@ -20,6 +23,15 @@ const OrderNow = () => {
   useEffect(() => {
     fetchAllRestaurant();
   }, []);
+
+  const handleRestaurantClick =(restaurantID)=>{
+    console.log("restaurant Clicked");
+    console.log("OrderNow Page",restaurantID);
+
+    navigate(`/restaurant/${restaurantID}`)
+  }
+  console.log(restaurants);
+  
   return (
     <>
       <div className="bg-gray-100 p-3">
@@ -31,10 +43,29 @@ const OrderNow = () => {
         </div>
 
         {restaurants ? (
-          <div>
+          <div className="grid grid-cols-4 gap-3 ">
             {restaurants.map((restaurant, idx) => (
-              <div key={idx} className="border">
-                {restaurant.restaurantName}
+              <div
+                key={idx}
+                className="rounded h-100 hover:shadow-lg p-3"
+                onClick={() => {
+                  handleRestaurantClick(restaurant._id);
+                }}
+              >
+                <div>{restaurant.restaurantName}</div>
+                <div className="flex gap-2">
+                  {restaurant.cuisine
+                    .split("' ")
+                    .slice(0, 2)
+                    .map((cusine, idx) => (
+                      <span
+                        key={idx}
+                        className="py-1 px-2 bg-amber-200 rounded-2xl capitalize"
+                      >
+                        {cusine.toLowerCase()}
+                      </span>
+                    ))}
+                </div>
               </div>
             ))}
           </div>

@@ -12,6 +12,7 @@ import RiderDashboard from "./pages/dashboards/RiderDashboard";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import RestaurantDashboard from "./pages/dashboards/RestaurantDashboard";
 import OrderNow from "./pages/OrderNow";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -34,6 +35,8 @@ const App = () => {
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/order-now" element={<OrderNow />} />
+          <Route path="/restaurant/:id " element={< RestaurantDashboard/>}/>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
     </>

@@ -1,5 +1,6 @@
 import Contact from "../models/contactModel.js";
 import User from "../models/userModel.js";
+import Menu from "../models/menuSchema.js";
 export const NewContact = async (req, res, next) => {
   try {
     const { fullName, email, mobileNumber, message } = req.body;
@@ -34,6 +35,23 @@ export const GetAllRestaurants = async (req, res, next) => {
       message: "Restaurants fetched successfully",
       data: restaurants,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetRestaurantMenuData = async (req, res, next) => {
+  try {
+    const { id, page } = req.params;
+    log(page);
+
+    if (!id) {
+      const error = new Error("All fields required");
+      error.StatusCode = 400;
+      return next(error);
+    }
+
+    const restaurantMenuData = await Menu.find({ restaurantID: id });
   } catch (error) {
     next(error);
   }
