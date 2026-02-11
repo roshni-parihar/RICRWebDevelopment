@@ -65,8 +65,8 @@ const EditItemModal = ({ onClose, selectedItem }) => {
         form_data.append("itemImages", img);
       });
 
-      const res = await api.get(
-        `/restaurant/updateMenuItem/${selectedItem._id}`, //dynamic routing..here call goes directly for the specific ItemId ..by this dynamic routing we don't have to call routes for all ids one by one thos is backend dynamic routing
+      const res = await api.put(
+        `/restaurant/updateMenuItem/${selectedItem._id}`,
         form_data,
       );
       toast.success(res.data.message);

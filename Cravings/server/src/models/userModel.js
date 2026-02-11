@@ -150,6 +150,24 @@ const userSchema = mongoose.Schema(
       required: true,
       default: "active",
     },
+    restaurantImages: [
+      {
+        url: { type: String, required: true },
+        publicID: { type: String, required: true },
+      },
+    ],
+
+    openTime: {
+      type: String, // "09:00"
+      required: true,
+      default:"09:00",
+    },
+    closeTime: {
+      // 22:30
+      type: String,
+      required: true,
+        default:"22:30",
+    },
   },
   { timestamps: true },
 );

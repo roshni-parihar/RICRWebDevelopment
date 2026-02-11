@@ -20,6 +20,7 @@ const RestaurantMenu = () => {
       const res = await api.get("/restaurant/menuItems");
       toast.success(res.data.message);
       setMenuItems(res.data.data);
+      console.log("API response", res.data);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Failed to add menu item");

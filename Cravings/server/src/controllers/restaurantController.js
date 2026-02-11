@@ -23,6 +23,8 @@ export const ManagerUpdate = async (req, res, next) => {
       restaurantName,
       cuisine,
       menu,
+      openTime,
+      closeTime,
     } = req.body;
 
     const currentManager = req.user;
@@ -38,6 +40,11 @@ export const ManagerUpdate = async (req, res, next) => {
 
     if (!city || !pin) {
       const error = new Error("City and PIN Code are required");
+      error.statusCode = 400;
+      return next(error);
+    }
+    if (!openTime || !closeTime) {
+      const error = new Error("open and close timing are required");
       error.statusCode = 400;
       return next(error);
     }
@@ -106,6 +113,8 @@ export const ManagerUpdate = async (req, res, next) => {
     currentManager.restaurantName = restaurantName;
     currentManager.cuisine = cuisine;
     currentManager.menu = menu;
+    currentManager.openTime = openTime;
+    currentManager.closeTime = closeTime;
     await currentManager.save();
 
     console.log(currentManager); // new data
@@ -244,7 +253,7 @@ export const RestaurantAddMenuItem = async (req, res, next) => {
       servingSize,
       cuisine,
       images,
-      resturantID: CurrentUser._id,
+      restaurantID: CurrentUser._id,
     });
 
     res.status(201).json({
@@ -322,7 +331,8 @@ export const GetRestaurantMenuItem = async (req, res, next) => {
   try {
     const CurrentUser = req.user;
 
-    const menuItems = await Menu.find({ restaurantID: CurrentUser._id });
+    //const menuItems = await Menu.find({ restaurantID: CurrentUser._id });
+    const menuItems = await Menu.find({});
 
     res.status(200).json({
       message: "Menu Items Fetched Successfully",
@@ -332,5 +342,149 @@ export const GetRestaurantMenuItem = async (req, res, next) => {
     next(error);
   }
 };
- 
+
+export const RestaurantUpdate = async (req, res, next) => {
+  try {
+    const {
+      fullName,
+      email,
+      mobileNumber,
+      gender,
+      dob,
+      address,
+      city,
+      pin,
+      restaurantName,
+      cuisine,
+      documents,
+      paymentDetails,
+      geoLocation,
+    } = req.body;
+    const currentUser = req.user;
+
+    // Validation for required fields
+    if (!fullName || !email || !mobileNumber) {
+      const error = new Error(
+        "Full Name, Email, and Mobile Number are required",
+      );
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    if (!city || !pin) {
+      const error = new Error("City and PIN Code are required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    if (!restaurantName) {
+      const error = new Error("Restaurant Name is required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate email format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const error = new Error("Invalid email format");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate mobile number (10 digits)
+    if (!/^\d{10}$/.test(mobileNumber.replace(/\D/g, ""))) {
+      const error = new Error("Mobile number must be 10 digits");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate PIN code (6 digits)
+    if (!/^\d{6}$/.test(pin)) {
+      const error = new Error("PIN code must be 6 digits");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate PAN format if provided
+    if (
+      documents?.pan &&
+      documents.pan !== "N/A" &&
+      !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(documents.pan)
+    ) {
+      const error = new Error("Invalid PAN format");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Validate UPI format if provided
+    if (
+      paymentDetails?.upi &&
+      paymentDetails.upi !== "N/A" &&
+      !/^[a-zA-Z0-9._-]+@[a-zA-Z]{3,}$/.test(paymentDetails.upi)
+    ) {
+      const error = new Error("Invalid UPI format");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    // Update personal information
+    currentUser.fullName = fullName;
+    currentUser.email = email.toLowerCase();
+    currentUser.mobileNumber = mobileNumber;
+    currentUser.gender = gender || currentUser.gender;
+    currentUser.dob = dob || currentUser.dob;
+    currentUser.address = address || currentUser.address;
+    currentUser.city = city;
+    currentUser.pin = pin;
+
+    // Update restaurant information
+    currentUser.restaurantName = restaurantName;
+    currentUser.cuisine = cuisine || currentUser.cuisine;
+
+    // Update nested documents
+    if (documents) {
+      currentUser.documents = {
+        gst: documents.gst || currentUser.documents?.gst || "N/A",
+        fssai: documents.fssai || currentUser.documents?.fssai || "N/A",
+        rc: documents.rc || currentUser.documents?.rc || "N/A",
+        dl: documents.dl || currentUser.documents?.dl || "N/A",
+        uidai: documents.uidai || currentUser.documents?.uidai || "N/A",
+        pan: documents.pan || currentUser.documents?.pan || "N/A",
+      };
+    }
+
+    // Update payment details
+    if (paymentDetails) {
+      currentUser.paymentDetails = {
+        upi: paymentDetails.upi || currentUser.paymentDetails?.upi || "N/A",
+        account_number:
+          paymentDetails.account_number ||
+          currentUser.paymentDetails?.account_number ||
+          "N/A",
+        ifs_Code:
+          paymentDetails.ifs_Code ||
+          currentUser.paymentDetails?.ifs_Code ||
+          "N/A",
+      };
+    }
+
+    // Update geo location
+    if (geoLocation) {
+      currentUser.geoLocation = {
+        lat: geoLocation.lat || currentUser.geoLocation?.lat || "N/A",
+        lon: geoLocation.lon || currentUser.geoLocation?.lon || "N/A",
+      };
+    }
+
+    console.log("OldData: ", req.user);
+    await currentUser.save();
+    console.log("NewData:", currentUser);
+
+    res
+      .status(200)
+      .json({ message: "User Updated Successfully", data: currentUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
 

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const menuSchema = mongoose.Schema( {
-    resturantID: {
+    restaurantID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

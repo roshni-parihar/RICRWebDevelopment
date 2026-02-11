@@ -8,6 +8,7 @@ import { BiSolidBank } from "react-icons/bi";
 import api from "../../config/Api";
 import toast from "react-hot-toast";
 import ResetPasswordModal from "../userDashboard/modals/ResetPasswordModal";
+import RestaurantImages from "./RestaurantImages";
 
 const RestaurantProfile = () => {
   const { user, setUser } = useAuth();
@@ -219,6 +220,8 @@ const RestaurantProfile = () => {
             <div className="space-y-1">
               {renderField("Restaurant Name", user?.restaurantName)}
               {renderField("Cuisine Type", user?.cuisine)}
+              {renderField("Opening Time", user?.openTime)}
+              {renderField("Closing Time", user?.closeTime)}
             </div>
           </div>
         )}
@@ -246,13 +249,15 @@ const RestaurantProfile = () => {
           <h2 className="text-lg font-bold text-gray-800 mb-3">
             Account Details
           </h2>
-          <div className="grid grid-cols-2 gap-4 text-gray-600">
+          <div className="grid grid-cols-3 gap-4 text-gray-600">
             <div>
               <span className="font-medium">Account ID:</span>
               <p className="text-gray-500 font-mono text-xs break-all">
                 {user?._id}
               </p>
             </div>
+ 
+            
             <div>
               <span className="font-medium">Member Since:</span>
               <p className="text-gray-900">
@@ -261,6 +266,11 @@ const RestaurantProfile = () => {
                   : "N/A"}
               </p>
             </div>
+            <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4"></h1>
+     
+      <RestaurantImages />
+    </div>
           </div>
         </div>
       </div>

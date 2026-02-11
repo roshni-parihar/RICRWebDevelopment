@@ -5,7 +5,7 @@ import api from "../../../config/Api";
 const EditResProfileModal = ({ onClose }) => {
   const { user, setUser, setIsLogin } = useAuth();
   const [formData, setFormData] = useState({
-     fullName: user?.fullName || "",
+    fullName: user?.fullName || "",
     email: user?.email || "",
     mobileNumber: user?.mobileNumber || "",
     gender: user?.gender || "",
@@ -13,13 +13,15 @@ const EditResProfileModal = ({ onClose }) => {
     address: user?.address || "",
     city: user?.city || "",
     pin: user?.pin || "",
-    restaurantName:user?.restaurantName ||"",
+    restaurantName: user?.restaurantName || "",
     documents: {
       uidai: user?.documents?.uidai || "",
       pan: user?.documents?.pan || "",
-      gst:user?.documents?.gst || "",
-      fssai:user?.documents?.fssai ||"",
+      gst: user?.documents?.gst || "",
+      fssai: user?.documents?.fssai || "",
     },
+    openTime: user?.openTime || "",
+    closeTime: user?.closeTime || "",
     paymentDetails: {
       upi: user?.paymentDetails?.upi || "",
       account_number: user?.paymentDetails?.account_number || "",
@@ -29,12 +31,8 @@ const EditResProfileModal = ({ onClose }) => {
       lat: user?.geoLocation?.lat || "",
       lon: user?.geoLocation?.lon || "",
     },
-    cuisine:{
-
-    },
-    menu:{
-
-    },
+    cuisine: {},
+    menu: {},
   });
 
   const [errors, setErrors] = useState({});
@@ -47,6 +45,15 @@ const EditResProfileModal = ({ onClose }) => {
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Full name is required";
     }
+
+    if (!formData.openTime.trim()) {
+  newErrors.openTime = "Opening time is required";
+}
+
+if (!formData.closeTime.trim()) {
+  newErrors.closeTime = "Closing time is required";
+}
+
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -286,6 +293,55 @@ const EditResProfileModal = ({ onClose }) => {
                     onChange={handleInputChange}
                     className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-200">
+                Timing:
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Open Time *
+                  </label>
+                  <input
+                    type="time"
+                    name="openTime"
+                    value={formData.openTime}
+                    onChange={handleInputChange}
+                    className={`w-full border rounded-md shadow-sm p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.fullName ? "border-red-500" : "border-gray-300"
+                      }`}
+                    placeholder="Enter Opening Time"
+                  />
+                  {errors.openTime && (
+                    <p className="text-red-600 text-xs mt-1">
+                      {errors.openTime}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Close Time *
+                  </label>
+                  <input
+                    type="time"
+                    name="closeTime"
+                    value={formData.closeTime}
+                    onChange={handleInputChange}
+                    className={`w-full border rounded-md shadow-sm p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.fullName ? "border-red-500" : "border-gray-300"
+                     }`}
+                    placeholder="Enter Closing Time"
+                  />
+                  {errors.closeTime && (
+                    <p className="text-red-600 text-xs mt-1">
+                      {errors.closeTime}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

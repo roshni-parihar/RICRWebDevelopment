@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const RestaurantDisplayMenu = () => {
-  const restaurantID = useParams().id;
+  const {restaurantID} = useParams();
   console.log("menu page", restaurantID);
 
   const [restaurantData, setRestaurantData] = useState();
 
   const fetchRestaurantMenu = async () => {
     try {
-      const res = await api.get(`/public/restaurant-menu/${restaurantID / 1}`);
+      const res = await api.get(`/public/restaurant-menu/${restaurantID}`);
       setRestaurantData(res.data.data);
     } catch (error) {
       console.log(error);

@@ -38,4 +38,6 @@ router.put(
   RestaurantAddMenuItem,
 );
 
+//router.patch("/restaurant/uploadImages",Protect,uploadRestaurantImages)
+
 export default router;

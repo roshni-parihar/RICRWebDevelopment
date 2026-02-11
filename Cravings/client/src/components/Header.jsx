@@ -63,6 +63,12 @@ const Header = () => {
           >
             Contact
           </Link>
+           <Link
+            to={"/orderNowCopy"}
+            className="text-decoration-none text-white hover:text-(--color-accent)"
+          >
+            Order Now
+          </Link>
         </nav>
 
         <div className="flex gap-3">

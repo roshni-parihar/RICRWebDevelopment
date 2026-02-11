@@ -86,7 +86,7 @@ const AddMenuItemModal = ({ onClose }) => {
       itemName: "",
       description: "",
       price: "",
-      category: "",
+      servingSize: "",
       cuisine: "",
       type: "",
       preparationTime: "",
