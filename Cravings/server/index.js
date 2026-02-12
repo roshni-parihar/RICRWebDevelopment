@@ -4,6 +4,7 @@ import cloudinary from "./src/config/cloudinary.js";
 import connectDB from "./src/config/db.js";
 import AuthRouter from "./src/routers/authRouter.js";
 import PublicRouter from "./src/routers/publicRouter.js";
+import RiderRouter from './src/routers/riderRouter.js'
 import UserRouter from "./src/routers/userRouter.js";
 import restaurantRouter from "./src/routers/restaurantRouter.js"
 import morgan from "morgan"; // gives error,or any log data in terminal
@@ -21,6 +22,7 @@ app.use("/auth", AuthRouter);
 app.use("/public", PublicRouter);
 app.use("/user", UserRouter);
 app.use("/restaurant", restaurantRouter);
+app.use("/rider", RiderRouter);
 
 app.get("/", (req, res) => {
   console.log("Server is working");

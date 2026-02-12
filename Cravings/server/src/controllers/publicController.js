@@ -2,6 +2,7 @@ import Contact from "../models/contactModel.js";
 import User from "../models/userModel.js";
 import Menu from "../models/menuSchema.js";
 import cloudinary from "../config/cloudinary.js";
+import { UploadMultipleToCloudinary } from "../utils/imageUploader.js";
 export const NewContact = async (req, res, next) => {
   try {
     const { fullName, email, mobileNumber, message } = req.body;
@@ -73,41 +74,16 @@ export const GetRestaurantMenuData = async (req, res, next) => {
 
 export const uploadRestaurantImages = async (req, res, next) => {
   try {
-    const currentUser = req.user;
-    const images = req.files;
+   const images=  await UploadMultipleToCloudinary(req.files)  ;
+   console.log(images);
 
-    if (!images || images.length === 0) {
-      const error = new Error("Images Required");
-      error.statusCode = 400;
-      return next(error);
-    }
+   const resItem= req.user;
+ res.status(201).json({
+      message: "Images uploaded",
+      data: resItem,
+    });
 
-    if (images.lenght > 5) {
-      images= images.slice(0, 5);
-    }
-    uploadedImages = [];
-
-    for (const image of images) {
-      const b64 = Buffer.from(image.buffer).toString("base64");
-
-      const dataURI = `data:${image.mimetype};base64,${b64}`;
-      console.log("DataURI:", dataURI.slice(0, 100));
-
-      const result = await cloudinary.uploader.upload(dataURI, {
-        folder: "Cravings/User",
-        width: 500,
-        height: 500,
-        crop: "fill",
-      });
-      uploadedImages.push({
-        url: result.secure_url,
-        publicID: result.public_id,
-      });}
-      
-      currentUser.restaurantImages = uploadedImages;
-      await currentUser.save();
-      res.status(200).json({ message: "images uploaded", data:uploadedImages});
-    
+     
   } catch (error) {
     next(error);
   }
