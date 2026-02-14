@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../config/Api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
+import { FaArrowRight } from "react-icons/fa";
 
 const OrderNow = () => {
   const navigate = useNavigate();
@@ -26,6 +28,13 @@ const OrderNow = () => {
   useEffect(() => {
     fetchAllRestaurant(); 
   }, []);
+    if (loading) {
+    return (
+      <div className="h-[80vh]">
+        <Loading />
+      </div>
+    );
+  }
 
   const handleRestaurantClick =(restaurantID)=>{
     console.log("restaurant Clicked");
@@ -66,7 +75,7 @@ const OrderNow = () => {
 
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {restaurants.map((restaurant) => {
+        {restaurants.map((restaurant,idx) => {
           const isOpen = isRestaurantOpen(
             restaurant.openTime,
             restaurant.closeTime
@@ -74,7 +83,7 @@ const OrderNow = () => {
 
           return (
             <div
-              key={restaurant._id}
+              key={idx}
               onClick={() => handleRestaurantClick(restaurant._id)}
               className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
             >
