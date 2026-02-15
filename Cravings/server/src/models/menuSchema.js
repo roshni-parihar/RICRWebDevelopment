@@ -54,7 +54,7 @@ const menuSchema = mongoose.Schema( {
       type: [
         {
           url: { type: String, required: true },
-          publicID: { type: String, required: true },
+          publicID: { type: String},
         },
       ],
       required: true,

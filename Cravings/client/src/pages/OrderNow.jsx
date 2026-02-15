@@ -36,11 +36,11 @@ const OrderNow = () => {
     );
   }
 
-  const handleRestaurantClick =(restaurantID)=>{
+  const handleRestaurantClick =(restaurantinfo)=>{
     console.log("restaurant Clicked");
-    console.log("OrderNow Page",restaurantID);
+    console.log("OrderNow Page",restaurantinfo);
 
-    navigate(`/restaurant/${restaurantID}`);
+    navigate("/restaurantMenu",{state:restaurantinfo});
   }  
   console.log(restaurants);
    const isRestaurantOpen = (openTime, closeTime) => {
@@ -69,11 +69,6 @@ const OrderNow = () => {
       </div>
 
       
-      {loading && (
-        <div className="text-center text-gray-600">Loading restaurants...</div>
-      )}
-
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {restaurants.map((restaurant,idx) => {
           const isOpen = isRestaurantOpen(
@@ -84,27 +79,17 @@ const OrderNow = () => {
           return (
             <div
               key={idx}
-              onClick={() => handleRestaurantClick(restaurant._id)}
+              onClick={() => handleRestaurantClick(restaurant)}
               className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
             >
             
                <div className="flex overflow-x-auto gap-2 h-40 w-full p-1">
-                {restaurant.restaurantImages?.length > 0 ? (
-                  restaurant.restaurantImages.map((img, idx) => (
-                    <img
-                      key={idx}
-                      src={img.url}
-                      alt={`${restaurant.restaurantName}-${idx}`}
-                      className="h-36 w-36 object-cover rounded"
-                    />
-                  ))
-                ) : (
-                  <img
-                    src="https://via.placeholder.com/300"
-                    alt={restaurant.restaurantName}
-                    className="h-36 w-full object-cover rounded"
-                  />
-                )}
+                 <img
+                src={restaurant.photo.url}
+                alt=""
+                className="w-full h-[50%] object-cover rounded-t-xl"
+              />
+              
               </div>
 
             
@@ -122,11 +107,18 @@ const OrderNow = () => {
                   >
                     {isOpen ? "Open" : "Closed"}
                   </span>
+              
+
                 </div>
 
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                <div>
+                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                   {restaurant.description || "Delicious food awaits you"}
                 </p>
+                  <div className="flex float-end items-center text-(--color-secondary) gap-2 underline group-hover:border-b-2 w-fit">
+                Explore Menu <FaArrowRight />
+              </div>
+                </div>
 
               
                 <div className="flex gap-2 flex-wrap mt-3">

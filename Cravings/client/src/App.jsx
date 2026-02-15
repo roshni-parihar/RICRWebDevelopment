@@ -38,12 +38,13 @@ const App = () => {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/order-now" element={<OrderNow />} />
           <Route
-            path="/restaurant/:restaurantID"
+            path="/restaurantMenu"
             element={<RestaurantDisplayMenu />}
           />
           <Route path="/orderNowCopy" element={<OrderNowCopy />} />
 
           <Route path="restaurant-images" element={<RestaurantImages />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

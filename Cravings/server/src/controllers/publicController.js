@@ -43,30 +43,24 @@ export const GetAllRestaurants = async (req, res, next) => {
 };
 
 export const GetRestaurantMenuData = async (req, res, next) => {
-  try {
-    const { restaurantID } = req.params;
+   try {
+    const { id } = req.params;
 
-    const restaurant = await User.findOne({
-      _id: restaurantID,
-      role: "manager",
-    }).select("-password");
-
-    if (!restaurant) {
-      return res.status(404).json({
-        message: "Restaurant not found",
-      });
+    if (!id) {
+      const error = new Error("All feilds required");
+      error.statusCode = 400;
+      return next(error);
     }
 
-    const menu = await Menu.find({
-      restaurantID: restaurantID,
-    });
+    const restaurantMenuData = await Menu.find({
+      resturantID: id,
+    })
+      .sort({ updatedAt: -1 })
+      .populate("restaurantID");
 
-    res.status(200).json({
-      data: {
-        restaurant,
-        menu,
-      },
-    });
+    res
+      .status(200)
+      .json({ message: "Menu fetched Sucessfully", data: restaurantMenuData });
   } catch (error) {
     next(error);
   }
