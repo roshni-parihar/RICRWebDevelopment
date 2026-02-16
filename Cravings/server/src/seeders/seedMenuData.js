@@ -25,7 +25,7 @@ const seedMenu = async () => {
 
     existingRestaurant.forEach((restaurant) => {
       DummyMenu.forEach((menuItem) => {
-        MenuItems.push({ ...menuItem, resturantID: restaurant._id });
+        MenuItems.push({ ...menuItem, restaurantID: restaurant._id });
       });
     });
 

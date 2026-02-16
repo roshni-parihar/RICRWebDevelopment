@@ -1,28 +1,64 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../config/Api";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 const RestaurantDisplayMenu = () => {
   const data = useLocation().state;
-  console.log("menu page", data);
+  const { isLogin, role } = useAuth();
+  const navigate = useNavigate();
 
   const [menuItems, setMenuItems] = useState();
-const[loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
+  const [cartFlag, setCartFlag] = useState([]);
 
   const fetchRestaurantMenu = async () => {
     setLoading(true);
     try {
       const res = await api.get(`/public/restaurant/menu/${data._id}`);
-     setMenuItems(res.data.data);
+      setMenuItems(res.data.data);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Unkown Error");
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
+
+  const handleAddToCart = (NewItem) => {
+    if (cart) {
+      if (cart.restaurantID === NewItem.restaurantID._id) {
+        setCart((prev) => ({
+          ...prev,
+          cartItem: [...prev.cartItem, { ...NewItem, quantity: 1 }],
+          cartValue: Number(prev.cartValue) + Number(NewItem.price),
+        }));
+        setCartFlag((prev) => [...prev, NewItem._id]);
+      } else {
+        toast.error("Clear the cart first");
+      }
+    } else {
+      setCart({
+        restaurantID: NewItem.restaurantID._id,
+        cartItem: [{ ...NewItem, quantity: 1 }],
+        cartValue: Number(NewItem.price),
+      });
+      setCartFlag((prev) => [...prev, NewItem._id]);
+    }
+  };
+const handleCheckout =()=>{
+  isLogin && role === "customer"?(localStorage.setItem("cart",JSON.stringify(cart)),
+navigate("/checkout-page")):(toast.error("Please Loginn as Customer"),navigate("/login"));
+}
+
+useEffect(()=>{
+  cart && localStorage.setItem("cart", JSON.stringify(cart));
+},[cart]);
+
+
   useEffect(() => {
     fetchRestaurantMenu();
   }, [data]);
@@ -105,8 +141,13 @@ const[loading,setLoading]=useState(false);
                       <div className="text-(--color-primary) text-2xl font-bold">
                         ₹{EachItem.price}
                       </div>
-                      <button className="bg-(--color-primary) text-white px-6 py-2 rounded hover:bg-(--color-primary-hover) transition">
-                        Add to Cart
+                      <button className="bg-(--color-primary) text-white px-6 py-2 rounded hover:bg-(--color-primary-hover) transition" onClick={()=>handleAddToCart(EachItem)}
+                        disabled={cartFlag.includes(EachItem._id)}>
+                       {console.log("cartFlag",cartFlag.includes(EachItem._id),
+                       )
+                       }{
+                        cartFlag.includes(EachItem._id)?"Added":"Add to Cart"
+                       }
                       </button>
                     </div>
                   </div>

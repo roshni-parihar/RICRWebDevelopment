@@ -53,7 +53,7 @@ export const GetRestaurantMenuData = async (req, res, next) => {
     }
 
     const restaurantMenuData = await Menu.find({
-      resturantID: id,
+      restaurantID: id,
     })
       .sort({ updatedAt: -1 })
       .populate("restaurantID");

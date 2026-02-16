@@ -16,6 +16,7 @@ import OrderNow from "./pages/OrderNow";
 import NotFound from "./pages/NotFound";
 import RestaurantImages from "./components/restaurantDashboard/RestaurantImages";
 import OrderNowCopy from "./pages/OrderNowCopy";
+import CheckoutPage from "./pages/CheckoutPage";
 const App = () => {
   return (
     <>
@@ -44,6 +45,8 @@ const App = () => {
           <Route path="/orderNowCopy" element={<OrderNowCopy />} />
 
           <Route path="restaurant-images" element={<RestaurantImages />} />
+
+          <Route path="checkout-page" element={<CheckoutPage/>}/>
           
           <Route path="*" element={<NotFound />} />
         </Routes>

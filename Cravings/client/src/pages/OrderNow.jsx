@@ -83,7 +83,7 @@ const OrderNow = () => {
               className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
             >
             
-               <div className="flex overflow-x-auto gap-2 h-40 w-full p-1">
+               <div className="flex overflow-x-auto gap-2  w-full p-1">
                  <img
                 src={restaurant.photo.url}
                 alt=""
