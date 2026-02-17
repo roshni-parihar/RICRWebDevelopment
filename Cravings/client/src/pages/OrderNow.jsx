@@ -28,6 +28,9 @@ const OrderNow = () => {
   useEffect(() => {
     fetchAllRestaurant(); 
   }, []);
+
+
+
     if (loading) {
     return (
       <div className="h-[80vh]">
@@ -42,7 +45,7 @@ const OrderNow = () => {
 
     navigate("/restaurantMenu",{state:restaurantinfo});
   }  
-  console.log(restaurants);
+
    const isRestaurantOpen = (openTime, closeTime) => {
     if (!openTime || !closeTime) return false;
 
@@ -58,19 +61,25 @@ const OrderNow = () => {
     );
   };
 
-  return (
-    <div className="bg-gray-100 min-h-screen p-6">
-    
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Order Now</h1>
-        <p className="text-gray-600 mt-2">
-          Browse restaurants and place your order instantly
-        </p>
-      </div>
+ return (
+  <>
+  <div className="bg-gray-100 min-h-screen">
 
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {restaurants.map((restaurant,idx) => {
+    {/* ================= HERO SECTION ================= */}
+    <div className="bg-black text-white py-16 px-6 text-center">
+      <h1 className="text-4xl font-bold mb-3">
+        Discover Restaurants Near You
+      </h1>
+      <p className="text-gray-300 max-w-2xl mx-auto">
+        Browse top-rated restaurants and order your favorite meals instantly.
+      </p>
+    </div>
+
+    {/* ================= RESTAURANT GRID ================= */}
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+        {restaurants.map((restaurant, idx) => {
           const isOpen = isRestaurantOpen(
             restaurant.openTime,
             restaurant.closeTime
@@ -80,72 +89,74 @@ const OrderNow = () => {
             <div
               key={idx}
               onClick={() => handleRestaurantClick(restaurant)}
-              className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer overflow-hidden"
+              className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 cursor-pointer overflow-hidden group"
             >
-            
-               <div className="flex overflow-x-auto gap-2  w-full p-1">
-                 <img
-                src={restaurant.photo.url}
-                alt=""
-                className="w-full h-[50%] object-cover rounded-t-xl"
-              />
-              
-              </div>
+              {/* IMAGE */}
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={restaurant.photo?.url}
+                  alt=""
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
 
-            
-              <div className="p-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-lg">
-                    {restaurant.restaurantName}
-                  </h3>
+                <div className="absolute top-3 right-3">
                   <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                    className={`text-xs font-semibold px-3 py-1 rounded-full ${
                       isOpen
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
+                        ? "bg-green-500 text-white"
+                        : "bg-red-500 text-white"
                     }`}
                   >
                     {isOpen ? "Open" : "Closed"}
                   </span>
-              
-
                 </div>
+              </div>
 
-                <div>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+              {/* CONTENT */}
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-800 mb-1">
+                  {restaurant.restaurantName}
+                </h3>
+
+                <p className="text-sm text-gray-500 line-clamp-2 mb-3">
                   {restaurant.description || "Delicious food awaits you"}
                 </p>
-                  <div className="flex float-end items-center text-(--color-secondary) gap-2 underline group-hover:border-b-2 w-fit">
-                Explore Menu <FaArrowRight />
-              </div>
-                </div>
 
-              
-                <div className="flex gap-2 flex-wrap mt-3">
+                {/* CUISINES */}
+                <div className="flex flex-wrap gap-2 mb-4">
                   {restaurant.cuisine
                     ?.split(",")
                     .slice(0, 3)
                     .map((cuisine, idx) => (
                       <span
                         key={idx}
-                        className="text-xs bg-amber-200 px-2 py-1 rounded-full capitalize"
+                        className="text-xs bg-gray-200 px-3 py-1 rounded-full capitalize"
                       >
                         {cuisine.trim()}
                       </span>
                     ))}
                 </div>
 
-                
-                <p className="text-xs text-gray-500 mt-3">
-                  ⏰ {restaurant.openTime} – {restaurant.closeTime}
-                </p>
+                {/* FOOTER */}
+                <div className="flex justify-between items-center text-sm text-gray-500">
+                  <span>
+                    ⏰ {restaurant.openTime} – {restaurant.closeTime}
+                  </span>
+
+                  <span className="text-black font-semibold group-hover:underline">
+                    Explore →
+                  </span>
+                </div>
               </div>
             </div>
           );
         })}
+
       </div>
     </div>
-  );
+  </div></>
+);
+
 };
 
 export default OrderNow;
