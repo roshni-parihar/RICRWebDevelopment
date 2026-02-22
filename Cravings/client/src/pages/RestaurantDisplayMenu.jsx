@@ -4,12 +4,13 @@ import api from "../config/Api";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import{FaRegTrashAlt} from "react-icons/fa"
 
 const RestaurantDisplayMenu = () => {
   const { isLogin, role } = useAuth();
   const navigate = useNavigate();
   const data = useLocation().state;
-  console.log("location", location.state);
+ // console.log("location", location.state);
 
   const [menuItems, setMenuItems] = useState();
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ const RestaurantDisplayMenu = () => {
   };
   const handleAddToCart = (NewItem) => {
     if (cart) {
-      if (cart.restaurantID === NewItem.restaurantID._id) {
+      if (cart.restaurantID === NewItem.restaurantID) {
         setCart((prev) => ({
           ...prev,
           cartItem: [...prev.cartItem, { ...NewItem, quantity: 1 }],
@@ -166,9 +167,13 @@ const RestaurantDisplayMenu = () => {
                     onClick={() => handleAddToCart(EachItem)}
                     disabled={cartFlag.includes(EachItem._id)}
                   >
-                    {cartFlag.includes(EachItem._id)
-                      ? "Added ✓"
-                      : "Add to Cart"}
+                      {console.log(
+                          "cartFlag",
+                          cartFlag.includes(EachItem._id),
+                        )}
+                        {cartFlag.includes(EachItem._id)
+                          ? "Added"
+                          : "Add to Cart"}
                   </button>
                 </div>
               </div>

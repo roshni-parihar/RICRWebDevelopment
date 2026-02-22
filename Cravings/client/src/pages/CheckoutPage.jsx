@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import api from "../config/Api"
+import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
+
+const PromoCode= {
+  NEW50:50,
+  SAVE20:20,
+  CRAVE10:10
+}
 
 const CheckoutPage = () => {
   const { user } = useAuth();
@@ -8,6 +17,9 @@ const CheckoutPage = () => {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [promoCode, setPromoCode]= useState("");
+  const [appliedPromo, setAppliedPromo]=useState(false);
+    const [paymentStatus, setPaymentStatus] = useState("pending");
   console.log("Checkoutpage", cart);
 
   const TAX_RATE = 0.05;
@@ -29,7 +41,7 @@ const CheckoutPage = () => {
         }
         return item;
       });
-      const newTotal = updatedItems.reduce(
+      const newTotal = updatedItems.reduce( // reduce() is a JavaScript array method used to convert an array into a single value.
         (sum, item) => sum + item.price * item.quantity,
         0,
       );
@@ -60,8 +72,57 @@ const CheckoutPage = () => {
     const subtotal = cart?.cartValue || 0;
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax + DELIVERY_CHARGE;
-    return (subtotal, tax, total);
+    return {subtotal, tax, total};
   };
+
+  const handlePromoCodeApply =()=>{
+    const discountPercent= PromoCode[promoCode.toUpperCase()];
+    if(discountPercent){
+      const {subtotal}= calculatePrices();
+      const discountAmount =(subtotal* discountPercent)/100;
+      const newSubTotal = subtotal - discountAmount;
+
+      console.log("Applying promo code:",{
+        promoCode,discountPercent,discountAmount,
+        oldSubTotal:subtotal,
+        newSubTotal:newSubTotal,
+      });
+      setCart((prev)=>({
+        ...prev, cartValue:newSubTotal,
+      }));
+      toast.success(`promo code applied! You saved ₹${discountAmount.toFixed(2)}`);
+      setAppliedPromo(true);
+    }else{
+      toast.error("Invalid promo code");
+    }
+  };
+
+  const GeneratePayload =()=>{
+    const {subtotal,tax,total}= calculatePrices();
+    return{
+      restaurantId:cart.restaurantID,
+      userId:user._id,
+      items:[...cart.cartItem],
+      orderValue:{
+        subtotal,tax,total,promoCode,
+        deliveryFee:50,
+        discountPercent:PromoCode[promoCode.toLocaleUpperCase() || 0],
+        paymentMethod,
+        paymentStatus,
+      },
+      status:"pending",
+      review:{},
+    }
+  }
+
+  const handlePayment = async () =>{
+    try {
+      // call payment gateway API
+      setPaymentStatus("paid")
+    } catch (error) {
+      setPaymentStatus("failed")
+    }
+  }
   const handlePlaceOrder = async () => {
     if (!user || !cart) {
       toast.error("Session Expired. Please login again.");
@@ -69,13 +130,20 @@ const CheckoutPage = () => {
       return;
     }
 
+    // payment gateway call
+    const payload = GeneratePayload();
+    console.log(payload);
+    
+
     setIsProcessing(true);
     try {
-      toast.success("Order placed successfully");
+
+      const res = await api.post("/user/placeorder",payload)
+      toast.success(res.data.data);
       localStorage.removeItem("cart");
-      navigate("/user-dashboard", { state: { tab: "orders" } });
+      navigate("/user-dashboard", { state: { tab:"orders" } });
     } catch (error) {
-      console.log(error);
+      console.log("Order placement error:", error);
       toast.error(error?.response?.data?.message || "Failed to place order");
     } finally {
       setIsProcessing(false);
@@ -95,7 +163,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="mb-8">
           <h1
             className="text-4xl font-bold"
@@ -109,9 +177,9 @@ const CheckoutPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Section - Order Items */}
+          
           <div className="lg:col-span-2">
-            {/* Order Items Card */}
+        
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
               <h2
                 className="text-2xl font-bold mb-6"
@@ -297,6 +365,36 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
+               {/* Promo Code Section */}
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3
+                  className="font-bold mb-3"
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  Promo Code
+                </h3>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter code"
+                    name="promo"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                    className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none disabled:bg-gray-100"
+                    style={{ borderColor: "var(--color-secondary)" }}
+                    disabled={appliedPromo}
+                  />
+                  <button
+                    style={{ backgroundColor: "var(--color-secondary)" }}
+                    className="text-white px-4 py-2 rounded hover:opacity-90 transition disabled:opacity-50"
+                    onClick={handlePromoCodeApply}
+                    disabled={appliedPromo}
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+
               {/* Payment Method Selection */}
               <div className="mb-6 border-t pt-6">
                 <h3
@@ -352,29 +450,8 @@ const CheckoutPage = () => {
               </button>
             </div>
 
-            {/* Promo Code Section */}
-            <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-              <h3
-                className="font-bold mb-3"
-                style={{ color: "var(--color-primary)" }}
-              >
-                Promo Code
-              </h3>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Enter code"
-                  className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none"
-                  style={{ borderColor: "var(--color-secondary)" }}
-                />
-                <button
-                  style={{ backgroundColor: "var(--color-secondary)" }}
-                  className="text-white px-4 py-2 rounded hover:opacity-90 transition"
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
+          
+            
           </div>
         </div>
       </div>

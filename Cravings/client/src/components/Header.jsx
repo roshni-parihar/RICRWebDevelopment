@@ -3,7 +3,7 @@ import transparentLogo from "../assets/clientLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const Header = () => {
+const Header = () => {                                         
   const { user, isLogin, role } = useAuth();
 
   const navigate = useNavigate();

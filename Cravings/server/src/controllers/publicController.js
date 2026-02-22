@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import Menu from "../models/menuSchema.js";
 import cloudinary from "../config/cloudinary.js";
 import { UploadMultipleToCloudinary } from "../utils/imageUploader.js";
+
+
 export const NewContact = async (req, res, next) => {
   try {
     const { fullName, email, mobileNumber, message } = req.body;
@@ -56,7 +58,7 @@ export const GetRestaurantMenuData = async (req, res, next) => {
       restaurantID: id,
     })
       .sort({ updatedAt: -1 })
-      .populate("restaurantID");
+     // .populate("restaurantID");
 
     res
       .status(200)

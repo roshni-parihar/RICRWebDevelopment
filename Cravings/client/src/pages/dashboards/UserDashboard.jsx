@@ -6,12 +6,18 @@ import UserOrders from "../../components/userDashboard/UserOrders";
 import UserTransaction from "../../components/userDashboard/UserTransaction";
 import UserHelpDesk from "../../components/userDashboard/UserHelpDesk";
 import bg from "../dashboards/images/f7.webp"
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
+
 const UserDashboard = () => {
+
   const {role, isLogin} = useAuth();
-  const [active, setActive] = useState("overview");
+  const location= useLocation()
+  const ActiveTab = location.state?.tab || "orders";
+  //console.log(useLocation.state);
+  
+  const [active, setActive] = useState(ActiveTab||"overview");
   const navigate = useNavigate();
  const [isOpen,setIsOpen]=useState(false);
  
