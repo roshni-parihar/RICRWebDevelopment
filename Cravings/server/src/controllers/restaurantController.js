@@ -487,7 +487,6 @@ export const RestaurantUpdate = async (req, res, next) => {
   }
 };
 
-
 export const GetAllPlacedOrder = async (req, res, next) => {
   try {
     const currentUser = req.user;
@@ -496,10 +495,45 @@ export const GetAllPlacedOrder = async (req, res, next) => {
       .populate("userId")
       .populate("riderId")
       .sort({ createdAt: -1 });
-      
+
     res.status(200).json({
       message: "All Placed Orders Fetched Successfully",
       data: allOrders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RestaurantOrderStatusUpdate = async (res, req, next) => {
+  try {
+    const restaurantID = req.user._id;
+    const orderID = req.params.id;
+    const NewStatus = req.query.status;
+
+    if (!NewStatus || !orderID) {
+      const error = new Error("All feilds required");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    const existingOrder = await Order.findOne({
+      _id: orderID,
+      restaurantId: resturantID,
+    });
+
+    if (!existingOrder) {
+      const error = new Error("Order not found or not accessible");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    existingOrder.status = NewStatus;
+    await existingOrder.save();
+
+    res.status(200).json({
+      message: "Order Status Updated Successfully",
+      data: existingOrder,
     });
   } catch (error) {
     next(error);

@@ -2,7 +2,8 @@ import React from "react";
 import {useNavigate }from "react-router-dom"
 import { FaMagnifyingGlassChart } from "react-icons/fa6";
 import { AiFillProfile } from "react-icons/ai";
-import { MdOutlineBorderColor } from "react-icons/md";
+import { TiShoppingCart } from "react-icons/ti";
+import { FaHistory } from "react-icons/fa";
 
 import { LuHandHelping } from "react-icons/lu";
 import { RiMenuUnfoldFill } from "react-icons/ri";
@@ -18,7 +19,8 @@ const RiderSideBar = ({ active, setActive, isOpen, setIsOpen }) => {
   const menuItems = [
     { key: "overview", title: "Overview", icon: <FaMagnifyingGlassChart /> },
     { key: "profile", title: "Profile", icon: <AiFillProfile /> },
-    { key: "rides", title: "Rides", icon: <MdOutlineBorderColor /> },
+      { key: "current-order", title: "Current Order", icon: <TiShoppingCart /> },
+    { key: "order-history", title: "Order History", icon: <FaHistory /> },
     
     { key: "helpdesk ", title: "Help Desk", icon: <LuHandHelping /> },
   ];

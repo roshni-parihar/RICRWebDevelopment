@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import RiderOverview from "../../components/RiderDashboard/RiderOverview";
 import RiderSideBar from "../../components/RiderDashboard/RiderSidebar";
 import RiderProfile from "../../components/RiderDashboard/RiderProfile";
-import RiderRides from "../../components/RiderDashboard/RiderRides";
+import RiderCurrentOrder from "../../components/riderDashboard/RiderCurrentOrder";
+import RiderOrderHistory from "../../components/riderDashboard/RiderOrderHistory";
 import RiderHelpDesk from "../../components/RiderDashboard/RiderHelpDesk";
 import bg from "../dashboards/images/f7.webp";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
+
+
 const RiderDashboard = () => {
   const { role, isLogin } = useAuth();
   const [active, setActive] = useState("overview");
@@ -58,7 +61,8 @@ const RiderDashboard = () => {
           <div className={`duration-300 ${isOpen ? "w-58/60}" : "w-48/60"}`}>
             {active === "overview" && <RiderOverview />}
             {active === "profile" && <RiderProfile />}
-            {active === "rides" && <RiderRides />}
+            {active === "current-order" && <RiderCurrentOrder />}
+          {active === "order-history" && <RiderOrderHistory />}
 
             {active === "helpdesk" && <RiderHelpDesk />}
           </div>
