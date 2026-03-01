@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import api from "../config/Api"
+import api from "../config/Api";
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
+import logo from "../assets/circleLogo.png";
 
-const PromoCode= {
-  NEW50:50,
-  SAVE20:20,
-  CRAVE10:10
-}
+const PromoCode = {
+  NEW50: 50,
+  SAVE20: 20,
+  CRAVE10: 10,
+};
+const AvailablePaymentMethod = [
+  { id: "razorPay", label: "Pay Online" },
+  { id: "cod", label: "Cash on Delivery" },
+];
 
 const CheckoutPage = () => {
   const { user } = useAuth();
@@ -17,9 +22,9 @@ const CheckoutPage = () => {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [promoCode, setPromoCode]= useState("");
-  const [appliedPromo, setAppliedPromo]=useState(false);
-    const [paymentStatus, setPaymentStatus] = useState("pending");
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState("pending");
   console.log("Checkoutpage", cart);
 
   const TAX_RATE = 0.05;
@@ -30,8 +35,8 @@ const CheckoutPage = () => {
       toast.error("Cart is Empty or Session Expired");
       navigate("/order-now");
     }
-  }, []); 
- 
+  }, []);
+
   const handleQuantityChange = (itemId, change) => {
     setCart((prev) => {
       const updatedItems = prev.cartItem.map((item) => {
@@ -41,7 +46,8 @@ const CheckoutPage = () => {
         }
         return item;
       });
-      const newTotal = updatedItems.reduce( // reduce() is a JavaScript array method used to convert an array into a single value.
+      const newTotal = updatedItems.reduce(
+        // reduce() is a JavaScript array method used to convert an array into a single value.
         (sum, item) => sum + item.price * item.quantity,
         0,
       );
@@ -72,57 +78,113 @@ const CheckoutPage = () => {
     const subtotal = cart?.cartValue || 0;
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax + DELIVERY_CHARGE;
-    return {subtotal, tax, total};
+    return { subtotal, tax, total };
   };
 
-  const handlePromoCodeApply =()=>{
-    const discountPercent= PromoCode[promoCode.toUpperCase()];
-    if(discountPercent){
-      const {subtotal}= calculatePrices();
-      const discountAmount =(subtotal* discountPercent)/100;
+  const handlePromoCodeApply = () => {
+    const discountPercent = PromoCode[promoCode.toUpperCase()];
+    if (discountPercent) {
+      const { subtotal } = calculatePrices();
+      const discountAmount = (subtotal * discountPercent) / 100;
       const newSubTotal = subtotal - discountAmount;
 
-      console.log("Applying promo code:",{
-        promoCode,discountPercent,discountAmount,
-        oldSubTotal:subtotal,
-        newSubTotal:newSubTotal,
+      console.log("Applying promo code:", {
+        promoCode,
+        discountPercent,
+        discountAmount,
+        oldSubTotal: subtotal,
+        newSubTotal: newSubTotal,
       });
-      setCart((prev)=>({
-        ...prev, cartValue:newSubTotal,
+      setCart((prev) => ({
+        ...prev,
+        cartValue: newSubTotal,
       }));
-      toast.success(`promo code applied! You saved ₹${discountAmount.toFixed(2)}`);
+      toast.success(
+        `promo code applied! You saved ₹${discountAmount.toFixed(2)}`,
+      );
       setAppliedPromo(true);
-    }else{
+    } else {
       toast.error("Invalid promo code");
     }
   };
 
-  const GeneratePayload =()=>{
-    const {subtotal,tax,total}= calculatePrices();
-    return{
-      restaurantId:cart.restaurantID,
-      userId:user._id,
-      items:[...cart.cartItem],
-      orderValue:{
-        subtotal,tax,total,promoCode,
-        deliveryFee:50,
-        discountPercent:PromoCode[promoCode.toLocaleUpperCase() || 0],
+  const GeneratePayload = () => {
+    const { subtotal, tax, total } = calculatePrices();
+    return {
+      restaurantId: cart.restaurantID,
+      userId: user._id,
+      items: [...cart.cartItem],
+      orderValue: {
+        subtotal,
+        tax,
+        total,
+        promoCode,
+        deliveryFee: 50,
+        discountPercent: PromoCode[promoCode.toLocaleUpperCase() || 0],
         paymentMethod,
         paymentStatus,
       },
-      status:"pending",
-      review:{},
-    }
-  }
+      status: "pending",
+      review: {},
+    };
+  };
 
-  const handlePayment = async () =>{
+  const handlePayment = async () => {
     try {
       // call payment gateway API
-      setPaymentStatus("paid")
+      setPaymentStatus("paid");
     } catch (error) {
-      setPaymentStatus("failed")
+      setPaymentStatus("failed");
     }
-  }
+  };
+
+ const handleRazorpayPayment = async () => {
+    const { total } = calculatePrices();
+    try {
+      const keyRes = await api.get("/payment/getRazorpayKey");
+      const key = keyRes.data.key;
+
+      const orderRes = await api.post("/payment/createOrder", {
+        amount: total,
+      });
+
+      const orderdata = orderRes.data;
+
+      const option = {
+        key,
+        amount: orderdata.amount,
+        currency: orderdata.currency,
+        name: "Cravings", //your business name
+        description: "Test Transaction",
+        image: "https://placehold.co/600x400?text=CR",
+        order_id: orderdata.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: `${import.meta.env.VITE_FRONTEND_URL}/paymentSuccess`,
+        prefill: {
+          name: user.fullName, //your customer's name
+          email: user.email,
+          contact: user.mobileNumber, //Provide the customer's phone number for better conversion rates
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#F16D34",
+        },
+      };
+
+      const razorpay = new window.Razorpay(option);
+      razorpay.open();
+
+      razorpay.on("payment.failed", function (response) {
+        console.log("Payment Failed");
+        toast.error("Payment Failed");
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Unknown Error");
+    }
+  };
+
   const handlePlaceOrder = async () => {
     if (!user || !cart) {
       toast.error("Session Expired. Please login again.");
@@ -131,24 +193,22 @@ const CheckoutPage = () => {
     }
 
     // payment gateway call
-    const payload = GeneratePayload();
-    console.log(payload);
-    
+  //   const payload = GeneratePayload();
+  //   console.log(payload);
 
-    setIsProcessing(true);
-    try {
-
-      const res = await api.post("/user/placeorder",payload)
-      toast.success(res.data.data);
-      localStorage.removeItem("cart");
-      navigate("/user-dashboard", { state: { tab:"orders" } });
-    } catch (error) {
-      console.log("Order placement error:", error);
-      toast.error(error?.response?.data?.message || "Failed to place order");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  //   setIsProcessing(true);
+  //   try {
+  //     const res = await api.post("/user/placeorder", payload);
+  //     toast.success(res.data.data);
+  //     localStorage.removeItem("cart");
+  //     navigate("/user-dashboard", { state: { tab: "orders" } });
+  //   } catch (error) {
+  //     console.log("Order placement error:", error);
+  //     toast.error(error?.response?.data?.message || "Failed to place order");
+  //   } finally {
+  //     setIsProcessing(false);
+  //   }
+  // };
 
   if (!user || !cart) {
     return (
@@ -158,12 +218,11 @@ const CheckoutPage = () => {
     );
   }
 
-  const {subtotal,tax,total}= calculatePrices();
+  const { subtotal, tax, total } = calculatePrices();
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        
         <div className="mb-8">
           <h1
             className="text-4xl font-bold"
@@ -177,9 +236,7 @@ const CheckoutPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
           <div className="lg:col-span-2">
-        
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
               <h2
                 className="text-2xl font-bold mb-6"
@@ -365,7 +422,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-               {/* Promo Code Section */}
+              {/* Promo Code Section */}
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h3
                   className="font-bold mb-3"
@@ -449,9 +506,6 @@ const CheckoutPage = () => {
                 ← Continue Shopping
               </button>
             </div>
-
-          
-            
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import Order from "../models/orderModel.js"
 
 export const RiderUpdate = async (req, res, next) => {
   // exported to rider router
@@ -144,34 +145,41 @@ export const RiderResetPassword = async (req, res, next) => {
     currentRider.password = hashPassword;
     await currentRider.save();
     res.status(200).json({ message: "Password Reset Succefully" });
-    
   } catch (error) {
     next(error);
   }
 };
 
-export const RiderGetAvailableOrder = async (req,res,next)=>{
+export const RiderGetAvailableOrder = async (req, res, next) => {
   try {
-    
-    const availableOrders = await Order.fiind({riderId:null,
-      status:{
-        $ne:"pending",
+    const { lat, lon } = req.body;
+    const availableOrders = await Order.fiind({
+      riderId: null,
+      status: {
+        $ne: "pending",
         $ne: "cancelled",
         $ne: "delivered",
         $ne: "rejected",
       }, // $ne means Not Equal. It Exclude orders that are pending, cancelled, delivered, or rejected
-    }).populate("userId").populate("restaurantId");
+    })
+      .populate("userId")
+      .populate("restaurantId");
 
-     res.status(200).json({
+    const AvailableOrderWithDistance = await calculateDistance(
+      availableOrders,
+      lat,
+      lon,
+    );
+    res.status(200).json({
       message: "Available Orders Fetched Successfully",
-      data: availableOrders,
+      data: AvailableOrderWithDistance,
     });
   } catch (error) {
     next(error);
   }
-}
+};
 
-export const RiderGetOngoingOrder = async(req,res,next)=>{
+export const RiderGetOngoingOrder = async (req, res, next) => {
   try {
     const currentuser = req.user;
     const ongoingOrders = await Order.find({
@@ -195,10 +203,10 @@ export const RiderGetOngoingOrder = async(req,res,next)=>{
   } catch (error) {
     next(error);
   }
-}
+};
 
-export const RiderGetCompletedOrder = async(req,res,next)=>{
-    try {
+export const RiderGetCompletedOrder = async (req, res, next) => {
+  try {
     const currentuser = req.user;
     const completedOrders = await Order.find({
       riderId: currentuser._id,
@@ -216,4 +224,23 @@ export const RiderGetCompletedOrder = async(req,res,next)=>{
   } catch (error) {
     next(error);
   }
-}
+};
+export const RiderAcceptOrder = async (req, res, next) => {
+  try {
+    const riderId = req.user_id;
+    const orderID = req.params.id;
+    const currentOrder = await Order.findById(orderID);
+
+    if (!currentOrder) {
+      const error = new Error("Order Not Found");
+      error.statusCode = 404;
+      return next(error);
+    }
+    currentOrder.riderId = riderId;
+    await currentOrder.save();
+
+    res.status(200).json({ message: "Order Assingned to you" });
+  } catch (error) {
+    next(error);
+  }
+};

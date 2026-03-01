@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 import RestaurantImages from "./components/restaurantDashboard/RestaurantImages";
 import OrderNowCopy from "./pages/OrderNowCopy";
 import CheckoutPage from "./pages/CheckoutPage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 const App = () => {
   return (
     <>
@@ -47,6 +48,8 @@ const App = () => {
           <Route path="restaurant-images" element={<RestaurantImages />} />
 
           <Route path="checkout-page" element={<CheckoutPage/>}/>
+          <Route path="/paymentSuccess" element={<PaymentSuccessPage />} />
+
           
           <Route path="*" element={<NotFound />} />
         </Routes>

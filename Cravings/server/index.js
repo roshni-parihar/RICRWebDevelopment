@@ -6,7 +6,9 @@ import AuthRouter from "./src/routers/authRouter.js";
 import PublicRouter from "./src/routers/publicRouter.js";
 import RiderRouter from './src/routers/riderRouter.js'
 import UserRouter from "./src/routers/userRouter.js";
-import RestaurantRouter from "./src/routers/restaurantRouter.js"
+import RestaurantRouter from "./src/routers/restaurantRouter.js";
+import PaymentRouter from "./src/routers/paymentRouter.js";
+import { verifyRazorPayConnect } from "./src/config/razorpay.js";
 import morgan from "morgan"; // gives error,or any log data in terminal
 import cookieParser from "cookie-parser";
 
@@ -23,6 +25,7 @@ app.use("/public", PublicRouter);
 app.use("/user", UserRouter);
 app.use("/restaurant", RestaurantRouter);
 app.use("/rider", RiderRouter);
+app.use("/payment", PaymentRouter);
 
 app.get("/", (req, res) => {
   console.log("Server is working");
@@ -45,5 +48,11 @@ app.listen(port, async () => {
     console.log("Cloudinary API is Working:", res);
   } catch (error) {
     console.error(" Error Connecting Cloudinay API:", error);
+  }
+   try {
+    const res = await verifyRazorPayConnect();
+    console.log("Razor Pay connected", res);
+  } catch (error) {
+    console.error("Error Connecting RazorPay API :", error);
   }
 });

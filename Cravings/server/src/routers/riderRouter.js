@@ -4,9 +4,10 @@ import {
   RiderChangePhoto,RiderResetPassword, RiderGetAvailableOrder,
   RiderGetCompletedOrder,
   RiderGetOngoingOrder,
+  RiderAcceptOrder,
 } from "../controllers/riderController.js";
 
-import { Protect } from "../middlewares/authMiddleware.js";
+import { PartnerProtect, Protect } from "../middlewares/authMiddleware.js";
 import multer from "multer";
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.patch("/resetPassword", Protect, RiderResetPassword);
 router.get("/availableOrder", Protect, PartnerProtect, RiderGetAvailableOrder);
 router.get("/ongoingOrder", Protect, PartnerProtect, RiderGetOngoingOrder);
 router.get("/completedOrder", Protect, PartnerProtect, RiderGetCompletedOrder);
+router.patch("/acceptorder/:id",Protect,PartnerProtect,RiderAcceptOrder);
 
 export default router;
