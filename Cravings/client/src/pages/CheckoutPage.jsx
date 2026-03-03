@@ -108,7 +108,7 @@ const CheckoutPage = () => {
     }
   };
 
-  const GeneratePayload = () => {
+  const GeneratePayload = (RazorpayOrderID, RazorpayPaymentID) => {
     const { subtotal, tax, total } = calculatePrices();
     return {
       restaurantId: cart.restaurantID,
@@ -123,22 +123,15 @@ const CheckoutPage = () => {
         discountPercent: PromoCode[promoCode.toLocaleUpperCase() || 0],
         paymentMethod,
         paymentStatus,
+        razorpayOrderID: RazorpayOrderID,
+        razorpayPaymentID: RazorpayPaymentID,
       },
       status: "pending",
       review: {},
     };
   };
 
-  const handlePayment = async () => {
-    try {
-      // call payment gateway API
-      setPaymentStatus("paid");
-    } catch (error) {
-      setPaymentStatus("failed");
-    }
-  };
-
- const handleRazorpayPayment = async () => {
+  const handleRazorpayPayment = async () => {
     const { total } = calculatePrices();
     try {
       const keyRes = await api.get("/payment/getRazorpayKey");
@@ -148,7 +141,7 @@ const CheckoutPage = () => {
         amount: total,
       });
 
-      const orderdata = orderRes.data;
+      const orderdata = orderRes.data.data;
 
       const option = {
         key,
@@ -158,7 +151,47 @@ const CheckoutPage = () => {
         description: "Test Transaction",
         image: "https://placehold.co/600x400?text=CR",
         order_id: orderdata.id, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: `${import.meta.env.VITE_FRONTEND_URL}/paymentSuccess`,
+
+        // callback_url: `${import.meta.env.VITE_FRONTEND_URL}/paymentSuccess`,
+        // we use handler for navigate at succespage when payment is succeed..
+
+        handler: async (response) => {
+          try {
+            console.log(response);
+
+            const VerifyPaymentPayload = {
+              paymentID: response.razorpay_payment_id,
+              orderID: response.razorpay_order_id,
+              signature: response.razorpay_signature,
+            };
+            console.log(VerifyPaymentPayload);
+            const res = await api.post(
+              "/payment/verifyPayment",
+              VerifyPaymentPayload,
+            );
+
+            //place-Order
+            const payload = GeneratePayload(
+              response.razorpay_order_id,
+              response.razorpay_payment_id,
+            );
+
+            const OrderRes = await api.post("/user/placeorder", payload);
+            navigate("/paymentSuccess", { state: OrderRes.data.data });
+          } catch (error) {
+            console.log(error);
+            toast.error(error?.response?.data?.message || "Unkown Error");
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        //this will run on closing the RazorPay Modal
+        modal: {
+          ondismiss: () => {
+            toast.error("Please Complete your Payment to Proceed");
+            setIsProcessing(false);
+          },
+        },
         prefill: {
           name: user.fullName, //your customer's name
           email: user.email,
@@ -192,23 +225,14 @@ const CheckoutPage = () => {
       return;
     }
 
-    // payment gateway call
-  //   const payload = GeneratePayload();
-  //   console.log(payload);
+    setIsProcessing(true);
+    console.log("Lets Start Payment");
 
-  //   setIsProcessing(true);
-  //   try {
-  //     const res = await api.post("/user/placeorder", payload);
-  //     toast.success(res.data.data);
-  //     localStorage.removeItem("cart");
-  //     navigate("/user-dashboard", { state: { tab: "orders" } });
-  //   } catch (error) {
-  //     console.log("Order placement error:", error);
-  //     toast.error(error?.response?.data?.message || "Failed to place order");
-  //   } finally {
-  //     setIsProcessing(false);
-  //   }
-  // };
+    if (paymentMethod === "razorPay") {
+      console.log("Calling RazorPay");
+      handleRazorpayPayment();
+    }
+  };
 
   if (!user || !cart) {
     return (
@@ -223,6 +247,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <div className="mb-8">
           <h1
             className="text-4xl font-bold"
@@ -236,7 +261,9 @@ const CheckoutPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Section - Order Items */}
           <div className="lg:col-span-2">
+            {/* Order Items Card */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
               <h2
                 className="text-2xl font-bold mb-6"
@@ -453,7 +480,7 @@ const CheckoutPage = () => {
               </div>
 
               {/* Payment Method Selection */}
-              <div className="mb-6 border-t pt-6">
+              <div className="mb-6 border-t pt-6 mt-6">
                 <h3
                   className="font-bold mb-4"
                   style={{ color: "var(--color-primary)" }}
@@ -462,27 +489,32 @@ const CheckoutPage = () => {
                 </h3>
 
                 <div className="space-y-3">
-                  {[
-                    { id: "credit-card", label: "💳 Credit/Debit Card" },
-                    { id: "upi", label: "📱 UPI" },
-                    { id: "wallet", label: "👛 Digital Wallet" },
-                    { id: "cod", label: "🏠 Cash on Delivery" },
-                  ].map((method) => (
-                    <label
-                      key={method.id}
-                      className="flex items-center cursor-pointer"
-                    >
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value="razorPay"
+                      checked={paymentMethod === "razorPay"}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="w-4 h-4"
+                    />
+                    <span className="ml-3 text-gray-700">{"Pay Online"}</span>
+                  </label>
+                  {/* {total < 1000 && (
+                    <label className="flex items-center cursor-pointer">
                       <input
                         type="radio"
                         name="payment"
-                        value={method.id}
-                        checked={paymentMethod === method.id}
+                        value="cod"
+                        checked={paymentMethod === "cod"}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                         className="w-4 h-4"
                       />
-                      <span className="ml-3 text-gray-700">{method.label}</span>
+                      <span className="ml-3 text-gray-700">
+                        {"Cash on Delivery"}
+                      </span>
                     </label>
-                  ))}
+                  )} */}
                 </div>
               </div>
 

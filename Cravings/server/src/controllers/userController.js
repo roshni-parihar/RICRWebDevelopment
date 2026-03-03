@@ -161,7 +161,7 @@ export const UserPlaceOrder = async (req, res, next) => {
       return next(error);
     }
 
-    const newOrder = await Order.create({
+    const order = await Order.create({
       orderNumber: `ORD-${Date.now()}`,
       restaurantId,
       userId: currentUser._id,
@@ -170,6 +170,11 @@ export const UserPlaceOrder = async (req, res, next) => {
       status,
       review: review || "N/A",
     });
+
+    const newOrder = await order.populate([
+      { path: "restaurantId" },
+      { path: "userId" },
+    ]);
     res
       .status(201)
       .json({ message: "Order Placed Successfully", data: newOrder });
